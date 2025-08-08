@@ -1,0 +1,58 @@
+/* Базовий ресет */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body.udark {background-image: url(images/BGUdark.png); }
+  
+  /* Закріплені панелі */
+    .top-panel.udark {
+     background: url(images/headerPid.png), linear-gradient(90deg, rgba(6, 2, 89,0.5) 0%, rgba(38, 87, 1,0.5) 35%, rgba(62, 3, 82,0.5) 100%);
+	 background-blend-mode: hard-light, color-burn;
+	 border-color: #54ffe5;
+	 box-shadow: 0 0 10px #54ffe5;
+	 backdrop-filter: invert(1);
+    }
+	
+	.top-panel .logo.udark {
+		filter: brightness(120%) hue-rotate(90deg);
+	}
+	
+	.top-panel .objects.udark {
+	  filter: hue-rotate(-124deg) contrast(135%);
+	  
+    }
+	
+	.top-panel .creator.udark {
+	  filter: hue-rotate(124deg) contrast(135%);
+	  
+    }
+	
+	/* Права панель */
+      .side-panel.right.udark {
+		  filter: invert(1);
+  
+    }
+	
+	.qa-item.udark {
+		border-top: 2px solid red;
+	  border-bottom: 2px solid red;
+	}
+	
+	.side-panel.left .side-button.udark {
+		filter: invert(80%) contrast(150%);
+	}
+	
+	
+	.side-panel.left .side-button.udark:nth-of-type(2) {
+		filter: hue-rotate(-30deg) drop-shadow(0 0 8px #eeff96);
+	}
+	
+	.side-panel.left .side-button.udark:nth-of-type(1) {
+		filter: hue-rotate(-30deg) drop-shadow(0 0 8px #eeff96);
+	}
+	
+	.eye.udark {
+		background-image: url(images/hudozEyeUdark.png);
+	}
+	
+	.speech-bubble.udark {
+		filter: invert(80%);
+	}

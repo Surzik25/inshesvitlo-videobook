@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'Expengsymbols';
+  src: url('fonts/Expengsymbols-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Expert2new';
+  src: url('fonts/Expert2new-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Klochanewnew';
+  src: url('fonts/Klochanewnew-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Per_pere';
+  src: url('fonts/Per_pere-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Uamorzecode';
+  src: url('fonts/Uamorzecode-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Timer';
+  src: url('fonts/Timer-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -1,0 +1,699 @@
+/* Базовий ресет */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif; background-image: url(images/BGdark.png); background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-width: 600px; min-height: 120vh; }
+
+
+   /* Закріплені панелі */
+    .top-panel {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 80px;
+      background: rgba(2,0,36,0.1);
+     background: url(images/headerPid.png), linear-gradient(90deg, rgba(239, 245, 83,0.5) 0%, rgba(136, 10, 247,0.5) 35%, rgba(10, 239, 247,0.5) 100%) ;
+	 background-blend-mode: color-burn, hard-light;
+	 border-bottom-style: double;
+	 border-bottom-width: 5px;
+	 border-color: rgb(46,51,4);
+      z-index: 1000;
+      /* flex layout для елементів */
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 20px;
+    }
+    /* Стили для контейнерів верхньої панелі */
+    .top-panel .logo {
+      width: 310px;
+      height: 80px; /* збільшена висота */
+      box-sizing: border-box;
+      text-align: center;
+      position: relative;
+      z-index: 10; /* поверх інших */
+      flex-shrink: 0;
+	  transform: translateX(-25px);
+    }
+	
+	.logo-img {
+		position: absolute;
+		left: 0;
+		top: -34px;
+		width: 100%;
+	}
+	
+	.objects-img {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		/* filter: drop-shadow(0px 0px 0.5px #03f8fc); */
+		
+	}
+	
+	.hudoz-img,
+.hudoz-shadow {
+  pointer-events: none; /* Всі шари прозорі для мишки */
+  position: absolute;
+  
+}
+	.hudoz-img {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		filter: brightness(10%);
+		transition: filter 0.4s ease;
+	}
+	
+	.hudoz:hover .hudoz-img {
+  filter: brightness(100%);
+}
+	
+	.hudoz-shadow {
+		position: absolute;
+		top: 0;
+		width: 100%;
+  -webkit-mask-image: linear-gradient(black, transparent);
+  mask-image: linear-gradient(black, transparent);
+  transition: transform 0.4s ease;
+	}
+	
+	.hudoz:hover .hudoz-shadow {
+  transform: translateY(-100px); /* Трохи вгору */
+}
+	
+.eyes {
+    position: absolute;
+    top: 45px;
+    left: 53%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+.eye {
+    width: 35px;
+    height: 34px;
+    background-image: url(images/hudozEye.png);
+	background-size: cover;
+    border-radius: 40%;
+    position: relative;
+    overflow: hidden;
+  }
+  .dark-mode .eye {
+    background-color: red;
+  }
+  .pupil {
+    width: 6px;
+    height: 15px;
+    background-image: url(images/qaBG2.png);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	}
+	
+	
+    
+    .top-panel .objects {
+      width: 710px; height: 80px;
+      display: inline-block;
+	  position: relative;
+	  
+    }
+    .top-panel .creator {
+      width: 350px; height: 80px;
+      display: inline-block;
+	  margin-left: 45px;
+	  position: relative;
+	  margin-bottom: 33px;
+    }
+    .top-panel .hudoz {
+      width: 150px; height: 150px;
+      display: inline-block;
+	  position: relative;
+	   transition: transform 0.4s ease;
+    }
+	
+	.hudoz:hover {
+  transform: scale(1.1); /* збільшується все */
+  transform: translateY(20px);
+}
+
+
+    .stuff {
+    width: 1250px;
+    height: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    right: 10px;
+    display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .side-panel {
+      position: fixed; top: 80px; bottom: 0;
+      background: none; z-index: 200;
+      transition: transform 0.3s ease;
+	  
+    }
+    /* Ліва панель */
+    .side-panel.left {
+      left: 0; width: 150px; padding: 10px 0;
+      overflow-y: hidden;
+    }
+	
+
+
+    /* Права панель */
+      .side-panel.right {
+		  pointer-events: none;
+      right: 0; width: 650px; padding: 10px 0;
+      border: none; overflow-y: scroll; overflow-x: hidden; /* background: rgba(252, 142, 134, 0.5);*/
+	    -webkit-overflow-scrolling: touch; /* Плавне прокручування на iOS */
+  
+    }
+	
+	
+	
+	
+
+  
+   
+
+    /* Кнопки лівої панелі */
+    .side-panel.left .side-button {
+      display: block; width: 100px; height: 85px;
+      margin-left: 0; margin-bottom: -3px; 
+      background: none; border: none;
+      font-family: 'Expert2new', 'Expengsymbols';
+	  position: relative;
+	  cursor: url(images2/cursorPointer/pointer.png) 2 2, pointer;
+	  
+    }
+    .side-panel.left .side-button:nth-of-type(6),
+    .side-panel.left .side-button:nth-of-type(7),
+    .side-panel.left .side-button:nth-of-type(8) {
+      width: 110px; height: 75px;
+    }
+	
+	.side-panel.left .side-button:active {
+	transform:  scale(0.9) translateX(-10%) rotate(4deg);
+	}
+	
+	.side-button-idle {
+		width: 85px;
+		height: auto;
+		position: absolute;
+		left: -10px;
+		top: 10px;
+		filter: drop-shadow(0 0 8px #360580);
+		transition: transform 0.4s ease;
+		transition: opacity 0.2s ease;
+	}
+	
+	.side-button-idle:hover {
+		transform: scale(1.1);
+	}
+	
+	.hover-img {
+		width: 104%;
+		height: auto;
+		position: absolute;
+		left: -8px;
+		top: -5px;
+		z-index: 2;
+		transition: opacity 0.3s ease;
+		transition: transform 0.4s ease;
+		pointer-events: none;
+		transform: scale(1.1);
+		transition: opacity 0.2s ease;
+		
+	}
+	
+	.side-button-sm {
+		width: 110px;
+		height: auto;
+		position: absolute;
+		left: -10px;
+		top: 10px;
+		opacity: 1;
+		
+	}
+	
+	.side-button-sm2:active {
+		transform: scale(0.95);
+		filter: brightness(200%);
+	}
+	
+	.side-button-sm2 {
+		width: 110px;
+		height: auto;
+		position: absolute;
+		left: -10px;
+		top: 7px;
+		opacity: 0;
+		transition: filter 0.4s ease;
+		
+	}
+	
+	.side-button:hover .side-button-sm2 {
+		opacity: 1;
+	}
+	
+	.side-button:hover .side-button-sm {
+		opacity: 0;
+	}
+	
+	 .side-button-dc {
+		width: 110px;
+		height: auto;
+		position: absolute;
+		left: -10px;
+		top: 10px;
+		opacity: 1;
+	}
+	
+	
+		
+    /* Відступ після DM */
+    .side-panel.left .side-button:nth-of-type(5) {
+      margin-bottom: 100px;
+    }
+	
+
+    /* Q&A елементи */
+	
+	.qa {
+      position: relative;
+      pointer-events: none;
+	  
+    }
+	
+	.qa-item2 {
+		pointer-events: auto;
+      background-image: url(images/qaBg.png); margin-bottom: 10px; margin-left: 10px;
+      padding: 8px; 
+	  padding-left: 20px;
+      clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%);
+      text-align: center; font-size:26px; font-weight: bold; width: 30%;
+	  filter: brightness(134%); 
+	  color: #75ffca;
+	  text-shadow: 0 0 5px #070478, 0 0 7px #042778; display: flex; align-items: center;
+      justify-content: center;
+      margin-left: auto;
+	  margin-top: 20px;
+	  box-shadow: 0 0 10px blue !important;
+      position: relative;      /* щоб лейбл був вище відповіді */
+    }
+	
+    .qa-item {
+		pointer-events: auto;
+      background-image: url(images/Qbg.png); background-size: cover; margin-bottom: 10px; margin-left: 10px;
+      padding: 8px; 
+	  padding-left: 20px;
+      clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%);
+      text-align: center; font-size:24px; font-weight: bold; width: 40%;
+	  transition: transform 0.2s ease, box-shadow 0.2s ease, text-shadow 0.2s ease;
+	  filter: brightness(134%); 
+	  color: #1b0178;
+	  text-shadow: 0 0 5px #00ecfc; display: flex; align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      position: relative;      /* щоб лейбл був вище відповіді */
+      z-index: 2;
+	  /* Додаємо border через box-shadow */
+	  cursor: url(images2/cursorPointer/pointer.png) 2 2, pointer;
+  
+	
+    }
+	
+
+	.qa-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 8px rgba(255, 232, 214, 0.8);
+      text-shadow: 
+	  0 0 8px #2aa198,
+	  0 0 5px #0932e8;
+    }
+	.qa-item:active {
+		filter: brightness(200%);
+		transform: scale(0.95);
+	}
+	
+	 
+	
+	.answer {
+      position: absolute;
+      top: 0;
+      right: 275px;
+      width: 310px;
+      background: linear-gradient(90deg, rgba(103, 80, 199, 1) 0%, rgba(16, 16, 135,0.8) 35%, rgba(10, 239, 247,0.1) 100%);;
+      padding: 10px;
+      border-radius: 10px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.6s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      pointer-events: none;
+      z-index: 1;
+	  font-size: 20px;
+	  text-shadow: 
+	  0 0 8px #2aa198,
+	  0 0 5px #0932e8;
+	  color: #feffa8;
+	  filter: blur(5px);
+    }
+
+    .qa.active .answer {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+	  filter: blur(0px);
+    }
+
+    /* Основний контент */
+    .content {
+      padding: 90px 270px 70px 170px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      grid-gap: 20px; position: relative;
+	  transition: all 0.3s ease;
+	  transform: translateX(-3%);
+    }
+
+    /* Бірюзова обгортка відео */
+    .video-wrapper { 
+	position: relative;
+      padding: 65px; min-width: 545px;
+	  transition: all 0.6s ease;
+	  
+    }
+	.video-wrapper:hover {
+		transform: scale(1.04);
+	}
+	
+	.video-wrapper.line4:hover {
+		transform: scale(1.04);
+	}
+	
+	.video-wrapper:hover .video-button-space {
+		filter: brightness(150%);
+	}
+	
+	.video-wrapper:hover .video-button-space2 {
+		filter: brightness(150%);
+	}
+	
+	
+	
+	
+	
+	.video-ramka {
+		position: absolute;
+		top: 13px;
+		z-index: 20;
+		width: 100%;
+		transform: translateX(-83px) translateY(-30px);
+		filter: drop-shadow(4px 4px 10px #9c3603);
+		animation: glowPulse 2.5s ease-in-out infinite;
+		pointer-events: none;
+	}
+	
+	@keyframes glowPulse {
+  0% {
+    filter: drop-shadow(4px 4px 10px #9c3603);
+  }
+  50% {
+    filter: drop-shadow(4px 4px 20px #ed980e);
+  }
+  100% {
+    filter: drop-shadow(4px 4px 10px #9c3603);
+  }
+}
+	
+	.video-ramka2 {
+		position: absolute;
+		top: 15px;
+		z-index: 20;
+		width: 96%;
+		height: auto;
+		transform: translateX(-46px) translateY(-6.7%);
+		filter: drop-shadow(4px 4px 10px #0bdbd8);
+		animation: glowPulse2 2.5s ease-in-out infinite;
+		pointer-events: none;
+	}
+	
+	@keyframes glowPulse2 {
+  0% {
+    filter: drop-shadow(4px 4px 10px #252cf5);
+  }
+  50% {
+    filter: drop-shadow(4px 4px 20px #47d7ff);
+  }
+  100% {
+    filter: drop-shadow(4px 4px 10px #252cf5);
+  }
+}
+
+    /* Рожевий контейнер із відео */
+    .video-container { padding-bottom: 10px; position: relative; }
+    .video-box { width: 100%; aspect-ratio: 1620 / 2160; background: rgba(41, 45, 102,0.5); }
+    .caption { margin-top: 10px; padding: 10px; height: 140px; font-size: 20px; text-align: center;
+	color: #f5b464; /* або #ff5e13 для м’якшого вогню */
+  text-shadow:
+    0 0 5px #400000,
+    0 0 10px #ff3300,
+    0 0 20px #ff2200,
+    0 0 40px #ff1100,
+    0 0 60px #ff0000;
+	background-image: url('images/captionBGLine3.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat; 
+  }
+  
+  #video-box { width: 100%; aspect-ratio: 1620 / 2160;  }
+  #video-box2 { width: 100%; aspect-ratio: 1620 / 2160;  }
+  
+  #loader {
+      position: absolute;
+      z-index: 10;
+     
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.5s ease, visibility 0.5s;
+    }
+
+    #loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+	
+	#loader2 {
+      position: absolute;
+      z-index: 10;
+     
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.5s ease, visibility 0.5s;
+    }
+
+    #loader2.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+  
+  .morze-code {
+	  font-family: 'Uamorzecode';
+  }
+  
+  .caption2 { margin-top: 10px; padding-top: 10px; padding-right: 15px; height: 140px; font-size: 21px; text-align: center; 
+  color: #fff;
+  text-shadow:
+    0 0 5px #000b54,
+    0 0 10px #0ff,
+    0 0 20px #0ff,
+    0 0 40px #0ff,
+    0 0 80px #0ff; 
+	background-image: url('images/captionBGLine4.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+/*animation: glowBreath 3s ease-in-out infinite;*/
+  }
+  
+		  
+
+    /* Зелена кнопкова панель */
+        /* Зелена кнопкова панель */
+    .video-button-space {
+		pointer-events: auto;
+      position: absolute;
+      bottom: calc(20px + 15px);
+      right: -40px;
+      transform: translateX(-45px) translateY(-15px);
+      width: 135px;
+      height: 350px;
+      padding-bottom: 20px;
+	 
+	  
+    }
+	
+	.video-button-space img {
+		cursor: url(images2/cursorPointer/pointer.png) 2 2, pointer;
+	}
+	
+	
+	
+	.video-button-space2 {
+      position: absolute;
+      bottom: calc(20px + 15px);
+      right: -40px;
+      transform: translateX(-45px) translateY(30px);
+      width: 135px;
+      height: 350px;
+      padding-bottom: 20px;
+	  filter: drop-shadow(4px 4px 10px #9c3603);
+		animation: glowPulse 2.5s ease-in-out infinite;
+	  
+    }
+	
+	.video-button-space3 {
+      position: absolute;
+      bottom: calc(20px + 15px);
+      right: -40px;
+      transform: translateX(-45px) translateY(30px);
+      width: 135px;
+      height: 350px;
+      padding-bottom: 20px;
+	  filter: drop-shadow(4px 4px 10px #9c3603);
+		animation: glowPulse 2.5s ease-in-out infinite;
+		opacity: 0;
+	  
+    }
+	 .video-button-space3:hover {
+		opacity: 1;
+	}
+	
+	
+	
+	.read-button {
+	position: absolute;
+	top: 3px;
+	width: 135px;
+	height: 330px;
+	filter: drop-shadow(4px 4px 10px #9c3603);
+		animation: glowPulse2 2.5s ease-in-out infinite;
+	}
+	
+	.read-button2 {
+	position: absolute;
+	top: 3px;
+	width: 135px;
+	height: 330px;
+	filter: drop-shadow(4px 4px 10px #9c3603);
+		animation: glowPulse2 2.5s ease-in-out infinite;
+		opacity: 0;
+	}
+	
+	 .read-button2:hover {
+		opacity: 1;
+		
+	}
+
+
+    /* Адаптив: портрет */
+    @media (orientation: portrait) {
+      .content { display: flex; flex-direction: column; align-items: center; transform: translateX(-6%);}
+      .video-wrapper { width: 80%; }
+    }
+	@media (orientation: portrait) {
+		.side-panel.right {  width: 63%; min-width: 40%; }
+		.answer { width: 54%; right: 45%; }
+		.qa-item {
+	  width: 42%;
+  }
+	}
+	@media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 1.6/1) {
+	.content { transform: translateX(-11%); grid-gap: 0;}
+	.video-wrapper.line4 { transform: translateX(-7%); }
+	.video-wrapper.line4:hover {
+		transform: scale(1.04) translateX(-7%);
+	}
+  .side-panel.right {
+    width: 60%;
+  }
+  .qa-item {
+	  width: 30%;
+  }
+	}
+		
+    
+      /* Додав fancy ефекти для QA */
+    .qa-item {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, text-shadow 0.2s ease; 
+    }
+	
+	body {
+    transition: background-image 0.5s ease-in-out;
+}
+
+.top-panel {
+    transition: background 0.5s ease-in-out, 
+                border-color 0.5s ease-in-out, 
+                box-shadow 0.5s ease-in-out;
+}
+
+.top-panel .logo {
+    transition: filter 0.5s ease-in-out;
+}
+
+.top-panel .objects {
+    transition: filter 0.5s ease-in-out;
+}
+
+.top-panel .creator {
+    transition: filter 0.5s ease-in-out;
+}
+
+.side-panel.right {
+    transition: filter 0.5s ease-in-out;
+}
+
+.qa-item {
+    transition: border-top 0.3s ease-in-out, 
+                border-bottom 0.3s ease-in-out;
+}
+
+.side-panel.left .side-button {
+    transition: filter 0.4s ease-in-out;
+}
+
+.eye {
+    transition: background-image 0.4s ease-in-out;
+}
+
+.speech-bubble {
+    transition: filter 0.4s ease-in-out;
+}
+
+/* Альтернативний варіант - універсальний transition для всіх елементів */
+/*
+* {
+    transition: all 0.3s ease-in-out;
+}
+*/
+
+/* Для кращого ефекту можна додати transition навіть для hover ефектів */
