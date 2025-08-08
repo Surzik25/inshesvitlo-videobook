@@ -297,7 +297,7 @@ class TreasureBoxTimer {
 
         unlockBox() {
         this.isLocked = false;
-        this.boxImage.src = "../images2/SkrunkaIdle.gif";
+        this.boxImage.src = "../images2/skrunkaIdle.gif";
         this.boxImage.alt = "Unlocked Treasure Box";
         this.treasureBox.classList.add('unlocked');
         
@@ -378,7 +378,7 @@ preloadAnimationImages() {
         'skrunkaHover',
         'skrunkaHover-Idle', 
         'skrunkaHoverReverse',
-        'SkrunkaIdle'
+        'skrunkaIdle'
     ];
     
     // Створюємо масив для зберігання preloaded зображень
@@ -440,7 +440,7 @@ handleUnlockedLeave() {
     // Після короткої затримки повернути до idle стану
     setTimeout(() => {
         if (!this.isHovering) {
-            this.setBoxImage('SkrunkaIdle', 'Idle Box');
+            this.setBoxImage('skrunkaIdle', 'Idle Box');
             this.currentHoverState = 'idle';
         }
     }, 500); // Можна налаштувати тривалість reverse анімації
