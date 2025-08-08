@@ -190,7 +190,7 @@ class TreasureBoxTimer {
 	// Відновлення візуального стану після перезавантаження
     restoreVisualState() {
         if (!this.isLocked) {
-            this.boxImage.src = "../images2/SkrunkaIdle.gif";
+            this.boxImage.src = "../images2/skrunkaIdle.gif";
             this.boxImage.alt = "Unlocked Treasure Box";
             this.treasureBox.classList.add('unlocked');
             this.speechBubble.classList.remove('show');
