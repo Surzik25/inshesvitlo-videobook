@@ -1,0 +1,78 @@
+body.udark {
+	background-image: linear-gradient(rgba(156, 192, 255,0.9) 0%, rgba(14, 58, 102,0.5) 35%, rgba(52, 59, 71,0.9) 100%), url(../images2/fonline3udark.png);
+	background-blend-mode: plus-lighter, hard-light;
+}
+
+.footer.line3.udark {
+		background: linear-gradient(
+        transparent 20%,
+        #0d2245 100%), url(../images2/footerLine3.png);
+		 mix-blend-mode: difference; 
+		 background-blend-mode: color-burn;
+		 background-repeat: no-repeat;
+	}
+	
+.footer-content.udark {
+	mix-blend-mode: normal;
+}	
+
+.top-panel.udark {
+	backdrop-filter: brightness(180%) invert(1) contrast(120%);
+	background-blend-mode: color-burn, color-burn;
+	 border-color: #f7d760;
+	 box-shadow: 0 0 10px #f7d760;
+}
+
+.logo.udark {
+	filter: hue-rotate(-95deg);
+}
+
+.video-main.udark {
+	box-shadow: 0 0 10px #f7d760;
+}
+
+.objects.udark {
+	filter: hue-rotate(-25deg) brightness(80%);
+}
+
+.nav-panel.udark {
+	filter: hue-rotate(-45deg) contrast(130%);
+}
+
+.map-container.udark {
+	filter: hue-rotate(45deg) contrast(130%);
+	mix-blend-mode: hard-light;
+}
+
+.map-svg.udark {
+	mix-blend-mode: hard-light;
+	
+	}
+	
+	.map-svg.svg-img.udark {
+	opacity: 0.95;
+	filter: brightness(260%);
+	}
+
+.pattern-left.udark {
+	background-blend-mode: multiply, hard-light;
+}
+
+.pattern-right.udark {
+	background-blend-mode: multiply, hard-light;
+}
+
+.page-date.udark {
+	mix-blend-mode: difference;
+}
+
+.skrunka.udark {
+	filter: sepia(40%) hue-rotate(-135deg) saturate(170%) brightness(80%) contrast(109%);
+}
+
+.fact-image.udark {
+	filter: hue-rotate(100deg);
+}
+
+	
+		
