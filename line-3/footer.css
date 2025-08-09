@@ -333,7 +333,7 @@ background-size: cover;
     }
 
     /* Responsive design */
-    @media (max-width: 768px) {
+    @media (orientation: portrait) {
       .footer-content {
         grid-template-columns: 1fr;
         gap: 20px;
