@@ -33,7 +33,14 @@
 transition: background 0.6s ease-in-out,
                         mix-blend-mode 0.6s ease-in-out,
                         background-blend-mode 0.6s ease-in-out;	
- background-repeat: no-repeat;	width: 100%;					
+ background-repeat: no-repeat;
+		width: 100vw !important;
+position: relative;
+left: 50%;
+right: 50%;
+margin-left: -50vw;
+margin-right: -50vw;
+background-size: cover;
 	}
 	
 	
