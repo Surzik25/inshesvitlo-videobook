@@ -1,6 +1,6 @@
 body {
 	font-family: 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
-	background-image: linear-gradient(rgba(5, 8, 64,0.5) 0%, rgba(14, 58, 102,0.5) 35%, rgba(214, 203, 120,0.5) 100%), url(../images2/fonline3light.png);
+	background-image: url(../images2/fonline3light.png);
 	background-blend-mode: difference, hard-light;
 	background-size: cover;
 	background-position: center;
@@ -440,14 +440,14 @@ body {
 
         .main-container {
             display: flex;
-           
+           min-height: calc(90vh - 80px);
             padding-top: 80px;
         }
 
        
 
         .content-area {
-            flex: 0.8;
+            flex: 1;
             display: flex;
             flex-direction: column;
         }
