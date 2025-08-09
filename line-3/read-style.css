@@ -3,9 +3,10 @@ body {
 	background-image: linear-gradient(rgba(5, 8, 64,0.5) 0%, rgba(14, 58, 102,0.5) 35%, rgba(214, 203, 120,0.5) 100%), url(../images2/fonline3light.png);
 	background-blend-mode: difference, hard-light;
 	background-size: cover;
-	background-repeat: no-repeat;
-	min-height: 120vh;
-	min-width: 100vw;
+	background-position: center;
+	background-attachment: scroll;
+  background-repeat: no-repeat;
+  min-width: 600px; min-height: 120vh;
 	transition: background-image 0.6s ease-in-out, 
                         background-blend-mode 0.6s ease-in-out;
 }
