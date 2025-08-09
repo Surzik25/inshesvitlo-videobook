@@ -6,7 +6,8 @@
         #2e000c 100%), url(images/footer.png);
 	  background-repeat: no-repeat;
 	  background-size: cover;
-	 
+	  left: 0;
+	  right: 0;
 	   /*;
       border-top: 3px solid #7d7720;*/
       
