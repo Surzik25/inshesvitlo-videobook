@@ -104,7 +104,7 @@ class TreasureBoxTimer {
 	
 	// Завантаження збереженого стану
     loadState() {
-        const savedState = JSON.parse(localStorage.getItem('PerpereBoxState') || '{}');
+        const savedState = JSON.parse(localStorage.getItem('PerpereBoxState1') || '{}');
         
         // Основний таймер
         this.timeLeft = savedState.timeLeft !== undefined ? savedState.timeLeft : 120;
@@ -150,7 +150,7 @@ class TreasureBoxTimer {
             unlockCount: this.unlockCount
         };
         
-        localStorage.setItem('PerpereBoxState', JSON.stringify(state));
+        localStorage.setItem('PerpereBoxState1', JSON.stringify(state));
     }
 
     init() {
@@ -173,18 +173,22 @@ class TreasureBoxTimer {
         }
         
         this.setupEventListeners();
-        // Preload першої групи зображень одразу
-        this.preloadGroup(0);
-        
-        // Збереження стану при закритті сторінки
-        window.addEventListener('beforeunload', () => {
-            this.saveState();
-        });
-        
-        // Періодичне збереження стану
-        setInterval(() => {
-            this.saveState();
-        }, 1000);
+// Preload першої групи зображень одразу
+this.preloadGroup(0);
+
+// Preload другої і третьої групи одразу після першої
+this.preloadGroup(1);
+this.preloadGroup(2);
+
+// Збереження стану при закритті сторінки
+window.addEventListener('beforeunload', () => {
+    this.saveState();
+});
+
+// Періодичне збереження стану
+setInterval(() => {
+    this.saveState();
+}, 1000);
     }
 	
 	// Відновлення візуального стану після перезавантаження
