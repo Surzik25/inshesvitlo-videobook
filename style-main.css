@@ -388,7 +388,7 @@
     /* Бірюзова обгортка відео */
     .video-wrapper { 
 	position: relative;
-      padding: 65px; min-width: 545px;
+      padding: 65px; min-width: 445px; max-width: 32vw;
 	  transition: all 0.6s ease;
 	  
     }
