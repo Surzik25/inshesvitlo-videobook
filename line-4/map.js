@@ -337,23 +337,79 @@ class InteractiveMap {
     }
     
     initEventListeners() {
-        // Переміщення
-        this.container.addEventListener('mousedown', this.onMouseDown.bind(this));
-        this.container.addEventListener('mousemove', this.onMouseMove.bind(this));
-        this.container.addEventListener('mouseup', this.onMouseUp.bind(this));
-        this.container.addEventListener('mouseleave', this.onMouseUp.bind(this));
-        
-        // Масштабування
-        this.container.addEventListener('wheel', this.onWheel.bind(this));
-        
-        // Кнопки керування
-        document.getElementById('zoomIn').addEventListener('click', () => this.zoom(1.2));
-        document.getElementById('zoomOut').addEventListener('click', () => this.zoom(0.8));
-        document.getElementById('resetView').addEventListener('click', () => this.resetView());
-        
-        // Запобігання стандартному контекстному меню
-        this.container.addEventListener('contextmenu', (e) => e.preventDefault());
+    // --- Миша ---
+    this.container.addEventListener('mousedown', this.onMouseDown.bind(this));
+    this.container.addEventListener('mousemove', this.onMouseMove.bind(this));
+    this.container.addEventListener('mouseup', this.onMouseUp.bind(this));
+    this.container.addEventListener('mouseleave', this.onMouseUp.bind(this));
+    this.container.addEventListener('wheel', this.onWheel.bind(this));
+
+    // --- Сенсор (тач) ---
+    this.container.addEventListener('touchstart', this.onTouchStart.bind(this), { passive: false });
+    this.container.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: false });
+    this.container.addEventListener('touchend', this.onTouchEnd.bind(this));
+
+    // --- Кнопки керування ---
+    document.getElementById('zoomIn').addEventListener('click', () => this.zoom(1.2));
+    document.getElementById('zoomOut').addEventListener('click', () => this.zoom(0.8));
+    document.getElementById('resetView').addEventListener('click', () => this.resetView());
+
+    // Запобігання стандартному контекстному меню
+    this.container.addEventListener('contextmenu', (e) => e.preventDefault());
+}
+
+// --- Touch-логіка ---
+onTouchStart(e) {
+    if (e.touches.length === 1) {
+        // Переміщення одним пальцем
+        this.isDragging = true;
+        this.lastTouchX = e.touches[0].clientX;
+        this.lastTouchY = e.touches[0].clientY;
+    } else if (e.touches.length === 2) {
+        // Початок pinch-to-zoom
+        this.isDragging = false;
+        this.lastPinchDistance = this.getPinchDistance(e.touches);
     }
+}
+
+onTouchMove(e) {
+    e.preventDefault(); // Щоб сторінка не скролилась при жестах
+
+    if (e.touches.length === 1 && this.isDragging) {
+        // Переміщення
+        const deltaX = e.touches[0].clientX - this.lastTouchX;
+        const deltaY = e.touches[0].clientY - this.lastTouchY;
+        this.translateX += deltaX;
+        this.translateY += deltaY;
+        this.lastTouchX = e.touches[0].clientX;
+        this.lastTouchY = e.touches[0].clientY;
+        this.updateTransform();
+    } 
+    else if (e.touches.length === 2) {
+        // Масштабування pinch-to-zoom
+        const newDistance = this.getPinchDistance(e.touches);
+        if (this.lastPinchDistance) {
+            const zoomFactor = newDistance / this.lastPinchDistance;
+            const newScale = Math.max(this.minScale, Math.min(this.maxScale, this.scale * zoomFactor));
+            this.scale = newScale;
+            this.updateTransform();
+        }
+        this.lastPinchDistance = newDistance;
+    }
+}
+
+onTouchEnd(e) {
+    if (e.touches.length === 0) {
+        this.isDragging = false;
+        this.lastPinchDistance = null;
+    }
+}
+
+getPinchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
     
     onMouseDown(e) {
         this.isDragging = true;
