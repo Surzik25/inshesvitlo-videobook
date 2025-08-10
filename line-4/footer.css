@@ -11,7 +11,7 @@
       border-top: 3px solid #7d7720;*/
       
 	  
-      min-height: 140px; min-width: 1200px;
+      min-height: 140px; min-width: 1450px;
       z-index: 100;
 	  box-sizing: border-box;
 	
@@ -366,7 +366,7 @@ transition: background 0.6s ease-in-out,
 		margin-top: 0;
       }
 	  
-	  .footer { background-size: cover; }
+	  .footer { background-size: cover; min-width: 980px; bottom: 0; }
 	  
 	  .footer.line3 { background-size: cover; }
 	  
