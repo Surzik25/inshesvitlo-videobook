@@ -75,7 +75,24 @@ bindEvents() {
                 this.goToVideo(this.totalVideos - 1);  
                 break;  
         }  
-    });  
+    }); 
+	const videoEl = document.getElementById('mainVideo');
+
+videoEl.addEventListener('click', (e) => {
+    // Перевіряємо чи саме відео (або його контейнер) у fullscreen
+    if (document.fullscreenElement === videoEl || document.fullscreenElement?.contains(videoEl)) {
+        const videoWidth = videoEl.clientWidth;
+        const clickX = e.clientX;
+
+        if (clickX > videoWidth / 2) {
+            // Права половина — вперед
+            this.goToNext();
+        } else {
+            // Ліва половина — назад
+            this.goToPrevious();
+        }
+    }
+});	
 }  
 
 getCurrentChapter() {  
