@@ -1,12 +1,25 @@
 body {
 	font-family: 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
-	background-image: linear-gradient(rgba(255, 169, 140,0.5) 0%, rgba(6, 54, 82,0.5) 35%, rgba(214, 203, 120,0.5) 100%), url(../images2/BGline4.png);
-	background-blend-mode: multiply, hard-light;
+	background-image: url(../images2/BGline4.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 	min-height: 120vh;
 	transition: background-image 0.6s ease-in-out, 
                         background-blend-mode 0.6s ease-in-out;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+ right: 0;
+bottom: 0;
+  width: 200vw;
+  min-width: 200%;
+  height: 100vh;
+  background: linear-gradient(rgba(255, 169, 140,0.5) 0%, rgba(6, 54, 82,0.5) 35%, rgba(214, 203, 120,0.5) 100%);
+  mix-blend-mode: multiply;
 }
 
 /* Закріплені панелі */
