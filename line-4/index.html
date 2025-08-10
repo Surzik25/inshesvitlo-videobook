@@ -1139,7 +1139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- Author info -->
       <div class="footer-section">
-       <div class="footer-tagline3">*Поки що сайт переживає свою ПЕРШУ версію. Ми використовуємо open-sourse CDN, тому наберіться, будь-ласка, терплячки, якщо сторінка довго не завантажується. У разі серйозних технічних негараздів маякніть нам ;) Оптимізуємо колись якось.</div>   
+       <div class="footer-tagline3">*Поки що сайт переживає свою ПЕРШУ версію. Open-source сервери, які ми використовуємо, можуть бути недостатньо сильними для швидкого завантаження і плавного відображення різних штукенцій, тому..поставтеся з розумінням :D</div>   
         
       </div>
     </div>
@@ -1190,7 +1190,7 @@ i = 0;
 })();
 
     // перевіряємо чи був візит, але не записуємо одразу
-if (!localStorage.getItem('perpereVisited')) {
+if (!localStorage.getItem('perpereVisitedd')) {
   const darkOverlay = document.getElementById('darkOverlay');
   const welcome = document.getElementById('welcome');
   welcome.style.display = 'block';
@@ -1207,7 +1207,7 @@ function closeWelcome() {
     welcome.style.display = 'none';
     darkOverlay.style.display = 'none';
     // записуємо в localStorage тільки після закриття вікна
-    localStorage.setItem('perpereVisited', 'true');
+    localStorage.setItem('perpereVisitedd', 'true');
   }, 1000);
 }
 
