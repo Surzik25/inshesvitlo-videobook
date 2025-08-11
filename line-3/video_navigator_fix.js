@@ -9,7 +9,7 @@ this.initElements();
     if (!isNaN(savedIndex) && savedIndex >= 0 && savedIndex < this.totalVideos) {  
         this.goToVideo(savedIndex);  
     } else {  
-        this.updateInterface();  
+         this.goToVideo(0);  
     }  
 }  
 
