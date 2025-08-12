@@ -617,7 +617,7 @@
 	@media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 1.6/1) {
 	.content { transform: translateX(-11%); grid-gap: 0;}
 	.video-wrapper.line4 { transform: translateX(-7%); }
-	.video-wrapper { max-width: 650px; min-width: 550px;}
+	.video-wrapper { max-width: 640px; min-width: 530px;}
 	.caption { font-size: 17px; }
 	.caption2 { font-size: 17px; }
 	.video-wrapper.line4:hover {
@@ -629,15 +629,6 @@
   .qa-item {
 	  width: 30%;
   }
-	}
-	
-	@media (max-width: 1300px) and (min-width: 800px) {
-		.content { transform: translateX(-10%); grid-gap: 0;}
-		.video-wrapper { max-width: 530px; min-width: 480px; }
-		.caption { font-size: 17px; }
-	    .caption2 { font-size: 17px; }
-		.qa-item {
-	  width: 30%;}
 	}
 	
 	/* Адаптив: портрет */
