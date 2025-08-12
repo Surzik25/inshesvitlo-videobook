@@ -179,13 +179,13 @@
     }
 	
 	
+	.sidebar-scroll {
+		height: 100%;
+		overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* магія для iOS */
+}
 	
-	
-
-  
-   
-
-    /* Кнопки лівої панелі */
+  /* Кнопки лівої панелі */
     .side-panel.left .side-button {
       display: block; width: 100px; height: 85px;
       margin-left: 0; margin-bottom: -3px; 
@@ -627,7 +627,10 @@
   }
 	}
 	@media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 1.6/1) {
-	.content { transform: translateX(-11%); grid-gap: 0;}
+	.content { transform: translateX(-15%); grid-gap: 0;}
+	.video-wrapper { max-width: 500px; min-width: 480px; }
+	.caption { font-size: 17px; }
+	.caption2 { font-size: 17px; }
 	.video-wrapper.line4 { transform: translateX(-7%); }
 	.video-wrapper.line4:hover {
 		transform: scale(1.04) translateX(-7%);
