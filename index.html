@@ -14,6 +14,28 @@
   
 </head>
 <body>
+	<!-- Lottie скрипт -->
+<script
+  src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js"
+  type="module"
+></script>
+
+<!-- Preloader -->
+<div id="preloader">
+  <div id="preloader-content">
+    <dotlottie-wc
+      src="https://lottie.host/09279c1f-79a9-40da-85d2-07599887fa5e/ZIRBIWW9yD.lottie"
+      style="width: 500px; height: 500px;"
+      speed="1"
+      autoplay
+      loop
+    ></dotlottie-wc>
+    <p id="preloader-text">Завантаження...</p>
+    <div id="progress-bar">
+      <div id="progress-fill"></div>
+    </div>
+  </div>
+</div>
   <div class="top-panel ">
     <div class="logo">
 	<img class="logo-img" draggable="false" 
@@ -377,5 +399,40 @@ i = 0;
 
   </script>
   <script src="footer-n-udark.js"></script>
+	  <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const response = await fetch("images-list.json");
+  const data = await response.json();
+
+  const allImages = [...data.images, ...data.images2];
+  let loadedCount = 0;
+  const preloaderText = document.getElementById("preloader-text");
+  const progressFill = document.getElementById("progress-fill");
+
+  function preloadImage(src) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = () => resolve();
+      img.src = src;
+    });
+  }
+
+  for (let i = 0; i < allImages.length; i++) {
+    await preloadImage(allImages[i]);
+    loadedCount++;
+    const percent = Math.round((loadedCount / allImages.length) * 100);
+    progressFill.style.width = percent + "%";
+    preloaderText.textContent = `Завантаження: ${percent}%`;
+  }
+
+  preloaderText.textContent = "Готово!";
+  setTimeout(() => {
+    document.getElementById("preloader").style.opacity = "0";
+    document.getElementById("preloader").style.transition = "opacity 0.5s ease";
+    setTimeout(() => document.getElementById("preloader").remove(), 500);
+  }, 500);
+});
+</script>
 </body>
 </html>
