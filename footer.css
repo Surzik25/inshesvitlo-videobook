@@ -361,7 +361,7 @@ transition: background 0.6s ease-in-out,
 		margin-top: 0;
       }
 	  
-	  .footer { background-size: cover; min-width: 980px; bottom: 0; }
+	  .footer { background-size: cover; min-width: 580px; bottom: 0; }
 	  
 	  .footer.line3 { background-size: cover; }
 	  
