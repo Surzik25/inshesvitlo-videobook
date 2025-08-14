@@ -1462,6 +1462,9 @@ pattern-button:hover {
                 height: auto;
 				background-image: url(../images2/map-legend-vert.png); background-position: top;
             }
-			
-			
-        }
+			}
+@media (orientation: portrait) {
+            .video-section {
+                flex-direction: column;
+            }
+}
