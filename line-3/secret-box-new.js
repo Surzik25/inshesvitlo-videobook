@@ -353,18 +353,35 @@ setInterval(() => {
             this.hideFactBubble();
         });
 
-        // Обробники для збільшувального скла
-        this.factImage.addEventListener('mouseenter', () => {
-            this.magnifyingGlass.classList.add('active');
-        });
+        // МИША
+this.factImage.addEventListener('mouseenter', () => {
+    this.magnifyingGlass.classList.add('active');
+});
+this.factImage.addEventListener('mouseleave', () => {
+    this.magnifyingGlass.classList.remove('active');
+});
+this.factImage.addEventListener('mousemove', (e) => {
+    this.updateMagnifyingGlass(e);
+});
 
-        this.factImage.addEventListener('mouseleave', () => {
-            this.magnifyingGlass.classList.remove('active');
-        });
+// МОБІЛЬНИЙ
+this.factImage.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // блокує свайп
+    this.magnifyingGlass.classList.add('active');
+    this.updateMagnifyingGlass(e);
+}, { passive: false });
 
-        this.factImage.addEventListener('mousemove', (e) => {
-            this.updateMagnifyingGlass(e);
-        });
+this.factImage.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // блокує прокрутку
+    this.updateMagnifyingGlass(e);
+}, { passive: false });
+
+this.factImage.addEventListener('touchend', () => {
+    this.magnifyingGlass.classList.remove('active');
+});
+
+// Вимикаємо контекстне меню при довгому тапі
+this.factImage.addEventListener('contextmenu', (e) => e.preventDefault());
     }
 
 
@@ -528,37 +545,46 @@ setBoxImage(imageName, fallbackText) {
     }
 
     updateMagnifyingGlass(e) {
-        if (!this.magnifyingGlass.classList.contains('active')) return;
+    if (!this.magnifyingGlass.classList.contains('active')) return;
 
-        const rect = this.factImage.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+    const rect = this.factImage.getBoundingClientRect();
 
-        // Позиціонування збільшувального скла
-        this.magnifyingGlass.style.left = `${x - 50}px`;
-        this.magnifyingGlass.style.top = `${y - 50}px`;
-
-        // Обмеження руху скла в межах зображення
-        const glassSize = 100;
-        const maxX = this.factImage.offsetWidth - glassSize;
-        const maxY = this.factImage.offsetHeight - glassSize;
-
-        if (x < 50) this.magnifyingGlass.style.left = '0px';
-        if (x > maxX + 50) this.magnifyingGlass.style.left = `${maxX}px`;
-        if (y < 50) this.magnifyingGlass.style.top = '0px';
-        if (y > maxY + 50) this.magnifyingGlass.style.top = `${maxY}px`;
-
-        // Позиціонування збільшеного зображення (покращена логіка)
-        const scaleX = (x / this.factImage.offsetWidth);
-        const scaleY = (y / this.factImage.offsetHeight);
-        
-        // Зміщення зображення всередині скла для створення ефекту збільшення
-        const offsetX = scaleX * 300; // 300px - розмір збільшеного зображення
-        const offsetY = scaleY * 250; // 250px - висота збільшеного зображення
-        
-        this.magnifiedImage.style.left = `-${offsetX - 50}px`; // 50px - половина розміру скла
-        this.magnifiedImage.style.top = `-${offsetY - 50}px`;
+    let clientX, clientY;
+    if (e.touches) { 
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
     }
+
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    // Зсув скла трохи вище точки дотику (наприклад, на 50px)
+    const fingerOffsetY = e.touches ? 50 : 0;
+
+    this.magnifyingGlass.style.left = `${x - 50}px`;
+    this.magnifyingGlass.style.top = `${y - 50 - fingerOffsetY}px`;
+
+    const glassSize = 100;
+    const maxX = this.factImage.offsetWidth - glassSize;
+    const maxY = this.factImage.offsetHeight - glassSize;
+
+    if (x < 50) this.magnifyingGlass.style.left = '0px';
+    if (x > maxX + 50) this.magnifyingGlass.style.left = `${maxX}px`;
+    if (y < 50) this.magnifyingGlass.style.top = '0px';
+    if (y > maxY + 50) this.magnifyingGlass.style.top = `${maxY}px`;
+
+    const scaleX = x / this.factImage.offsetWidth;
+    const scaleY = y / this.factImage.offsetHeight;
+
+    const offsetX = scaleX * 300;
+    const offsetY = scaleY * 250;
+
+    this.magnifiedImage.style.left = `-${offsetX - 50}px`;
+    this.magnifiedImage.style.top = `-${offsetY - 50 - fingerOffsetY}px`;
+}
 
     hideFactBubble() {
         if (this.isFactBubbleVisible) {
