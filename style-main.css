@@ -3,7 +3,7 @@
     body { font-family: 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif; background-image: url(images/BGdark.png); background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-width: 600px; min-height: 120vh; }
+  min-width: 600px; min-height: 120vh; max-width: 95%;}
 
 #preloader {
   position: fixed;
