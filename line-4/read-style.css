@@ -1466,3 +1466,8 @@ pattern-button:hover {
 			
 			
         }
+@media (orientation: portrait) {
+            .video-section {
+                flex-direction: column;
+            }
+}
