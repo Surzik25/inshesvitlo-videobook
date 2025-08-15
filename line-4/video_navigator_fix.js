@@ -107,7 +107,7 @@ getCurrentChapter() {
 
 getVideoPath() {  
     if (this.currentVideo <= 5) {
-        return 'https://cdn.jsdelivr.net/npm/@surzik25/line4-chapter1@latest/chapter1/';
+        return 'https://cdn.jsdelivr.net/npm/@surzik25/line4-chapter1@1.0.3/chapter1/';
     } else if (this.currentVideo <= 10) {
         return 'https://cdn.jsdelivr.net/npm/@surzik25/line4-chapter1-p2@latest/chapter1/';
     } else if (this.currentVideo <= 15) {
