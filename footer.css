@@ -1,11 +1,13 @@
 /* FOOTER STYLES */
     .footer {
       position: relative;
-	  background: linear-gradient(
-        transparent 20%,
-        #2e000c 100%), url(images/footer.png);
+	 background: linear-gradient(
+        transparent 20%, #40120c 70%,
+        #200080 100%), url(images/footer.png);
 	  background-repeat: no-repeat;
 	  background-size: cover;
+	 background-blend-mode: difference;
+	 filter: brightness(80%) contrast(110%) saturate(130%);
 	 
 	   /*;
       border-top: 3px solid #7d7720;*/
@@ -255,25 +257,24 @@ transition: background 0.6s ease-in-out,
 	 .footer-tagline2 {
       font-size: 15px;
       
-      opacity: 0.5;
+      opacity: 0.9;
       text-align: center;
 	  text-shadow: 0 0 8px #2aa198,
         0 0 5px #3bfffc,
-		0 0 5px #3bfffc;
+		0 0 8px #3bfffc,
+		  0 0 10px #3bfffc;
 		margin-top: 30%;
     }
 	
 	.footer-tagline3 {
       font-size: 15px;
       
-      opacity: 0.7;
+      opacity: 0.8;
       text-align: center;
 	  text-shadow: 0 0 8px #2aa198,
         0 0 5px #3bfffc,
 		0 0 5px #3bfffc;
 		margin-top: 40%;
-		-webkit-mask-image: linear-gradient(90deg, black 0%, transparent 135%);
-  mask-image: linear-gradient(90deg, black 0%, transparent 135%);
   color: #d9fffa;
     }
 
