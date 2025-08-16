@@ -23,6 +23,7 @@ body.udark::before {
 		 mix-blend-mode: difference; 
 		 background-blend-mode: color-dodge;
 		 filter: hue-rotate(65deg);
+		background-repeat: no-repeat;
 	}
 	
 .footer-content.udark {
