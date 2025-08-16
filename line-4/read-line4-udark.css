@@ -12,16 +12,17 @@ body.udark::before {
   min-width: 200%;
   height: 200vh;
   min-height: 200%;
-  background: linear-gradient(rgba(55, 80, 48,0.9) 0%, rgba(130, 85, 66,0.5) 15%, rgba(1, 56, 74,0.98) 65%, rgba(1, 56, 74,0.98) 100%);
+  background: linear-gradient(rgba(55, 80, 48,0.9) 0%, rgba(130, 85, 66,0.5) 15%, rgba(22, 47, 48,0.98) 65%, rgba(1, 56, 74,0.98) 100%);
   mix-blend-mode: hard-light;
 }
 
 .footer.line4.udark {
 		background: linear-gradient(
-        transparent 20%,
-        #0d2245 100%), url(../images2/footerLine4.png);
+        transparent 10%,
+        #07135c 100%), url(../images2/footerLine4.png);
 		 mix-blend-mode: difference; 
-		 background-blend-mode: color-burn;
+		 background-blend-mode: color-dodge;
+		 filter: hue-rotate(65deg);
 	}
 	
 .footer-content.udark {
