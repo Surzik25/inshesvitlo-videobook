@@ -222,7 +222,7 @@ transition: background 0.6s ease-in-out,
 	}
 
     .footer-tagline {
-      font-size: 16px;
+      font-size: 19px;
       font-style: italic;
       opacity: 0.8;
       text-align: center;
@@ -257,7 +257,7 @@ transition: background 0.6s ease-in-out,
 	 .footer-tagline2 {
       font-size: 15px;
       
-      opacity: 0.5;
+      opacity: 0.9;
       text-align: center;
 	  text-shadow: 0 0 8px #2aa198,
         0 0 5px #3bfffc,
@@ -268,7 +268,7 @@ transition: background 0.6s ease-in-out,
 	.footer-tagline3 {
       font-size: 15px;
       
-      opacity: 0.7;
+      opacity: 0.8;
       text-align: center;
 	  text-shadow: 0 0 8px #2aa198,
         0 0 5px #3bfffc,
