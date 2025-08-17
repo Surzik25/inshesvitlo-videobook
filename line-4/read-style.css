@@ -19,7 +19,7 @@ bottom: 0;
   min-width: 200%;
 height: 200vh;
   min-height: 200%;
-  background: linear-gradient(rgba(255, 169, 140,0.5) 0%, rgba(6, 54, 82,0.5) 35%, rgba(214, 203, 120,0.5) 65%, rgba(214, 203, 120,0.5) 100%);
+  background: linear-gradient(rgba(255, 169, 140,0.8) 0%, rgba(122, 73, 64,0.5) 35%, rgba(88, 199, 197,0.5) 65%, rgba(214, 203, 120,0.5) 100%);
   mix-blend-mode: multiply;
 }
 
