@@ -479,7 +479,7 @@ body::before {
         .breadcrumb-button {
             position: relative;
             background-image: url(../images2/book-path-button.png); background-position: center; background-size: cover;
-            color: black;
+            color: #ffd073;
 			font-weight: bold;
             border: none;
             padding: 6px 20px 6px 15px;
@@ -489,8 +489,8 @@ body::before {
             clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 10px 50%);
 			font-family: 'Klochanewnew', 'Expengsymbols';
 			mix-blend-mode: hard-light;
-			-webkit-text-stroke: 0.2px #ebffba;
-			text-shadow: 0 0 5px blue,  0 0 5px blue;
+			-webkit-text-stroke: 0.2px #cf4523;
+			text-shadow: 0 0 5px #912119,  0 0 5px #912119;
         }
 
         .breadcrumb-button:first-child {
