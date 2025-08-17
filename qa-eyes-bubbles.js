@@ -22,7 +22,7 @@ items.forEach(item => {
       let charCount = answer ? answer.textContent.trim().length : 0;
       
       // Розрахунок часу
-      let displayTime = Math.min(Math.max(charCount * 60, 3000), 25000);
+      let displayTime = Math.min(Math.max(charCount * 60, 3000), 37000);
       // 60 мс на символ, мінімум 5 сек, максимум 20 сек
 
       hideTimer = setTimeout(() => {
