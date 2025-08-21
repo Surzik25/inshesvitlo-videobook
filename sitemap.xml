@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Головна сторінка -->
+  <url>
+    <loc>https://inshesvitlo.com.ua/</loc>
+    <lastmod>2025-08-21</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Лінія 3 -->
+  <url>
+    <loc>https://inshesvitlo.com.ua/line-3/</loc>
+    <lastmod>2025-08-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Лінія 4 -->
+  <url>
+    <loc>https://inshesvitlo.com.ua/line-4/</loc>
+    <lastmod>2025-08-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
