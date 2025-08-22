@@ -107,12 +107,12 @@ class TreasureBoxTimer {
         const savedState = JSON.parse(localStorage.getItem('PerpereBoxState1') || '{}');
         
         // Основний таймер
-        this.timeLeft = savedState.timeLeft !== undefined ? savedState.timeLeft : 120;
+        this.timeLeft = savedState.timeLeft !== undefined ? savedState.timeLeft : 1500;
         this.isLocked = savedState.isLocked !== undefined ? savedState.isLocked : true;
         
         // Групова система
         this.currentGroupIndex = savedState.currentGroupIndex || 0;
-        this.groupTimeLeft = savedState.groupTimeLeft !== undefined ? savedState.groupTimeLeft : 100;
+        this.groupTimeLeft = savedState.groupTimeLeft !== undefined ? savedState.groupTimeLeft : 900;
         this.isGroupTimerActive = savedState.isGroupTimerActive || false;
         this.unlockCount = savedState.unlockCount || 0;
         
@@ -289,7 +289,7 @@ setInterval(() => {
             // Запустити таймер для наступної групи, якщо вона існує
             if (this.currentGroupIndex + 1 < this.factGroups.length) {
                 this.isGroupTimerActive = false;
-                this.groupTimeLeft = 100; // Скинути час для нової групи
+                this.groupTimeLeft = 900; // Скинути час для нової групи
                 this.startGroupTimer();
             } else {
                 // Всі групи розблоковані, таймер зупиняється
@@ -319,7 +319,7 @@ setInterval(() => {
         this.initUnlockedAnimations();
         
         // Запустити таймер групи
-        this.groupTimeLeft = 100; // Встановити час для першої групи
+        this.groupTimeLeft = 900; // Встановити час для першої групи
         this.startGroupTimer();
     }
 
