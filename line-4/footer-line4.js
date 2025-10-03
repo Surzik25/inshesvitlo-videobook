@@ -183,8 +183,8 @@ function checkTimeAndToggle() {
     const now = new Date();
     const currentHour = now.getHours();
     
-    // udark режим має бути активний з 20:00 до 7:00
-    const shouldBeUdark = currentHour >= 20 || currentHour < 7;
+    // udark режим має бути активний з 19:00 до 7:00
+    const shouldBeUdark = currentHour >= 19 || currentHour < 7;
     
     // Перевіряємо поточний стан
     const isCurrentlyUdark = body.classList.contains('udark');
