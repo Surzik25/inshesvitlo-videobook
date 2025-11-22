@@ -336,7 +336,10 @@ body::before {
     .side-panel.left .side-button:nth-of-type(5) {
       margin-bottom: 100px;
     }
-	
+
+	.side-panel.left .side-button:nth-of-type(10) {
+      margin-bottom: 100px;
+    }
 
     /* Q&A елементи */
 	
