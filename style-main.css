@@ -1,6 +1,6 @@
 /* Базовий ресет */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif; background-image: url(images/BGdark.png); background-size: cover;
+    body { font-family: 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif; background-image: url(images/BGdarkXmas.png); background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-width: 600px; min-height: 120vh; max-width: 95%;}
@@ -21,7 +21,7 @@ body::before {
 #preloader {
   position: fixed;
   inset: 0;
-  background: linear-gradient(145deg, #131240, #240a12);
+  background: linear-gradient(145deg, #0a2900, #300207);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,7 +174,7 @@ body::before {
       width: 710px; height: 80px;
       display: inline-block;
 	  position: relative;
-	  
+	  transform: translateX(-80px);
     }
     .top-panel .creator {
       width: 350px; height: 80px;
@@ -197,15 +197,15 @@ body::before {
 
 
     .stuff {
-    width: 1250px;
-    height: 160px;
+    width: 1350px;
+    height: 205px;
     white-space: nowrap;
     overflow: hidden;
     position: absolute;
     right: 10px;
     display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: right;
     }
     .side-panel {
       position: fixed; top: 80px; bottom: 0;
@@ -213,6 +213,28 @@ body::before {
       transition: transform 0.3s ease;
 	  
     }
+
+.xmas-overlay-right {
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 380px;
+		height: 380px;
+		background-image: url(images/CristmasOverlayRight.png);
+		background-size: cover;
+		pointer-events: none;
+	}
+	
+	.xmas-overlay-left {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 220px;
+		height: 380px;
+		background-image: url(images/CristmasOverlayLeft.png);
+		background-size: cover;
+		pointer-events: none;
+	}
     /* Ліва панель */
     .side-panel.left {
       left: 0; width: 150px;
@@ -227,7 +249,7 @@ body::before {
       right: 0; width: 650px; padding: 10px 0;
       border: none; overflow-y: scroll; overflow-x: hidden; /* background: rgba(252, 142, 134, 0.5);*/
 	    -webkit-overflow-scrolling: touch; /* Плавне прокручування на iOS */
-  
+  		z-index: 1001;
     }
 	
 	
@@ -368,7 +390,7 @@ body::before {
 	
     .qa-item {
 		pointer-events: auto;
-      background-image: url(images/Qbg.png); background-size: cover; margin-bottom: 10px; margin-left: 10px;
+      background-image: url(images/QbgXmas.png); background-size: cover; margin-bottom: 10px; margin-left: 10px;
       padding: 8px; 
 	  padding-left: 20px;
       clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%);
@@ -376,7 +398,7 @@ body::before {
 	  transition: transform 0.2s ease, box-shadow 0.2s ease, text-shadow 0.2s ease;
 	  filter: brightness(134%); 
 	  color: #1b0178;
-	  text-shadow: 0 0 5px #00ecfc; display: flex; align-items: center;
+	  text-shadow: 0 0 5px #00ecfc, 0 0 5px white, 0 0 5px white; display: flex; align-items: center;
       justify-content: center;
       margin-left: auto;
       position: relative;      /* щоб лейбл був вище відповіді */
@@ -516,7 +538,7 @@ body::before {
 
     /* Рожевий контейнер із відео */
     .video-container { padding-bottom: 10px; position: relative; }
-    .video-box { width: 100%; aspect-ratio: 1620 / 2160; background: rgba(41, 45, 102,0.5); }
+    .video-box { width: 100%; aspect-ratio: 1620 / 2160; background: rgba(41, 45, 102,0.5); filter: contrast(113%) hue-rotate(25deg); }
     .caption { margin-top: 10px; padding: 10px; height: 140px; font-size: 20px; text-align: center;
 	color: #f5b464; /* або #ff5e13 для м’якшого вогню */
   text-shadow:
