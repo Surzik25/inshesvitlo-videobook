@@ -1,6 +1,6 @@
 /* Базовий ресет */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body.udark {background-image: url(images/BGUDark.png); }
+    body.udark {background-image: url(images/BGUdarkXmas.png); }
   
   /* Закріплені панелі */
     .top-panel.udark {
@@ -27,7 +27,7 @@
 	
 	/* Права панель */
       .side-panel.right.udark {
-		  filter: invert(1);
+		   filter: invert(1) hue-rotate(174deg);
   
     }
 	
