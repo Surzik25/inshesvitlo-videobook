@@ -59,10 +59,9 @@
             </div>
         </div>
         </div>
+	   <div class="xmas-ol-r-t"></div>
      </div> 
 	 
-
-  </div>
   
    
 
@@ -203,6 +202,7 @@
 		<button class="nav-button button39" data-video="39" data-tree="2" ></button>
 		<button class="nav-button button40" data-video="40" data-tree="2" ></button>
 		</div>
+		<div class="xmas-garland"></div>
 		<!-- Попередній перегляд -->
         <div class="preview-bubble" id="previewBubble">
             <img class="preview-image" id="previewImage" src="" alt="Попередній перегляд">
@@ -1155,6 +1155,54 @@ document.addEventListener("DOMContentLoaded", () => {
       ТРЕТІЙ РОЗДІЛ НАС ТРОХИ ПОТРУСИТЬ У ПАВУЧОМУ АВТОБУСІ
     </div>
   </footer>
+	<div class="xmas-ol-l-b"></div>
+  <div class="xmas-ol-r-b"></div>
+	<script>
+  document.addEventListener('DOMContentLoaded', function() {
+const leftBranch = document.querySelector('.xmas-ol-l-b');
+  const rightBranch = document.querySelector('.xmas-ol-r-b');
+
+  if (!leftBranch || !rightBranch) return;
+
+  // Плавність руху
+  const transitionStyle = "transform 0.3s ease-out, opacity 0.3s ease-out";
+  leftBranch.style.transition = transitionStyle;
+  rightBranch.style.transition = transitionStyle;
+
+  window.addEventListener('scroll', function() {
+    // Використовуємо кілька джерел для отримання позиції скролу
+    const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const windowHeight = window.innerHeight;
+    
+    const distanceFromBottom = scrollHeight - (scrollPos + windowHeight);
+    const threshold = 180; // Поріг для 120vh
+
+    if (distanceFromBottom < threshold) {
+      // Рахуємо прогрес: 0 (початок зони) -> 1 (самий низ)
+      let progress = 1 - (distanceFromBottom / threshold);
+      if (progress > 1) progress = 1;
+      if (progress < 0) progress = 0;
+
+      const move = progress * 300; 
+      const rotate = progress * 25;
+      const opacity = 1 - progress;
+
+      leftBranch.style.transform = `translateX(-${move}px) rotate(-${rotate}deg)`;
+      leftBranch.style.opacity = opacity;
+
+      rightBranch.style.transform = `translateX(${move}px) rotate(${rotate}deg)`;
+      rightBranch.style.opacity = opacity;
+    } else {
+      leftBranch.style.transform = `translateX(0) rotate(0)`;
+      leftBranch.style.opacity = 1;
+      rightBranch.style.transform = `translateX(0) rotate(0)`;
+      rightBranch.style.opacity = 1;
+    }
+  }, { passive: true }); // Оптимізація для продуктивності скролу
+});
+
+</script>
   <div class="light-overlay" id="lightOverlay" ></div>
   <div class="dark-overlay" id="darkOverlay">
   <div id="welcome">
