@@ -1,6 +1,6 @@
 body {
 	font-family: 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
-	background-image: url(../images2/fonline3light.png);
+	background-image: url(../images2/fonline3lightXmas.png);
 	background-size: cover;
 	background-position: center;
 	background-attachment: scroll;
@@ -456,7 +456,18 @@ body::before {
             padding-top: 80px;
         }
 
-       
+       .xmas-garland {
+		   position: absolute;
+		   top: 80px;
+		   left: 30px;
+		   width: 200px;
+		   height: 780px;
+		   background-image: url(../images2/XmasGarland.png);
+		   z-index: 100;
+		   pointer-events: none;
+		   background-size: contain;
+		   background-position: bottom;
+	   }
 
         .content-area {
             flex: 1;
@@ -1259,6 +1270,52 @@ pattern-button:hover {
     stroke-width: 2;
 	cursor: url(../images2/cursorGrab/info.png) 0 0, pointer;
 	
+}
+
+.xmas-ol-l-b {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 290px;
+	height: 200px;
+	background-image: url(../images2/Xmas-OL-L-B.png);
+	z-index: 100;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
+.xmas-ol-r-b {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 290px;
+	height: 200px;
+	background-image: url(../images2/Xmas-OL-R-B.png);
+	z-index: 100;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
+.xmas-ol-l-b,
+.xmas-ol-r-b {
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  transform-origin: bottom;
+}
+
+
+.xmas-ol-r-t {
+	position: fixed;
+	top: 80px;
+	right: 0;
+	width: 160px;
+	height: 160px;
+	background-image: url(../images2/Xmas-OL-R-T.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	pointer-events: none;
 }
 
 .dark-overlay {

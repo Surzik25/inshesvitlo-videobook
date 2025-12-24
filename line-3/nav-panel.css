@@ -337,6 +337,7 @@
 		
 		 @media (orientation: portrait) {
       .nav-panel { left: -5%; }
+		.xmas-garland { left: -5%; }
 	  .content-area { transform: translateX(-5%);}
 	  .pattern-left, .pattern-right {
 				width: 49px;
