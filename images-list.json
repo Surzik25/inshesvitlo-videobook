@@ -49,8 +49,8 @@
     "images/YTIdle.gif"
   ],
   "images2": [
-    "images2/BGline4.png",
-    "images2/BGline4udark.png",
+    "images2/BGline4Xmas.png",
+    "images2/BGline4udarkXmas.png",
     "images2/book-path-button-line4.png",
     "images2/book-path-button.png",
     "images2/book-path.png",
@@ -68,8 +68,8 @@
     "images2/firstLine4.png",
     "images2/fonline3.png",
     "images2/fonline303.jpg",
-    "images2/fonline3light.png",
-    "images2/fonline3udark.png",
+    "images2/fonline3lightXmas.png",
+    "images2/fonline3udarkXmas.png",
     "images2/footerLine3.png",
     "images2/footerLine4.png",
     "images2/freeze.gif",
@@ -151,6 +151,10 @@
     "images2/windowDeact.png",
     "images2/windowLabel.png",
     "images2/windowLabel0048.png",
+    "images2/XmasGarland.png",
+    "images2/Xmas-OL-L-B.png",
+    "images2/Xmas-OL-R-B.png",
+    "images2/Xmas-OL-R-T.png",
     "images2/zoombg.png"
   ]
 }
