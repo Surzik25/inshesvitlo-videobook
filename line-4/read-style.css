@@ -1309,8 +1309,8 @@ pattern-button:hover {
 
 .xmas-ol-r-t {
 	position: fixed;
-	top: 80px;
-	right: 0;
+	top: 110px;
+	right: 6px;
 	width: 160px;
 	height: 160px;
 	background-image: url(../images2/Xmas-OL-R-T.png);
