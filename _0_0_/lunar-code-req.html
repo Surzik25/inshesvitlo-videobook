@@ -3,9 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../perpere-fonts.css">
 <title>Access</title>
 
 <style>
+    * { box-sizing: border-box; }
+
     body {
         margin: 0;
         height: 100vh;
@@ -13,103 +16,316 @@
         justify-content: center;
         align-items: center;
         background: radial-gradient(circle at center, #111 0%, #050505 70%);
-        font-family: "Courier New", monospace;
+        font-family: "Expengsymbols", monospace;
         color: #aaa;
         overflow: hidden;
+        transition: background 1.2s ease;
     }
 
-    .container {
-        text-align: center;
+    body.light-bg {
+        background: radial-gradient(circle at center, #e8e0d8 0%, #c8c0b8 70%);
+    }
+
+    /* ── SCREENS ── */
+    .screen {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         transition: opacity 0.6s ease;
     }
+    .screen.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
 
-    input {
+    /* ── INPUT ── */
+    input[type="text"] {
         background: transparent;
         border: none;
-        border-bottom: 1px solid #444;
+        border-bottom: 2px dashed #444;
         color: #ddd;
         font-size: 20px;
         padding: 10px;
         width: 220px;
+        font-family: "Expengsymbols", monospace;
         text-align: center;
         outline: none;
         transition: 0.3s ease;
     }
-
     input::placeholder {
         color: #555;
         letter-spacing: 2px;
     }
-
     input:focus {
         border-bottom: 1px solid #888;
     }
-
-    .video-box {
-        display: none;
-        opacity: 0;
-        transition: opacity 1s ease;
+    .glow {
+        animation: glowAnim 1s ease;
+    }
+    @keyframes glowAnim {
+        0%   { border-bottom-color: #0ff; }
+        50%  { border-bottom-color: #fff; }
+        100% { border-bottom-color: #444; }
     }
 
-    video {
-        width: 60vw;
-        max-width: 1080px;
+    /* ── LOADING ── */
+    .loader-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .loading-label {
+        font-size: 13px;
+        letter-spacing: 4px;
+        color: #555;
+        text-transform: uppercase;
+    }
+    .loading-bar-wrap {
+        width: 220px;
+        height: 2px;
+        background: #1a1a1a;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+    .loading-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #333, #888, #333);
+        background-size: 200% 100%;
+        animation: shimmer 1.2s linear infinite;
+        transition: width 0.2s linear;
+    }
+    @keyframes shimmer {
+        0%   { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+    .loading-percent {
+        font-size: 11px;
+        color: #444;
+        letter-spacing: 2px;
+    }
+
+    /* ── JOKE CARD ── */
+    .joke-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+    }
+    .joke-card {
+        padding: 40px 60px;
+        background: url(april.png);
+        background-size: contain;
+		background-repeat: no-repeat;
+        text-align: center;
+        animation: jokeFadeIn 0.7s ease both;
+		width: 530px;
+		height: 500px;
+		position: relative;
+    }
+    @keyframes jokeFadeIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .joke-title {
+        font-size: 22px;
+        color: #333;
+        letter-spacing: 3px;
+        margin-bottom: 6px;
+    }
+    .joke-sub {
+        font-size: 11px;
+        color: #888;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+    .retry-btn {
+        background: linear-gradient(162deg,rgba(196, 230, 46, 1) 1%, rgba(129, 235, 110, 1) 50%, rgba(122, 158, 30, 1) 100%);
+        border: 3px dashed #236311;
+        color: #236311;
+        font-family: "Expengsymbols", monospace;
+        font-size: 19px;
+        letter-spacing: 3px;
+        padding: 7px 6px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+		position: absolute;
+		bottom: 65px;
+		left: 35px;
+		border-radius: 18px;
+		font-weight: bold;
+		width: 190px;
+		height: 80px;
+		transform: rotate(6deg);
+    }
+    .retry-btn:hover {
+        filter: hue-rotate(65deg);
+		transform: scale(1.04) rotate(7deg);
+    }
+
+    /* ── MEDIA ── */
+    .media-wrap img,
+    .media-wrap video {
+        max-width: 65vw;
+        max-height: 75vh;
         border-radius: 8px;
         box-shadow: 0 0 40px rgba(255,255,255,0.05);
     }
-
-    .glow {
-        animation: glow 1s ease;
-    }
-
-    @keyframes glow {
-        0% { border-bottom-color: #0ff; }
-        50% { border-bottom-color: #fff; }
-        100% { border-bottom-color: #444; }
-    }
 </style>
 </head>
-
 <body>
 
-<div class="container" id="inputContainer">
-    <input type="text" id="codeInput" placeholder="Enter code">
+<!-- S1: FIRST INPUT -->
+<div class="screen" id="s1">
+    <input type="text" id="codeInput1" placeholder="Enter code" autocomplete="off" spellcheck="false">
 </div>
 
-<div class="video-box" id="videoBox">
-    <video autoplay muted loop playsinline>
-        <source src="Klocha-42.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+<!-- S2: FIRST LOADING -->
+<div class="screen hidden" id="s2">
+    <div class="loader-wrap">
+        <div class="loading-label">Verifying access</div>
+        <div class="loading-bar-wrap"><div class="loading-bar" id="bar1"></div></div>
+        <div class="loading-percent" id="pct1">0%</div>
+    </div>
+</div>
+
+<!-- S3: APRIL FOOLS -->
+<div class="screen hidden" id="s3">
+    <div class="joke-wrap">
+        <div class="joke-card">
+			<button class="retry-btn" id="retryBtn">What? Unfair >:(</button>
+        </div>
+        
+    </div>
+</div>
+
+<!-- S4: SECOND INPUT (same code required) -->
+<div class="screen hidden" id="s4">
+    <input type="text" id="codeInput2" placeholder="Enter code" autocomplete="off" spellcheck="false">
+</div>
+
+<!-- S5: SECOND LOADING -->
+<div class="screen hidden" id="s5">
+    <div class="loader-wrap">
+        <div class="loading-label">Verifying access</div>
+        <div class="loading-bar-wrap"><div class="loading-bar" id="bar2"></div></div>
+        <div class="loading-percent" id="pct2">0%</div>
+    </div>
+</div>
+
+<!-- S6: MEDIA RESULT -->
+<div class="screen hidden" id="s6">
+    <div class="media-wrap" id="mediaWrap"></div>
 </div>
 
 <script>
-    const correctCode = "03255670773838042";
-    const input = document.getElementById("codeInput");
-    const container = document.getElementById("inputContainer");
-    const videoBox = document.getElementById("videoBox");
+    const CODES = {
+        "7731924": { type: "video", src: "PerpereGoodCitizen.mp4" },
+        "4429017": { type: "image", src: "OkiCharDev.png"         },
+        "8853601": { type: "image", src: "VedaInitial.png"        },
+        "2260485": { type: "image", src: "KazInitial.png"         }
+    };
 
-    input.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            if (input.value === correctCode) {
-                container.style.opacity = "0";
-                setTimeout(() => {
-                    container.style.display = "none";
-                    videoBox.style.display = "block";
-                    setTimeout(() => {
-                        videoBox.style.opacity = "1";
-                    }, 50);
-                }, 600);
-            } else {
-                input.classList.add("glow");
-                setTimeout(() => {
-                    input.classList.remove("glow");
-                }, 1000);
-                input.value = "";
-            }
+    let savedCode = null;
+
+    /* ── transition ── */
+    function go(fromId, toId, cb) {
+        document.getElementById(fromId).classList.add('hidden');
+        setTimeout(() => {
+            document.getElementById(toId).classList.remove('hidden');
+            if (cb) cb();
+        }, 650);
+    }
+
+    /* ── loader animation ── */
+    function runLoader(barId, pctId, durationMs, onDone) {
+        const bar = document.getElementById(barId);
+        const pct = document.getElementById(pctId);
+        bar.style.width = '0%';
+        pct.textContent = '0%';
+        const t0 = performance.now();
+        (function tick(now) {
+            const p = Math.min((now - t0) / durationMs, 1);
+            const e = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2, 2)/2;
+            const v = Math.floor(e * 100);
+            bar.style.width = v + '%';
+            pct.textContent = v + '%';
+            p < 1 ? requestAnimationFrame(tick) : (bar.style.width = '100%', pct.textContent = '100%', setTimeout(onDone, 200));
+        })(performance.now());
+    }
+
+    /* ── bad input flash ── */
+    function badInput(el) {
+        el.classList.add('glow');
+        setTimeout(() => el.classList.remove('glow'), 1000);
+        el.value = '';
+    }
+
+    /* ── inject media ── */
+    function showMedia(media) {
+        const wrap = document.getElementById('mediaWrap');
+        wrap.innerHTML = '';
+        if (media.type === 'video') {
+            const v = document.createElement('video');
+            v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+            const s = document.createElement('source');
+            s.src = media.src; s.type = 'video/mp4';
+            v.appendChild(s);
+            wrap.appendChild(v);
+        } else {
+            const img = document.createElement('img');
+            img.src = media.src; img.alt = '';
+            wrap.appendChild(img);
+        }
+    }
+
+    /* ── S1: first code entry ── */
+    const ci1 = document.getElementById('codeInput1');
+    ci1.focus();
+    ci1.addEventListener('keydown', e => {
+        if (e.key !== 'Enter') return;
+        const val = ci1.value.trim();
+        if (CODES[val]) {
+            savedCode = val;
+            go('s1', 's2', () =>
+                runLoader('bar1', 'pct1', 6500, () => {
+                    document.body.classList.add('light-bg'); // lighten bg
+                    go('s2', 's3');
+                })
+            );
+        } else {
+            badInput(ci1);
+        }
+    });
+
+    /* ── S3: retry → back to input ── */
+    document.getElementById('retryBtn').addEventListener('click', () => {
+        document.body.classList.remove('light-bg'); // restore dark bg
+        const ci2 = document.getElementById('codeInput2');
+        ci2.value = '';
+        go('s3', 's4', () => ci2.focus());
+    });
+
+    /* ── S4: must re-enter the SAME code ── */
+    document.getElementById('codeInput2').addEventListener('keydown', e => {
+        if (e.key !== 'Enter') return;
+        const val = document.getElementById('codeInput2').value.trim();
+        if (val === savedCode) {
+            go('s4', 's5', () =>
+                runLoader('bar2', 'pct2', 10000, () => {
+                    showMedia(CODES[savedCode]);
+                    go('s5', 's6');
+                })
+            );
+        } else {
+            badInput(document.getElementById('codeInput2'));
         }
     });
 </script>
-
 </body>
 </html>
