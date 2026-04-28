@@ -159,6 +159,30 @@
        oncontextmenu="return false;"
 	src="images/WKHover.gif">
 	</button>
+	<button class="side-button " data-bubble="10">
+	<img class="side-button-sm" 
+	draggable="false" 
+       ondragstart="return false;" 
+       oncontextmenu="return false;"
+	src="images/PTIdle.gif">
+	<img class="side-button-sm2" 
+	draggable="false" 
+       ondragstart="return false;" 
+       oncontextmenu="return false;"
+	src="images/PTHover.gif">
+	</button>
+	<button class="side-button " data-bubble="11">
+	<img class="side-button-sm" 
+	draggable="false" 
+       ondragstart="return false;" 
+       oncontextmenu="return false;"
+	src="images/KFIdle.gif">
+	<img class="side-button-sm2-kf" 
+	draggable="false" 
+       ondragstart="return false;" 
+       oncontextmenu="return false;"
+	src="images/KFHover.gif">
+	</button>
     <button class="side-button " data-bubble="4">
 	<img class="side-button-sm" 
 	draggable="false" 
@@ -419,6 +443,14 @@
       КОЛИСЬ ЦІ ЛІНІЇ ТОЧНО ПЕРЕТНУТЬСЯ
     </div>
   </footer>
+  
+  <div class="newbuttons-ol">
+  <div class="new-bookmarks-arrow">
+  </div>
+  </div>
+  <div class="newbuttons-ol2">
+  </div>
+  
   <script>
   let playground = document.querySelector("body");
 
@@ -437,6 +469,24 @@ i = 0;
    setTimeout(cursor, 50);
 })();
 
+  </script>
+  <script>
+// Показати оверлеї через 10 секунд після завантаження
+window.addEventListener('load', function () {
+  setTimeout(function () {
+    document.querySelector('.newbuttons-ol').classList.add('visible');
+    document.querySelector('.newbuttons-ol2').classList.add('visible');
+  }, 10000);
+});
+
+// Закрити оверлеї при натисканні на кнопки з data-bubble="10" або "11"
+document.querySelectorAll('.side-button[data-bubble="10"], .side-button[data-bubble="11"]')
+  .forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelector('.newbuttons-ol').classList.remove('visible');
+      document.querySelector('.newbuttons-ol2').classList.remove('visible');
+    });
+  });
   </script>
   <script src="footer-n-udark.js"></script>
 	  <script>

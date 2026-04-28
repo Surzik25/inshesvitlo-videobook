@@ -100,7 +100,9 @@ document.addEventListener('click', e => {
             6: 'Діскорд-сервер (кумедне та затишне місце, куди вам неодмінно треба потрапити). Там ми будуємо теорії, постимо фанарти і просто балакаємо від душі! <br><br><a href="https://discord.gg/xMSHbqytTK" target="_blank" style="color: #2efff8; text-decoration: underline;">👾 ПРИЄДНУЙСЯ ДО ВЕСЕЛОЩІВ →</a>',
 			7: '🖥️ Найкраще виглядає на великих моніторах (HD 1080px, 16:9). Базово адаптовано до мобільних пристроїв, але може мати там відчутні затримки. Негайно чимчикуй до ПК, грр! 📺',
 			8: 'Просто ще одна запасна соцмережа (можна написати туди, якщо не дуже кортить тинятися каналами чи підозрілими серверами) :] <br><br><a href="https://bsky.app/profile/surzik25.bsky.social" target="_blank" style="color: #210f96; text-decoration: underline;">˚🦋༘ Чкурнути за метеликом →</a>',
-			9: 'Наш офіційний міжнародний вікі-проєкт (вся інформація, написана адміном, підтверджена).<br> Хочете дізнатися про <b>Інше світло</b> більше? <br><br><a href="https://different-light.fandom.com/wiki/Different_Light:_Ultimate_Diodes_and_Their_Life_Cycle" target="_blank" style="color: #0b2e01; text-decoration: underline;">📚 ШНУРКУЙТЕ ДО ЕНЦИКЛОПЕДІЇ! →</a>'
+			9: 'Наш офіційний міжнародний вікі-проєкт (вся інформація, написана адміном, підтверджена).<br> Хочете дізнатися про <b>Інше світло</b> більше? <br><br><a href="https://different-light.fandom.com/wiki/Different_Light:_Ultimate_Diodes_and_Their_Life_Cycle" target="_blank" style="color: #0b2e01; text-decoration: underline;">📚 ШНУРКУЙТЕ ДО ЕНЦИКЛОПЕДІЇ! →</a>',
+			10: 'ХТО ХОЧЕ ГАРНЕНЬКО І ДІЯЛЬНО ПІДТРИМАТИ ПРОЄКТ?<br> Ще й отримати тонну ексклюзивного контенту натомість 😋<br><br><a href="https://www.patreon.com/Surzik25" target="_blank" style="color: #0b2e01; font-weight: bold; text-decoration: underline;"> Мені це справді допоможе 🥹 →</a>',
+			11: 'ЩЕ БІЛЬШ простий спосіб підтримки (скористайся ним, поки не пізно!)<br><br><a href="https://ko-fi.com/surzik25" target="_blank" style="color: #024500; font-weight: bold; text-decoration: underline;">🥐 НАГОДУВАТИ ГОЛОДНОГО КАЗА →</a>'
         };
 
         const buttons = document.querySelectorAll('.side-button');
