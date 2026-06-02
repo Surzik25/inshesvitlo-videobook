@@ -120,7 +120,7 @@ class TreasureBoxTimer {
 	
 	// Завантаження збереженого стану
     loadState() {
-        const savedState = JSON.parse(localStorage.getItem('PerpereBoxStateNN') || '{}');
+        const savedState = JSON.parse(localStorage.getItem('PerpereBoxStateNew') || '{}');
         
         // Основний таймер
         this.timeLeft = savedState.timeLeft !== undefined ? savedState.timeLeft : 5;
@@ -166,7 +166,7 @@ class TreasureBoxTimer {
             unlockCount: this.unlockCount
         };
         
-        localStorage.setItem('PerpereBoxStateNN', JSON.stringify(state));
+        localStorage.setItem('PerpereBoxStateNew', JSON.stringify(state));
     }
 
     init() {
