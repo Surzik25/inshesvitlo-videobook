@@ -119,15 +119,15 @@ class TreasureBoxTimer {
 	
 	    // Завантаження збереженого стану
     loadState() {
-        const savedState = JSON.parse(localStorage.getItem('treasureBoxStateN2') || '{}');
+        const savedState = JSON.parse(localStorage.getItem('treasureBoxStateN2N') || '{}');
         
         // Основний таймер
-        this.timeLeft = savedState.timeLeft !== undefined ? savedState.timeLeft : 1000;
+        this.timeLeft = savedState.timeLeft !== undefined ? savedState.timeLeft : 5;
         this.isLocked = savedState.isLocked !== undefined ? savedState.isLocked : true;
         
         // Групова система
         this.currentGroupIndex = savedState.currentGroupIndex || 0;
-        this.groupTimeLeft = savedState.groupTimeLeft !== undefined ? savedState.groupTimeLeft : 540;
+        this.groupTimeLeft = savedState.groupTimeLeft !== undefined ? savedState.groupTimeLeft : 5;
         this.isGroupTimerActive = savedState.isGroupTimerActive || false;
         this.unlockCount = savedState.unlockCount || 0;
         
@@ -165,7 +165,7 @@ class TreasureBoxTimer {
             unlockCount: this.unlockCount
         };
         
-        localStorage.setItem('treasureBoxStateN2', JSON.stringify(state));
+        localStorage.setItem('treasureBoxStateN2N', JSON.stringify(state));
     }
 
     init() {
@@ -304,7 +304,7 @@ setInterval(() => {
             // Запустити таймер для наступної групи, якщо вона існує
             if (this.currentGroupIndex + 1 < this.factGroups.length) {
                 this.isGroupTimerActive = false;
-                this.groupTimeLeft = 540; // Скинути час для нової групи
+                this.groupTimeLeft = 5; // Скинути час для нової групи
                 this.startGroupTimer();
             } else {
                 // Всі групи розблоковані, таймер зупиняється
@@ -334,7 +334,7 @@ setInterval(() => {
         this.initUnlockedAnimations();
         
         // Запустити таймер групи
-        this.groupTimeLeft = 540; // Встановити час для першої групи
+        this.groupTimeLeft = 5; // Встановити час для першої групи
         this.startGroupTimer();
     }
 
