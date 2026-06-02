@@ -11,6 +11,11 @@
   <link rel="stylesheet" href="footer.css">
   <title>Інше світло ~ головна ✶⋆.˚</title>
 	<meta name="description" content="Інше світло - авторська анімаційна відеокнижка про діодів, які живуть біля Прірви. Читайте й досліджуйте її прямо осьдечки, на нашому сайті!">
+	
+	<link rel="alternate" hreflang="uk" href="https://inshesvitlo.com.ua/" />
+<link rel="alternate" hreflang="en" href="https://inshesvitlo.com.ua/en" />
+<link rel="alternate" hreflang="x-default" href="https://inshesvitlo.com.ua/" />
+<link rel="canonical" href="https://inshesvitlo.com.ua/" />
   <!-- Open Graph -->
   <meta property="og:title" content="⋆.ೃ࿔*Інше світло: крайні діоди та їхній життєвий цикл ⋆˚｡⋆" />
   <meta property="og:description" content="Анімаційна відеокнижка про діодів, які живуть біля Прірви." />
@@ -19,6 +24,7 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:url" content="https://inshesvitlo.com.ua" />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="uk_UA" />
 <!-- ключове місце! -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="⋆.ೃ࿔*Інше світло: крайні діоди та їхній життєвий цикл ⋆˚｡⋆" />
@@ -444,11 +450,21 @@
   </footer>
   
   <div class="newbuttons-ol">
-  <div class="new-bookmarks-arrow">
-  </div>
-  </div>
+ </div>
   <div class="newbuttons-ol2">
-  </div>
+   
+  <div id="welcome">
+  <div class="welcome-in">
+    <p>Improved visibility and readability; Added new questions and answers to the Q&A block; Updated map; +15 new facts for random boxes of each Line; And some other minor adjustments for a better reading experience!</p>
+	
+	<div class="welcome-buttons">
+    <button class="welcome-btn1" onclick="closeWelcome()">Stay here :)</button>
+	<button class="welcome-btn2" onclick="switchToEnglish()">✨SWITCH༘⋆</button>
+	</div>
+	</div>
+	<img class="welcome-img" src="images/adaptation.png">
+	</div>
+	</div>
   
   <script>
   let playground = document.querySelector("body");
@@ -468,22 +484,49 @@ i = 0;
    setTimeout(cursor, 50);
 })();
 
-// Показати оверлеї через 10 секунд після завантаження
+// Поява оверлеїв та таблички через 3 секунди після завантаження
 window.addEventListener('load', function () {
   setTimeout(function () {
-    document.querySelector('.newbuttons-ol').classList.add('visible');
-    document.querySelector('.newbuttons-ol2').classList.add('visible');
-  }, 10000);
+    const ol2 = document.querySelector('.newbuttons-ol2');
+    const ol = document.querySelector('.newbuttons-ol');
+    const welcome = document.getElementById('welcome');
+
+    // Спочатку newbuttons-ol
+    ol.classList.add('visible');
+
+    // Потім newbuttons-ol2
+    setTimeout(function () {
+      ol2.classList.add('visible');
+
+      // Потім табличка — вона вже анімується через CSS fadeIn
+      setTimeout(function () {
+        welcome.style.display = 'block';
+		welcome.style.animation = 'fadeIn 0.4s ease forwards';
+      }, 400);
+    }, 500);
+  }, 3000);
 });
 
-// Закрити оверлеї при натисканні на кнопки з data-bubble="10" або "11"
-document.querySelectorAll('.side-button[data-bubble="10"], .side-button[data-bubble="11"]')
-  .forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelector('.newbuttons-ol').classList.remove('visible');
-      document.querySelector('.newbuttons-ol2').classList.remove('visible');
-    });
-  });
+// Закриває табличку та обидва оверлеї
+function closeWelcome() {
+  const ol2 = document.querySelector('.newbuttons-ol2');
+  const ol = document.querySelector('.newbuttons-ol');
+  const welcome = document.getElementById('welcome');
+
+  welcome.style.animation = 'fadeOut 0.4s ease forwards';
+
+  setTimeout(function () {
+    ol.classList.remove('visible');
+    ol2.classList.remove('visible');
+    welcome.style.display = 'none';
+    welcome.style.animation = '';
+  }, 400);
+}
+
+// Перекидає на en/
+function switchToEnglish() {
+  window.location.href = 'en';
+}
   </script>
   <script src="footer-n-udark.js"></script>
 	  <script>
