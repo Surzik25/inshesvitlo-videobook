@@ -1,6 +1,6 @@
 /* Базовий ресет */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif; background-image: url(images/BGdark.png); background-size: cover;
+    body { font-family: 'Expert2new', 'Expengsymbols', 'Expeng2n', 'Comic Sans MS', sans-serif; background-image: url(../images/BGdark.png); background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-width: 600px; min-height: 120vh; max-width: 95%;}
@@ -64,7 +64,7 @@ body::before {
       top: 0; left: 0; right: 0;
       height: 80px;
       background: rgba(2,0,36,0.1);
-     background: url(images/headerPid.png), linear-gradient(90deg, rgba(239, 245, 83,0.5) 0%, rgba(136, 10, 247,0.5) 35%, rgba(10, 239, 247,0.5) 100%) ;
+     background: url(../images/headerPid.png), linear-gradient(90deg, rgba(239, 245, 83,0.5) 0%, rgba(136, 10, 247,0.5) 35%, rgba(10, 239, 247,0.5) 100%) ;
 	 background-blend-mode: color-burn, hard-light;
 	 border-bottom-style: double;
 	 border-bottom-width: 5px;
@@ -91,7 +91,7 @@ body::before {
 	.logo-img {
 		position: absolute;
 		left: 0;
-		top: -34px;
+		top: -3px;
 		width: 100%;
 	}
 	
@@ -148,7 +148,7 @@ body::before {
 .eye {
     width: 35px;
     height: 34px;
-    background-image: url(images/hudozEye.png);
+    background-image: url(../images/hudozEye.png);
 	background-size: cover;
     border-radius: 40%;
     position: relative;
@@ -160,7 +160,7 @@ body::before {
   .pupil {
     width: 6px;
     height: 15px;
-    background-image: url(images/qaBg2.png);
+    background-image: url(../images/qaBg2.png);
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -181,7 +181,7 @@ body::before {
       display: inline-block;
 	  margin-left: 45px;
 	  position: relative;
-	  margin-bottom: 33px;
+	  margin-bottom: 9px;
     }
     .top-panel .hudoz {
       width: 150px; height: 150px;
@@ -244,7 +244,7 @@ body::before {
       background: none; border: none;
       font-family: 'Expert2new', 'Expengsymbols';
 	  position: relative;
-	  cursor: url(images2/cursorPointer/pointer.png) 2 2, pointer;
+	  cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
 	  
     }
     .side-panel.left .side-button:nth-of-type(6),
@@ -368,9 +368,50 @@ body::before {
 	  
     }
 	
+	.qa a {
+		margin-left: 6px;
+		margin-right: 5px;
+		text-decoration: underline;
+		color: #63ffef;
+		
+	}
+	
+	.answer a {
+		background: rgba(0, 24, 94, 0.3);
+		border-radius: 6px;
+	}
+	
+	.grad-links {
+		background: linear-gradient(to right, #8b4dff, #4dfff3, #2abf72);
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent; 
+		color: transparent;
+		z-index: 100;
+		text-shadow: 0 3px 5px #5449f2;
+		-webkit-text-stroke: 0.3px rgba(7, 0, 79, 0.5);
+		font-weight: bold;
+		font-size: 28px;
+		cursor: url(../images2/cursorWiki.png) 2 2, pointer;
+	}
+	
+	.grad-links2 {
+		font-size: 28px;
+		background: linear-gradient(to right, #9666ff, #48fae5, #ceeb86);
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent; 
+		color: transparent;
+		z-index: 100;
+		text-shadow: none;
+		font-weight: bold;
+		cursor: url(../images2/cursorWiki.png) 2 2, pointer;
+	}
+	
+	
 	.qa-item2 {
 		pointer-events: auto;
-      background-image: url(images/qaBg.png); margin-bottom: 10px; margin-left: 10px;
+      background-image: url(../images/qaBg.png); margin-bottom: 10px; margin-left: 10px;
       padding: 8px; 
 	  padding-left: 20px;
       clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%);
@@ -378,7 +419,7 @@ body::before {
 	  filter: brightness(134%); 
 	  color: #75ffca;
 	  text-shadow: 0 0 5px #070478, 0 0 7px #042778; display: flex; align-items: center;
-      justify-content: center;
+      justify-content: center; 
       margin-left: auto;
 	  margin-top: 20px;
 	  box-shadow: 0 0 10px blue !important;
@@ -387,21 +428,21 @@ body::before {
 	
     .qa-item {
 		pointer-events: auto;
-      background-image: url(images/Qbg.png); background-size: cover; margin-bottom: 10px; margin-left: 10px;
+      background-image: url(../images/Qbg.png); background-size: cover; margin-bottom: 10px; margin-left: 10px;
       padding: 8px; 
 	  padding-left: 20px;
       clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%);
-      text-align: center; font-size:24px; font-weight: bold; width: 40%;
+      text-align: center; font-size:28px; width: 40%;
 	  transition: transform 0.2s ease, box-shadow 0.2s ease, text-shadow 0.2s ease;
 	  filter: brightness(134%); 
 	  color: #1b0178;
 	  text-shadow: 0 0 5px #00ecfc; display: flex; align-items: center;
       justify-content: center;
-      margin-left: auto;
+      margin-left: auto; font-weight: 600;
       position: relative;      /* щоб лейбл був вище відповіді */
-      z-index: 2;
+      z-index: 2; font-family: 'Expeng2n', 'Expengsymbols', 'Expert2new';
 	  /* Додаємо border через box-shadow */
-	  cursor: url(images2/cursorPointer/pointer.png) 2 2, pointer;
+	  cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
   
 	
     }
@@ -429,13 +470,14 @@ body::before {
       background: linear-gradient(90deg, rgba(103, 80, 199, 1) 0%, rgba(16, 16, 135,0.8) 35%, rgba(10, 239, 247,0.1) 100%);;
       padding: 10px;
       border-radius: 10px;
+	  font-family: 'Expeng2n', 'Expengsymbols', 'Expert2new';
       opacity: 0;
       transform: translateX(-20px);
       transition: all 0.6s ease;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       pointer-events: none;
       z-index: 1;
-	  font-size: 20px;
+	  font-size: 24px;
 	  text-shadow: 
 	  0 0 8px #2aa198,
 	  0 0 5px #0932e8;
@@ -452,7 +494,7 @@ body::before {
 
     /* Основний контент */
     .content {
-      padding: 90px 270px 70px 170px;
+      padding: 110px 270px 70px 170px;
       display: grid; grid-template-columns: 1fr 1fr;
       grid-gap: 20px; position: relative;
 	  transition: all 0.3s ease;
@@ -475,10 +517,6 @@ body::before {
 	}
 	
 	.video-wrapper:hover .video-button-space {
-		filter: brightness(150%);
-	}
-	
-	.video-wrapper:hover .video-button-space2 {
 		filter: brightness(150%);
 	}
 	
@@ -536,15 +574,16 @@ body::before {
     /* Рожевий контейнер із відео */
     .video-container { padding-bottom: 10px; position: relative; }
     .video-box { width: 100%; aspect-ratio: 1620 / 2160; background: rgba(41, 45, 102,0.5); }
-    .caption { margin-top: 10px; padding: 10px; height: 140px; font-size: 20px; text-align: center;
+    .caption { margin-top: 10px; padding: 10px; height: 155px; font-size: 20px; text-align: center; font-family:'Expeng2n', 'Expert2new';
 	color: #f5b464; /* або #ff5e13 для м’якшого вогню */
   text-shadow:
+	0 0 4px black,
     0 0 5px #400000,
     0 0 10px #ff3300,
     0 0 20px #ff2200,
     0 0 40px #ff1100,
     0 0 60px #ff0000;
-	background-image: url('images/captionBGLine3.png');
+	background-image: url('../images/captionBGLine3.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat; 
@@ -593,15 +632,16 @@ body::before {
 	  font-family: 'Uamorzecode';
   }
   
-  .caption2 { margin-top: 10px; padding-top: 10px; padding-right: 15px; height: 140px; font-size: 21px; text-align: center; 
+  .caption2 { margin-top: 10px; padding-top: 10px; padding-right: 15px; height: 140px; font-size: 21px; font-family:'Expeng2n', 'Expert2new'; text-align: center; 
   color: #fff;
   text-shadow:
+	0 0 4px black,
     0 0 5px #000b54,
     0 0 10px #0ff,
     0 0 20px #0ff,
     0 0 40px #0ff,
     0 0 80px #0ff; 
-	background-image: url('images/captionBGLine4.png');
+	background-image: url('../images/captionBGLine4.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -617,16 +657,16 @@ body::before {
       position: absolute;
       bottom: calc(20px + 15px);
       right: -40px;
-      transform: translateX(-45px) translateY(-15px);
+      transform: translateX(-40px) translateY(-15px);
       width: 135px;
-      height: 350px;
+      height: 353px;
       padding-bottom: 20px;
 	 
 	  
     }
 	
 	.video-button-space img {
-		cursor: url(images2/cursorPointer/pointer.png) 2 2, pointer;
+		cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
 	}
 	
 	
@@ -692,8 +732,8 @@ body::before {
 	.content { transform: translateX(-11%); grid-gap: 0;}
 	.video-wrapper.line4 { transform: translateX(-7%); }
 	.video-wrapper { max-width: 650px; min-width: 550px;}
-	.caption { font-size: 17px; }
-	.caption2 { font-size: 17px; }
+	.caption { font-size: 19px;}
+	.caption2 { font-size: 19px; }
 	.video-wrapper.line4:hover {
 		transform: scale(1.04) translateX(-7%);
 	}
@@ -707,10 +747,11 @@ body::before {
   }
 	}
 	
+	
 	@media (max-width: 1300px) and (min-width: 800px) {
 		.content { transform: translateX(-10%); grid-gap: 0;}
 		.video-wrapper { max-width: 530px; min-width: 480px; }
-		.caption { font-size: 17px; }
+		.caption { font-size: 17px; height: 150px;}
 	    .caption2 { font-size: 17px; }
 		.qa-item {
 	  width: 30%;}
@@ -722,6 +763,8 @@ body::before {
       .video-wrapper { width: 80%; }
 	  .video-ramka  { transform: translateX(-83px) translateY(-35px) scale(0.97); }
 	  .video-ramka2 { transform: translateX(-46px) translateY(-6%) scale(0.99); }
+	  .caption { font-size: 19px; }
+	.caption2 { font-size: 19px; }
     }
 	@media (orientation: portrait) {
 		.side-panel.right {  width: 63%; min-width: 40%; }
@@ -784,174 +827,76 @@ body::before {
 	position: fixed;
 	top: 0;
 	left: 0;
-	bottom: 0;
-	right: 0;
 	width: 100%;
 	height: 100%;
-	background: radial-gradient(circle at center,rgba(63, 251, 220, 0) 0%, rgba(0, 7, 74, 0.76) 85%);
+	background: radial-gradient(circle at 10px 740px,rgba(63, 251, 220, 0) 0%, rgba(0, 7, 74, 0.76) 14%);
 	z-index: 1001;
-	transition: all 0.7s ease;
-	backdrop-filter: blur(20px);
+	pointer-events: none;
+	animation: olGlow 3.5s infinite;
 }
 
+@keyframes olGlow {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 .newbuttons-ol2 {
 	position: fixed;
 	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
+	left: 100px;
 	height: 100%;
-	width: 100%;
+	right: 0;
 	z-index: 1001;
 	background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 20, 0.5) 100%);
-	transition: opacity 0.4s ease;
 }
 
-    #welcome {
-      width: 700px;
-	  height: 514px;
-      position: fixed;
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -30%);
-      padding: 30px 40px;
-      border-radius: 20px;
-      text-align: right;
-      animation: fadeIn 1.5s ease infinite;
-      z-index: 9999;
-	  position: relative;
-	  filter: drop-shadow(0 0 18px #fef23c);
-	 
-    }
-	
-	.welcome-img {
-		position: absolute;
-		top: 0;
-		left: -15px;
-		width: 100%;
-		pointer-events: none;
-	}
-	
-	.welcome-in {
-		position: absolute;
-		right: 19px;
-		top: 130px;
-		width: 510px;
-		height: 405px;
-		background: #000468;
-		border-radius: 30px;
-		padding-top: 55px;
-		padding-left: 120px;
-		padding-right: 13px;
-		padding-bottom: 10px;
-		border: 4px solid #fef23c;
-		font-family: 'Expeng2n', 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
-	}
-	
-	.welcome-ps {
-		z-index: 10;
-		
-	}
 
-    #welcome p {
-      color: #fef23c;
-      margin-bottom: 10px;
-	  font-family: 'Expeng2n', 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
-	  text-align: right;
-	  margin-left: 110px;
-	  font-size: 21px;
-	 text-shadow: 0 0 6px black, 0 0 7px blue, 0 0 8px white, 0 0 9px white;
-	  font-weight: bold;
-	  width: 250px;
-    }
-	
-	.welcome-buttons {
-		display: flex;
-		flex-direction: row;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
+.new-bookmarks-arrow {
+	width: 380px;
+	height: 280px;
+	position: relative;
+	left: 30px;
+	top: 620px;
+	background: url(../images/newBookmarks.png);
+	z-index: 1002;
+	background-size: contain;
+	background-repeat: no-repeat;
+	pointer-events: none;
+	transform-origin: 85% 50%;
+	animation: arrowRotate 2s ease-in-out infinite;
+}
 
-   .welcome-btn1 {
-      padding: 10px 7px;
-      font-size: 21px;
-      background: radial-gradient(ellipse at top, #e0da79, transparent),
-  radial-gradient(ellipse at bottom, #807a2b, transparent);
-   background-color: #e0be7c;
-      border: 3px solid black;
-      border-radius: 10px;
-      color: black;
-      cursor: url(images2/cursorPointer/pointer.png) 2 2, pointer;
-      transition: all 0.3s;
-	  margin: 10px;
-	  z-index: 10;
-	  font-family: 'Expeng2n', 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
-	  width: 160px;  height: 65px;
-	   box-shadow: 0 1px 7px black;
-    }
-	
-	.welcome-btn2 {
-      padding: 10px 7px;
-      font-size: 28px;
-      background: radial-gradient(ellipse at top, #180091, transparent),
-  radial-gradient(ellipse at bottom,#880091, transparent);
-  background-color: #e0be7c;
-      border: 3px solid #fef23c;
-      border-radius: 10px;
-      color: #fef23c;
-      cursor: url(images2/cursorPointer/pointer.png) 2 2, pointer;
-      transition: all 0.3s;
-	  margin: 10px;
-	  z-index: 10;
-	   text-shadow: 0 0 6px black, 0 0 7px blue, 0 0 8px blue, 0 0 9px black;
-	  font-family: 'Expeng2n', 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
-	  width: 200px;  height: 65px;
-	  box-shadow: 0 1px 7px black;
-    }
-
-    #welcome button:hover {
-      background-color: #00bbee;
-	  border-color: white;
-    }
-	
-	.welcome-btn1:active {
-      background-color: #ee003f;
-	  background: radial-gradient(ellipse at top, #36010a, transparent),
-  radial-gradient(ellipse at bottom,#4a0536, transparent);
-	  border-color: white;
-	  transform: scale(0.95);
-    }
-	
-	.welcome-btn2:active {
-      background-color: #ee003f;
-	  background: radial-gradient(ellipse at top, #36010a, transparent),
-  radial-gradient(ellipse at bottom,#4a0536, transparent);
-	  border-color: white;
-	  transform: scale(0.95);
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translate(-50%, -50%); }
-      100% { opacity: 1; transform: translate(-50%, -30%); }
-    }
-
-    @keyframes fadeOut {
-      0% { opacity: 1; transform: translate(-50%, -30%); }
-      100% { opacity: 0; transform: translate(-50%, -40%); }
-    }
-
-
+@keyframes arrowRotate {
+  0% {
+    transform: translateY(0px) rotate(1deg);
+	filter: brightness(100%) contrast(100%);
+  }
+  50% {
+    transform: translateY(15px) rotate(-2deg);
+	filter: brightness(190%) contrast(150%);
+  }
+  100% {
+    transform: translateY(0px) rotate(1deg);
+	filter: brightness(100%) contrast(100%);
+  }
+}
 
 .newbuttons-ol,
 .newbuttons-ol2 {
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.8s ease;
 }
 
 .newbuttons-ol.visible {
   opacity: 1;
-  pointer-events: auto;
 }
 
 .newbuttons-ol2.visible {
