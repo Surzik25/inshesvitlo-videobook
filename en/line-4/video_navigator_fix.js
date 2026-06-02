@@ -173,7 +173,7 @@ updateVideo() {
 
 getFooterText() {  
     const footerTexts = [  
-        "Любите зачаїтися у своїй власній ковдровій палатці з телефоном у руках? :D",  
+        "Wanna hide in your own blanket tent with your phone in your hands? :D",  
         "That little green flying one—it's not Oki, right? Because he probably doesn’t know such long and complicated words.",  
         "“I wasn’t even going to argue,” says the diary. “I get enough adventures from you. The tea stains you’ve dripped onto my yellowed pages are plenty for me.”",  
         "Who here has ever started a diary but never kept it going? You kind of do have things to write down at the end of the day, but you’re already sleepy… and the next day, more stuff happens again…And that’s how you end up forgetting half your life :p",  
