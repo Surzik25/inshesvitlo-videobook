@@ -818,11 +818,11 @@ body::before {
       padding: 30px 40px;
       border-radius: 20px;
       text-align: right;
-      animation: fadeIn 1.5s ease infinite;
+      animation: fadeIn 1.5s ease forwards;
       z-index: 9999;
 	  position: relative;
 	  filter: drop-shadow(0 0 18px #fef23c);
-	 
+	 display: none;
     }
 	
 	.welcome-img {
@@ -892,7 +892,7 @@ body::before {
     }
 	
 	.welcome-btn2 {
-      padding: 10px 7px;
+      padding: 5px 7px;
       font-size: 28px;
       background: radial-gradient(ellipse at top, #180091, transparent),
   radial-gradient(ellipse at bottom,#880091, transparent);
