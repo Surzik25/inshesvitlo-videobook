@@ -1119,7 +1119,6 @@ pattern-button:hover {
             width: 350%;
             height: 350%;
             transform-origin: center center;
-            transition: transform 0.1s ease-out;
 			position: absolute;
             top: -120%;
             left: -144%;
