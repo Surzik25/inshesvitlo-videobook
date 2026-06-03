@@ -390,18 +390,36 @@ onTouchStart(e) {
     } else if (e.touches.length === 2) {
         this.isDragging = false;
         this.lastPinchDistance = this.getPinchDistance(e.touches);
-        // Запам'ятовуємо центр між пальцями
-        this.pinchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-        this.pinchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        
+        // Отримуємо межі контейнера, щоб рахувати координати відносно нього
+        const rect = this.container.getBoundingClientRect();
+        
+        // Знаходимо центр між двома пальцями ВІДНОСНО КОНТЕНТУ КАРТИ
+        const touchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const touchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        
+        // Центруємо координату відносно центру контейнера (аналогічно до логіки onWheel)
+        this.pinchCenterX = touchCenterX - (rect.left + rect.width / 2);
+        this.pinchCenterY = touchCenterY - (rect.top + rect.height / 2);
+
+        // ХОВАЄМО ТАБЛИЧКУ: Користувач почав зумити двома пальцями
+        this.hideMarkerInfo();
     }
 }
 
 onTouchMove(e) {
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault(); 
 
     if (e.touches.length === 1 && this.isDragging) {
         const deltaX = e.touches[0].clientX - this.lastTouchX;
         const deltaY = e.touches[0].clientY - this.lastTouchY;
+        
+        // Перевіряємо, чи це реальний зсув, а не випадковий мікро-тиць
+        if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
+            // ХОВАЄМО ТАБЛИЧКУ: Карта почала рухатися від пальця
+            this.hideMarkerInfo();
+        }
+
         this.translateX += deltaX;
         this.translateY += deltaY;
         this.lastTouchX = e.touches[0].clientX;
@@ -411,20 +429,32 @@ onTouchMove(e) {
     else if (e.touches.length === 2) {
         const newDistance = this.getPinchDistance(e.touches);
 
-        if (this.lastPinchDistance) {
+        if (this.lastPinchDistance && this.lastPinchDistance > 0) {
             const zoomFactor = newDistance / this.lastPinchDistance;
             const oldScale = this.scale;
             const newScale = Math.max(this.minScale, Math.min(this.maxScale, oldScale * zoomFactor));
 
-            // Зсуваємо translateX/Y так, щоб точка під пальцями не зрушила
-            this.translateX = this.pinchCenterX - (this.pinchCenterX - this.translateX) * (newScale / oldScale);
-            this.translateY = this.pinchCenterY - (this.pinchCenterY - this.translateY) * (newScale / oldScale);
-
-            this.scale = newScale;
-            this.updateTransform();
+            if (newScale !== oldScale) {
+                const scaleDiff = newScale / oldScale;
+                
+                // Формула точного зсуву відносно точки між пальцями
+                this.translateX = this.translateX * scaleDiff - this.pinchCenterX * (scaleDiff - 1);
+                this.translateY = this.translateY * scaleDiff - this.pinchCenterY * (scaleDiff - 1);
+                
+                this.scale = newScale;
+                this.updateTransform();
+            }
         }
 
         this.lastPinchDistance = newDistance;
+        
+        // Динамічно оновлюємо центр між пальцями під час руху, 
+        // щоб зум плавно слідував за руками
+        const rect = this.container.getBoundingClientRect();
+        const touchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const touchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        this.pinchCenterX = touchCenterX - (rect.left + rect.width / 2);
+        this.pinchCenterY = touchCenterY - (rect.top + rect.height / 2);
     }
 }
 
@@ -434,6 +464,12 @@ onTouchEnd(e) {
         this.lastPinchDistance = null;
         this.pinchCenterX = null;
         this.pinchCenterY = null;
+    } else if (e.touches.length === 1) {
+        // Якщо один палець прибрали, а другий залишився — перемикаємося назад на drag
+        this.isDragging = true;
+        this.lastTouchX = e.touches[0].clientX;
+        this.lastTouchY = e.touches[0].clientY;
+        this.lastPinchDistance = null;
     }
 }
 
