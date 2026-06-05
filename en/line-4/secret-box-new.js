@@ -44,7 +44,7 @@ class TreasureBoxTimer {
 					{ image: 'fact13.PNG', text: 'Every creature with fur sheds sometimes. Oki is no exception.' },
 					{ image: 'fact17.PNG', text: 'Per-pere calls his phone a mobile device because it sounds more serious and professional.' },
 					{ image: 'fact39.PNG', text: 'How many identical hoods does Per-pere actually own?' },
-					{ image: 'fact43.PNG', text: 'Per-pere is occasionally visited by his black cat tutor, Aristocrat. Aunt Veda assigned him as a replacement for regular school, since Per-Pere never wanted to leave Oki\'s side—and fitting Oki into a normal school would\'ve been... difficult :D' },
+					{ image: 'fact43.PNG', text: 'Per-pere is occasionally visited by his black cat tutor, Aristocrat. Aunt Veda assigned him as a replacement for regular school, since Per-pere never wanted to leave Oki\'s side—and fitting Oki into a normal school would\'ve been... difficult :D' },
 					{ image: 'fact44.PNG', text: 'Per-pere was born on December 13th, Year 138 (P.E.) Maybe THAT\'S why he\'s so obsessed with the number 13?' },
 					{ image: 'fact47.PNG', text: 'Per-pere is TERRIFIED of loud, rattling noises. Especially the Yardman-Boletus\' monstrous chainsaw. Every year on July 19th, he unloads a truck full of logs and revs that thing at maximum power. Not a pleasant day for anyone\'s ears :D' },
 					{ image: 'fact48.PNG', text: 'Oki once made Per-pere a shadow lamp that scans his power ring and only unlocks after recognizing it.' },
@@ -123,12 +123,12 @@ class TreasureBoxTimer {
         const savedState = JSON.parse(localStorage.getItem('PerpereBoxStateNew') || '{}');
         
         // Основний таймер
-        this.timeLeft = savedState.timeLeft !== undefined ? savedState.timeLeft : 5;
+        this.timeLeft = savedState.timeLeft !== undefined ? savedState.timeLeft : 1500;
         this.isLocked = savedState.isLocked !== undefined ? savedState.isLocked : true;
         
         // Групова система
         this.currentGroupIndex = savedState.currentGroupIndex || 0;
-        this.groupTimeLeft = savedState.groupTimeLeft !== undefined ? savedState.groupTimeLeft : 5;
+        this.groupTimeLeft = savedState.groupTimeLeft !== undefined ? savedState.groupTimeLeft : 900;
         this.isGroupTimerActive = savedState.isGroupTimerActive || false;
         this.unlockCount = savedState.unlockCount || 0;
         
@@ -305,7 +305,7 @@ setInterval(() => {
             // Запустити таймер для наступної групи, якщо вона існує
             if (this.currentGroupIndex + 1 < this.factGroups.length) {
                 this.isGroupTimerActive = false;
-                this.groupTimeLeft = 5; // Скинути час для нової групи
+                this.groupTimeLeft = 900; // Скинути час для нової групи
                 this.startGroupTimer();
             } else {
                 // Всі групи розблоковані, таймер зупиняється
@@ -335,7 +335,7 @@ setInterval(() => {
         this.initUnlockedAnimations();
         
         // Запустити таймер групи
-        this.groupTimeLeft = 5; // Встановити час для першої групи
+        this.groupTimeLeft = 900; // Встановити час для першої групи
         this.startGroupTimer();
     }
 
