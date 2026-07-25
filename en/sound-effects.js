@@ -6,7 +6,7 @@
 (function () {
   const SOUND_DIR = '../sound/';
   const MUSIC_DIR = '../music/';
-  const MUSIC_TRACK = 'DLsample2.mp3';
+  const MUSIC_TRACK = 'DLsample2.MP3';
   const IMAGES_DIR = '../images/';
   const MUSIC_START_DELAY = 800; // ⏱ затримка перед стартом музики (мс)
   const MUSIC_VOLUME = 1;        // 0..1
