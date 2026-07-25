@@ -44,6 +44,19 @@ body::before {
   box-shadow: 0 0 18px #f736da,  0 0 9px #4d0742;
 }
 
+#preloader.preloader-bw {
+  filter: grayscale(1);
+  transition: filter 0.4s ease;
+}
+
+#preloader.preloader-bw.active {
+  filter: grayscale(0);
+}
+
+#preloader {
+  cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+}
+
 #progress-fill {
   height: 100%;
   width: 0%;
@@ -215,11 +228,61 @@ body::before {
     }
     /* Ліва панель */
     .side-panel.left {
-      left: 0; width: 150px;
+      left: 0; width: 115px;
       overflow-y: hidden;
     }
 	
-
+.bottom-panel {
+	  position: fixed;
+      bottom: -16px; height: 80px;
+      background-image: url(../images/sound-tab.png);
+	  left: 13%;
+	  width: 310px;
+	  z-index: 101;
+	  background-repeat: no-repeat;
+	  padding-top: 19px;
+	  padding-left: 15px;
+	  filter: drop-shadow(0 -4px 13px blue);
+	  transition: bottom 0.3s ease-in-out; 
+    }
+	
+	.bottom-panel--hidden {
+  bottom: -90px; 
+}
+	
+	.sound-btn {
+		display: inline-block;
+	  width: 64px;
+	  height: 41px;
+	  align-items: center;
+      justify-content: center;
+	  margin-right: 7px;
+	  background: none;
+	  border: none;
+	  cursor: url(../images2/cursorPointer/littlePointer.png) 1 1, pointer;
+	  transition: transform 0.2s ease, filter 0.2s ease;
+	  filter: drop-shadow(0 5px 7px black);
+	}
+	
+	.sound-btn:hover {
+		transform: translateY(-2px);
+		filter: brightness(140%);
+	}
+	
+	#musicBtn {
+		background-image: url(../images/music-btn.gif);
+		background-repeat: no-repeat;
+	}
+	
+	#soundBtn {
+		background-image: url(../images/sound-btn.gif);
+		background-repeat: no-repeat;
+	}
+	
+	#adaptBtn {
+		background-image: url(../images/ua-btn.gif);
+		background-repeat: no-repeat;
+	}
 
     /* Права панель */
       .side-panel.right {
@@ -704,8 +767,7 @@ body::before {
 	
 	
 	.read-button {
-	position: absolute;
-	top: 3px;
+	padding-bottom: 10px;
 	width: 135px;
 	height: 330px;
 	filter: drop-shadow(4px 4px 10px #9c3603);
@@ -904,6 +966,185 @@ body::before {
   pointer-events: auto;
 }
 
+.board-pid {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(circle at center,rgba(63, 251, 220, 0) 0%, rgba(0, 7, 74, 0.76) 85%);
+	z-index: 1001;
+	transition: all 0.7s ease;
+	backdrop-filter: blur(20px);
+}
+
+
+.board-pid2 {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 1001;
+	background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 20, 0.5) 100%);
+	transition: opacity 0.4s ease;
+}
+
+ #welcome {
+      width: 500px;
+	  height: 514px;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -30%);
+      padding: 30px 40px;
+      border-radius: 20px;
+      text-align: right;
+      animation: fadeIn 1.5s ease forwards;
+      z-index: 9999;
+	  position: relative;
+	  filter: drop-shadow(0 0 18px #fef23c);
+	 display: none;
+    }
+	
+	.welcome-img {
+		position: absolute;
+		top: 0;
+		left: -15px;
+		width: 100%;
+		pointer-events: none;
+	}
+	
+	.welcome-in {
+		position: absolute;
+		right: 71px;
+		top: 128px;
+		width: 310px;
+		height: 349px;
+		background: #dac37b;
+		border-radius: 30px;
+		padding-top: 55px;
+		padding-left: 20px;
+		padding-right: 13px;
+		padding-bottom: 10px;
+		border: 4px solid #cf8a00;
+		font-family: 'Expeng2n', 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
+	}
+	
+	.welcome-ps {
+		z-index: 10;
+		
+	}
+
+    #welcome p {
+      color: #02473e;
+      margin-bottom: 10px;
+	  font-family: 'Expeng2n', 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
+	  text-align: center;
+	  margin-left: 4px;
+	  margin-top: 67px;
+	  font-size: 27px;
+	 text-shadow: 0 0 6px #115e99, 0 0 7px white, 0 0 8px white, 0 0 9px white;
+	  font-weight: bold;
+    }
+	
+	.welcome-buttons {
+		display: flex;
+		flex-direction: row;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
+   .welcome-btn1 {
+      padding: 10px 7px;
+      font-size: 28px;
+      background: radial-gradient(ellipse at top, #5e4002, transparent),
+  radial-gradient(ellipse at bottom, #7d6b46, transparent);
+   background-color: #c8cf6d;
+      border: 3px solid #cf8a00;
+      border-radius: 10px;
+      color: #cf8a00;
+      cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+      transition: all 0.3s;
+	  margin: 10px;
+	  z-index: 10;
+	  font-family: 'Expeng2n', 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
+	  width: 160px;  height: 65px;
+	   box-shadow: 0 1px 7px black;
+	   text-shadow: 0 0 6px black, 0 0 7px #808005, 0 0 8px #808005, 0 0 9px black;
+    }
+	
+	.welcome-btn2 {
+      padding: 5px 7px;
+      font-size: 28px;
+      background: radial-gradient(ellipse at top, #033f4f, transparent),
+  radial-gradient(ellipse at bottom,#0c7085, transparent);
+  background-color: #30b6d1;
+      border: 3px solid #49e5eb;
+      border-radius: 10px;
+      color: #49e5eb;
+      cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+      transition: all 0.3s;
+	  margin: 10px;
+	  z-index: 10;
+	   text-shadow: 0 0 6px black, 0 0 7px #0091bd, 0 0 8px #0091bd, 0 0 9px black;
+	  font-family: 'Expeng2n', 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
+	  width: 200px;  height: 65px;
+	  box-shadow: 0 1px 7px black;
+    }
+
+    #welcome button:hover {
+      background-color: #00bbee;
+	  border-color: white;
+    }
+	
+	.welcome-btn1:active {
+      background-color: #ee003f;
+	  background: radial-gradient(ellipse at top, #36010a, transparent),
+  radial-gradient(ellipse at bottom,#4a0536, transparent);
+	  border-color: white;
+	  transform: scale(0.95);
+    }
+	
+	.welcome-btn2:active {
+      background-color: #ee003f;
+	  background: radial-gradient(ellipse at top, #36010a, transparent),
+  radial-gradient(ellipse at bottom,#4a0536, transparent);
+	  border-color: white;
+	  transform: scale(0.95);
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translate(-50%, -50%); }
+      100% { opacity: 1; transform: translate(-50%, -30%); }
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; transform: translate(-50%, -30%); }
+      100% { opacity: 0; transform: translate(-50%, -40%); }
+    }
+
+
+
+.board-pid,
+.board-pid2 {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.board-pid.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.board-pid2.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
 /* Альтернативний варіант - універсальний transition для всіх елементів */
 /*
 * {

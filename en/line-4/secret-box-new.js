@@ -14,6 +14,8 @@ class TreasureBoxTimer {
         this.magnifiedImage = document.getElementById('magnifiedImage');
         this.factGroupNumber = document.getElementById('factGroupNumber');
         this.unlockMessage = document.getElementById('unlockMessage');
+		this.soundCache = new Map();
+		this.SOUND_DIR = '../../sound/read/';
         
         // Змінні для анімацій розблокованої скриньки
         this.hoverTimeout = null;
@@ -205,6 +207,17 @@ window.addEventListener('beforeunload', () => {
 setInterval(() => {
     this.saveState();
 }, 1000);
+this.bubbleObserver = new MutationObserver((mutations) => {
+    mutations.forEach((m) => {
+        if (m.attributeName === 'class') {
+            const classes = this.factBubble.classList;
+            if (classes.contains('show') || classes.contains('suck-in')) {
+                this.muteChestSound();
+            }
+        }
+    });
+});
+this.bubbleObserver.observe(this.factBubble, { attributes: true });
     }
 	
 	// Відновлення візуального стану після перезавантаження
@@ -440,9 +453,40 @@ preloadAnimationImages() {
     });
 }
 
+playSound(fileName, trackAsChestSound = false) {
+	// 🔇 Спільний перемикач звуку (sound-mute-state.js)
+    if (window.SoundPrefs && window.SoundPrefs.isMuted()) return null;
+	
+    if (!this.soundCache.has(fileName)) {
+        const audio = new Audio(this.SOUND_DIR + fileName);
+        audio.preload = 'auto';
+        this.soundCache.set(fileName, audio);
+    }
+    const instance = this.soundCache.get(fileName).cloneNode();
+
+    if (trackAsChestSound) {
+        this.activeChestAudio = instance;
+    }
+
+    instance.play().catch(() => {});
+    return instance;
+}
+
+muteChestSound() {
+    if (this.activeChestAudio) {
+        this.activeChestAudio.pause();
+        this.activeChestAudio.currentTime = 0;
+        this.activeChestAudio = null;
+    }
+}
+
 handleUnlockedHover() {
     this.isHovering = true;
-    
+    // Не програвати звук, якщо ми зараз в процесі перемикання факту —
+    // browser може викликати цей hover штучно (hit-testing після зміни DOM)
+    if (!this.suppressChestSound) {
+        this.playSound('teapotOpening.mp3', true); // true — трекаємо як chest sound
+    }
     // Очистити попередній таймер якщо він існує
     if (this.hoverTimeout) {
         clearTimeout(this.hoverTimeout);
@@ -463,7 +507,11 @@ handleUnlockedHover() {
 
 handleUnlockedLeave() {
     this.isHovering = false;
-    
+    // Те саме — не програвати звук закривання, якщо це "фантомний" leave
+    // під час перемикання факту
+    if (!this.suppressChestSound) {
+        this.playSound('teapotClosing.mp3', true); // true — трекаємо як chest sound
+    }
     // Очистити таймер
     if (this.hoverTimeout) {
         clearTimeout(this.hoverTimeout);
@@ -497,7 +545,7 @@ setBoxImage(imageName, fallbackText) {
     showUnlockBubble() {
         // Оновити повідомлення залежно від кількості розблокувань
         this.unlockCount++;
-        
+        this.playSound('boxUnlocked2.mp3');
         if (this.unlockCount === 1) {
             this.unlockMessage.textContent = 'The teapot is unlocked!';
         } else if (this.unlockCount === 2) {
@@ -515,19 +563,34 @@ setBoxImage(imageName, fallbackText) {
     }
 
     showFactBubbleWithAnimation() {
-        if (this.isFactBubbleVisible) {
-            // Якщо бульбашка вже видима, спочатку втягуємо її
-            this.suckInBubble().then(() => {
-                this.showNewFact();
-            });
-        } else {
-            // Якщо бульбашка не видима, просто показуємо новий факт
+    // Блокуємо звуки ChestOpening/ChestClosing на весь час анімації переключення факту.
+    // Це важливіше за muteChestSound(), бо той глушить лише те, що ВЖЕ грає —
+    // а тут ми запобігаємо запуску звуку, який ще навіть не почав відтворюватись
+    // (browser може викликати mouseleave/mouseenter вже ПІСЛЯ зміни DOM,
+    // коли muteChestSound() вже відпрацював).
+    this.suppressChestSound = true;
+    clearTimeout(this.suppressChestSoundTimeout);
+
+    this.muteChestSound(); // заглушити ChestOpening/ChestClosing, якщо вже грає
+
+    if (this.isFactBubbleVisible) {
+        this.suckInBubble().then(() => {
             this.showNewFact();
-        }
+        });
+    } else {
+        this.showNewFact();
     }
+
+    // Зняти блокування вже після завершення suck-in (400ms) + показу нового факту (100ms)
+    // + невеликий запас на те, щоб браузер встиг перерахувати hover-стан
+    this.suppressChestSoundTimeout = setTimeout(() => {
+        this.suppressChestSound = false;
+    }, 800);
+}
 
     suckInBubble() {
         return new Promise((resolve) => {
+			this.muteChestSound(); // глушимо перед suck-in
             this.factBubble.classList.add('suck-in');
             
             setTimeout(() => {
@@ -540,6 +603,8 @@ setBoxImage(imageName, fallbackText) {
     }
 
     showNewFact() {
+		this.muteChestSound(); // глушимо перед show
+		this.playSound('factPull.mp3');
         // Випадковий вибір факту з доступних фактів
         const randomIndex = Math.floor(Math.random() * this.availableFacts.length);
         const selectedFact = this.availableFacts[randomIndex];

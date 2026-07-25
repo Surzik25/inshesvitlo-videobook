@@ -7,6 +7,18 @@ class NavigationTreeAnimator {
         this.hiddenImages = document.querySelectorAll('.nav-branches-hidden, .nav-branches2-hidden, .nav-branches3-hidden');
         this.gradientTimeout = null;
 
+		// Звук "пробігання світла"
+        this.audioCtx = null;
+                // 🔇 Синхронізуємо зі спільним перемикачем звуку (sound-mute-state.js)
+        this.soundEnabled = !window.SoundPrefs || !window.SoundPrefs.isMuted();
+        if (window.SoundPrefs) {
+            window.SoundPrefs.onChange((muted) => {
+                this.soundEnabled = !muted;
+            });
+        }
+        this.soundStyle = 'shimmer'; // 'retro' — 8-bit тіки, 'shimmer' — м'яке мерехтіння
+        this.flowStepDelay = 0.2; // сек, синхронізовано з 200мс затримкою анімації
+		
         // Групуємо кнопки по деревам
         this.tree1Buttons = Array.from(this.buttons).filter(btn => btn.dataset.tree === '1');
         this.tree2Buttons = Array.from(this.buttons).filter(btn => btn.dataset.tree === '2');
@@ -274,6 +286,9 @@ class NavigationTreeAnimator {
     animatePath(veins, isForward) {
         // Очищаємо попередні анімації
         this.clearAnimations();
+		
+		// Генеруємо звук пробігання світла, синхронізований з довжиною шляху
+        this.playFlowSound(veins.length, isForward);
 
         // Анімуємо кожну галузку з затримкою
         // Якщо йдемо назад, реверсуємо порядок анімації
@@ -284,6 +299,140 @@ class NavigationTreeAnimator {
                 this.animateVein(vein, isForward);
             }, index * 200); // Затримка 200мс між анімаціями
         });
+    }
+	
+	ensureAudioContext() {
+        if (!this.audioCtx) {
+            this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        // Важливо: resume() викликається тут, всередині того ж кліку,
+        // що й уся навігація — це той самий "trusted user gesture"
+        if (this.audioCtx.state === 'suspended') {
+            this.audioCtx.resume();
+        }
+        return this.audioCtx;
+    }
+
+    playFlowSound(pathLength, isForward) {
+        if (!this.soundEnabled || pathLength === 0) return;
+
+        if (this.soundStyle === 'shimmer') {
+            this.playFlowSoundShimmer(pathLength, isForward);
+        } else {
+            this.playFlowSoundRetro(pathLength, isForward);
+        }
+    }
+
+    // Дозволяє перемикати стиль звуку "на льоту"
+    setSoundStyle(style) {
+        this.soundStyle = style === 'shimmer' ? 'shimmer' : 'retro';
+    }
+
+    // --- Допоміжний реверб для повітряного, "чарівного" звучання ---
+    createReverbImpulse(ctx, duration = 2.2, decay = 3) {
+        const rate = ctx.sampleRate;
+        const length = Math.floor(rate * duration);
+        const impulse = ctx.createBuffer(2, length, rate);
+
+        for (let channel = 0; channel < 2; channel++) {
+            const data = impulse.getChannelData(channel);
+            for (let i = 0; i < length; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
+            }
+        }
+        return impulse;
+    }
+
+    ensureReverb() {
+        const ctx = this.ensureAudioContext();
+        if (!this.reverbNode) {
+            this.reverbNode = ctx.createConvolver();
+            this.reverbNode.buffer = this.createReverbImpulse(ctx);
+
+            this.dryGain = ctx.createGain();
+            this.dryGain.gain.value = 1;
+
+            this.wetGain = ctx.createGain();
+            this.wetGain.gain.value = 0.4; // скільки "повітря" реверба підмішуємо
+
+            this.dryGain.connect(ctx.destination);
+            this.wetGain.connect(this.reverbNode);
+            this.reverbNode.connect(ctx.destination);
+        }
+        return { dry: this.dryGain, wet: this.wetGain };
+    }
+
+    // --- М'який, мерехтливий "помах чарівної палички" ---
+    playFlowSoundShimmer(pathLength, isForward) {
+        const ctx = this.ensureAudioContext();
+        const { dry, wet } = this.ensureReverb();
+        const now = ctx.currentTime;
+        const stepDelay = this.flowStepDelay;
+        const totalDuration = (pathLength - 1) * stepDelay + this.animationDuration / 1000;
+
+        // Легке вібрато для всього тону
+        const lfo = ctx.createOscillator();
+        lfo.type = 'sine';
+        lfo.frequency.value = 5.5;
+        const lfoGain = ctx.createGain();
+        lfoGain.gain.value = 6; // глибина вібрато в Гц
+        lfo.connect(lfoGain);
+        lfo.start(now);
+        lfo.stop(now + totalDuration + 0.5);
+
+        // Хор із трьох злегка розстроєних синусоїд — "флейтовий" тон помаху
+        const startFreq = isForward ? 500 : 1200;
+        const endFreq = isForward ? 1200 : 500;
+
+        [-6, 0, 6].forEach(detune => {
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.detune.value = detune;
+            osc.frequency.setValueAtTime(startFreq, now);
+            osc.frequency.exponentialRampToValueAtTime(endFreq, now + totalDuration);
+            lfoGain.connect(osc.frequency);
+
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.0001, now);
+            g.gain.exponentialRampToValueAtTime(0.05, now + totalDuration * 0.3);
+            g.gain.setValueAtTime(0.05, now + totalDuration * 0.7);
+            g.gain.exponentialRampToValueAtTime(0.0001, now + totalDuration);
+
+            osc.connect(g);
+            g.connect(dry);
+            g.connect(wet);
+
+            osc.start(now);
+            osc.stop(now + totalDuration + 0.1);
+        });
+
+        // Іскорки-переливи, розкидані вздовж шляху (пентатоніка)
+        const sparkleScale = isForward
+            ? [523.25, 659.25, 783.99, 987.77, 1174.66] // C5 E5 G5 B5 D6
+            : [1174.66, 987.77, 783.99, 659.25, 523.25];
+
+        const sparkleCount = Math.max(4, pathLength * 3);
+        for (let i = 0; i < sparkleCount; i++) {
+            const t = now + Math.random() * totalDuration;
+            const baseFreq = sparkleScale[Math.floor(Math.random() * sparkleScale.length)];
+            const freq = baseFreq * (1 + Math.random() * 0.02);
+
+            const sOsc = ctx.createOscillator();
+            sOsc.type = 'sine';
+            sOsc.frequency.setValueAtTime(freq, t);
+
+            const sGain = ctx.createGain();
+            sGain.gain.setValueAtTime(0.0001, t);
+            sGain.gain.exponentialRampToValueAtTime(0.08, t + 0.008);
+            sGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.6 + Math.random() * 0.4);
+
+            sOsc.connect(sGain);
+            sGain.connect(dry);
+            sGain.connect(wet);
+
+            sOsc.start(t);
+            sOsc.stop(t + 1.2);
+        }
     }
 
     animateVein(vein, isForward) {

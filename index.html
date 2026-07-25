@@ -41,21 +41,22 @@
 ></script>
 
 <!-- Preloader -->
-<div id="preloader">
+<div id="preloader" class="preloader-bw">
   <div id="preloader-content">
     <dotlottie-wc
+      id="preloader-lottie"
       src="https://lottie.host/09279c1f-79a9-40da-85d2-07599887fa5e/ZIRBIWW9yD.lottie"
       style="width: 500px; height: 500px;"
       speed="1"
-      autoplay
       loop
     ></dotlottie-wc>
-    <p id="preloader-text">Завантаження...</p>
+    <p id="preloader-text">Клікни будь-де, щоб розпочати завантаження!</p>
     <div id="progress-bar">
       <div id="progress-fill"></div>
     </div>
   </div>
 </div>
+
   <div class="top-panel ">
     <div class="logo">
 	<img class="logo-img" draggable="false" 
@@ -455,7 +456,7 @@
    
   <div id="welcome">
   <div class="welcome-in">
-    <p>Improved visibility and readability; Added new questions and answers to the Q&A block; Updated map; +15 new facts for random boxes of each Line; And some other minor adjustments for a better reading experience!</p>
+    <p>In addition to all the updates you've seen before, the English version is now FULLY SOUNDED! If you don't want to miss anything new, check it out and don't hesitate :D</p>
 	
 	<div class="welcome-buttons">
     <button class="welcome-btn1" onclick="closeWelcome()">Stay here :)</button>
@@ -504,7 +505,7 @@ window.addEventListener('load', function () {
 		welcome.style.animation = 'fadeIn 0.4s ease forwards';
       }, 400);
     }, 500);
-  }, 3000);
+  }, 15000);
 });
 
 // Закриває табличку та обидва оверлеї
@@ -529,40 +530,6 @@ function switchToEnglish() {
 }
   </script>
   <script src="footer-n-udark.js"></script>
-	  <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const response = await fetch("images-list.json");
-  const data = await response.json();
-
-  const allImages = [...data.images, ...data.images2];
-  let loadedCount = 0;
-  const preloaderText = document.getElementById("preloader-text");
-  const progressFill = document.getElementById("progress-fill");
-
-  function preloadImage(src) {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => resolve();
-      img.onerror = () => resolve();
-      img.src = src;
-    });
-  }
-
-  for (let i = 0; i < allImages.length; i++) {
-    await preloadImage(allImages[i]);
-    loadedCount++;
-    const percent = Math.round((loadedCount / allImages.length) * 100);
-    progressFill.style.width = percent + "%";
-    preloaderText.textContent = `Завантаження: ${percent}%`;
-  }
-
-  preloaderText.textContent = "Готово!";
-  setTimeout(() => {
-    document.getElementById("preloader").style.opacity = "0";
-    document.getElementById("preloader").style.transition = "opacity 0.5s ease";
-    setTimeout(() => document.getElementById("preloader").remove(), 500);
-  }, 500);
-});
-</script>
+  <script src="preloader.js"></script>
 </body>
 </html>
