@@ -194,7 +194,7 @@ updateMusic() {
     this.musicElement.pause();
 
     this.musicTimeout = setTimeout(() => {
-        this.musicElement.src = `${this.musicBasePath}${track}.mp3`;
+        this.musicElement.src = `${this.musicBasePath}${track}.MP3`;
         this.musicElement.loop = true;
         this.musicElement.currentTime = 0;
 
