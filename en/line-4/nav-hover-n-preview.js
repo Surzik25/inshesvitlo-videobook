@@ -38,50 +38,64 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
  // Створюємо кнопки навігації
-        const navPanel = document.getElementById('navPanel');
-        const previewBubble = document.getElementById('previewBubble');
-        const previewImage = document.getElementById('previewImage');
-        const previewText = document.getElementById('previewText');
+const navPanel = document.getElementById('navPanel');
+const previewBubble = document.getElementById('previewBubble');
+const previewImage = document.getElementById('previewImage');
+const previewText = document.getElementById('previewText');
 
-       
+// Обробка наведення миші
+const buttons = document.querySelectorAll('.nav-button');
+let hoverTimeout;
+let autoHideTimeout; // таймер автоприховування
 
-        // Обробка наведення миші
-        const buttons = document.querySelectorAll('.nav-button');
-        let hoverTimeout;
+buttons.forEach(button => {
+    button.addEventListener('mouseenter', (e) => {
+    clearTimeout(hoverTimeout);
+    clearTimeout(autoHideTimeout);
 
-        buttons.forEach(button => {
-            button.addEventListener('mouseenter', (e) => {
-                clearTimeout(hoverTimeout);
-                
-                const pageNumber = e.target.getAttribute('data-video');
-                const buttonRect = e.target.getBoundingClientRect();
+    const pageNumber = e.target.getAttribute('data-video');
+    const buttonRect = e.target.getBoundingClientRect();
+
+    function positionBubble() {
+        previewBubble.style.left = `${buttonRect.right + 30}px`;
+        previewBubble.style.top = `${buttonRect.top + buttonRect.height / 2 - previewBubble.offsetHeight / 2}px`;
+    }
                 
                 // Оновлюємо контент попереднього перегляду
                 previewImage.src = `../../images2/perpere-thumbs/page${pageNumber}.png`;
                 previewText.textContent = `Page ${pageNumber}`;
                 
-                // Позиціонуємо бульбашку справа від кнопки з відступом 30px
-                previewBubble.style.left = `${buttonRect.right + 30}px`;
-                previewBubble.style.top = `${buttonRect.top + buttonRect.height/2 - previewBubble.offsetHeight/2}px`;
-                
-                // Показуємо з затримкою для плавності
-                hoverTimeout = setTimeout(() => {
-                    previewBubble.classList.add('show');
-                }, 500);
-            });
+                    // Позиціонуємо одразу (для випадку, коли розміри вже відомі)
+    positionBubble();
 
-            button.addEventListener('mouseleave', () => {
-                clearTimeout(hoverTimeout);
-                previewBubble.classList.remove('show');
-            });
-        });
+    hoverTimeout = setTimeout(() => {
+        previewBubble.classList.add('show');
+        // І ще раз — після того, як браузер відмалював елемент з реальним контентом
+        requestAnimationFrame(positionBubble);
 
-        // Приховуємо попередній перегляд при наведенні на нього
-        previewBubble.addEventListener('mouseenter', () => {
+        autoHideTimeout = setTimeout(() => {
             previewBubble.classList.remove('show');
-        });
+        }, 3000);
+    }, 500);
 
-        // Обробка помилок завантаження зображень
-        previewImage.addEventListener('error', () => {
-            previewImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ5IiBoZWlnaHQ9IjE0MiIgdmlld0JveD0iMCAwIDI0OSAxNDIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDkiIGhlaWdodD0iMTQyIiBmaWxsPSIjZjVmNWY1Ii8+Cjx0ZXh0IHg9IjEyNC41IiB5PSI3MSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImNlbnRyYWwiIGZpbGw9IiM5OTkiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCI+Ч89vбp. перегл.</text+Cjwvc3ZnPgo=';
-        });
+    // Перерахунок після завантаження зображення (на випадок зміни висоти картинкою)
+    previewImage.onload = positionBubble;
+});
+
+    button.addEventListener('mouseleave', () => {
+        clearTimeout(hoverTimeout);
+        clearTimeout(autoHideTimeout);
+        previewBubble.classList.remove('show');
+    });
+});
+
+// Приховуємо попередній перегляд при наведенні на нього
+previewBubble.addEventListener('mouseenter', () => {
+    clearTimeout(autoHideTimeout);
+    previewBubble.classList.remove('show');
+});
+
+// Обробка помилок завантаження зображень
+previewImage.addEventListener('error', () => {
+    previewImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ5IiBoZWlnaHQ9IjE0MiIgdmlld0JveD0iMCAwIDI0OSAxNDIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDkiIGhlaWdodD0iMTQyIiBmaWxsPSIjZjVmNWY1Ii8+Cjx0ZXh0IHg9IjEyNC41IiB5PSI3MSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImNlbnRyYWwiIGZpbGw9IiM5OTkiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCI+Ч89vбp. перегл.</text+Cjwvc3ZnPgo=';
+});

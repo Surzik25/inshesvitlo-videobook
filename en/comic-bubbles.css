@@ -72,10 +72,12 @@
 
         .speech-bubble.bubble-1::after {
             border-right-color: #f3f578;
+			top: 18%;
         }
 
         .speech-bubble.bubble-1::before {
             border-right-color: #7d7720;
+			top: 18%;
         }
 
         .speech-bubble.bubble-2 {

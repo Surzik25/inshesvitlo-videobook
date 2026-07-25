@@ -44,6 +44,19 @@ body::before {
   box-shadow: 0 0 18px #f736da,  0 0 9px #4d0742;
 }
 
+#preloader.preloader-bw {
+  filter: grayscale(1);
+  transition: filter 0.4s ease;
+}
+
+#preloader.preloader-bw.active {
+  filter: grayscale(0);
+}
+
+#preloader {
+  cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+}
+
 #progress-fill {
   height: 100%;
   width: 0%;

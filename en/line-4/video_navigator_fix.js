@@ -1,16 +1,61 @@
 class VideoNavigator {
 constructor() {
 this.currentVideo = 0;
-this.totalVideos = 31; // 0-40 (21 + 20)
+this.totalVideos = 31; // 0-30 
+
+// 🎵 Шлях до папки з музикою
+this.musicBasePath = '../../music/';
+this.currentTrack = null;
+this.musicElement = new Audio();
+this.musicElement.loop = true;
+this.musicDelay = 800; // ⏱ затримка перед стартом треку (мс) 
+this.musicTimeout = null;
+
+// 🔇 Заглушення музики
+this.imagesDir = '../../images/';
+this.musicMuted = localStorage.getItem('musicMuted') === '1';
 
 this.initElements();  
     this.bindEvents();  
+   this.bindMusicButton();
+   this.updateMusicBtnUI();
    const savedIndex = parseInt(localStorage.getItem('currentVideoIndex2'));  
     if (!isNaN(savedIndex) && savedIndex >= 0 && savedIndex < this.totalVideos) {  
         this.goToVideo(savedIndex);  
     } else {  
          this.goToVideo(0);  
     }  
+} 
+
+bindMusicButton() {
+    if (!this.musicBtn) return;
+    this.musicBtn.addEventListener('click', () => this.toggleMusic());
+}
+
+toggleMusic() {
+    this.musicMuted = !this.musicMuted;
+    localStorage.setItem('musicMuted', this.musicMuted ? '1' : '0');
+    this.updateMusicBtnUI();
+
+    if (this.musicMuted) {
+        this.musicElement.pause();
+    } else {
+        // Відновлюємо відтворення поточного треку без очікування зміни сторінки
+        if (this.musicElement.src) {
+            this.musicElement.play().catch(() => {});
+        } else {
+            // Трек ще жодного разу не було встановлено — запускаємо примусово
+            this.currentTrack = null;
+            this.updateMusic();
+        }
+    }
+}
+
+updateMusicBtnUI() {
+    if (!this.musicBtn) return;
+    this.musicBtn.style.backgroundImage = this.musicMuted
+        ? `url('${this.imagesDir}no-music-btn.png')`
+        : '';
 }  
 
 initElements() {  
@@ -29,6 +74,9 @@ initElements() {
     // Breadcrumb кнопки
     this.bookStartBtn = document.getElementById('bookStart');
     this.chapterStartBtn = document.getElementById('chapterStart');
+	
+	// Кнопка глушення музики
+    this.musicBtn = document.getElementById('musicBtn');
 }  
 
 bindEvents() {  
@@ -121,6 +169,57 @@ getVideoPath() {
     }
 }
 
+getMusicTrack() {
+    const v = this.currentVideo;
+    if (v === 0) return 'perpereSample0';
+    if (v >= 1 && v <= 9) return 'perpereSample1';
+    if (v === 10) return 'perpereSample1-5';
+    if (v >= 11 && v <= 16) return 'perpereSample2';
+    if (v >= 17 && v <= 20) return 'perpereSample3';
+    if (v >= 21 && v <= 29) return 'perpereSample4';
+	if (v === 30) return 'perpereSample4-5';
+    return null;
+}
+
+updateMusic() {
+    const track = this.getMusicTrack();
+    if (!track) return;
+
+    // Якщо трек не змінився — нічого не робимо, музика продовжує грати
+    if (track === this.currentTrack) return;
+
+    this.currentTrack = track;
+
+    // Скасовуємо попередній відкладений запуск, якщо користувач швидко перемикає сторінки
+    clearTimeout(this.musicTimeout);
+
+    // Одразу зупиняємо поточну музику, щоб вона не грала під час паузи
+    this.musicElement.pause();
+
+    this.musicTimeout = setTimeout(() => {
+        this.musicElement.src = `${this.musicBasePath}${track}.mp3`;
+        this.musicElement.loop = true;
+        this.musicElement.currentTime = 0;
+		
+		if (this.musicMuted) return; // заглушено — просто готуємо трек, не граємо
+
+        const playPromise = this.musicElement.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                // Автоплей заблоковано браузером до першої взаємодії користувача —
+                // запустимо музику при першому кліку/натисканні
+                const resumeOnInteraction = () => {
+                    this.musicElement.play().catch(() => {});
+                    document.removeEventListener('click', resumeOnInteraction);
+                    document.removeEventListener('keydown', resumeOnInteraction);
+                };
+                document.addEventListener('click', resumeOnInteraction, { once: true });
+                document.addEventListener('keydown', resumeOnInteraction, { once: true });
+            });
+        }
+    }, this.musicDelay);
+}
+
 goToChapterStart() {
     const currentChapter = this.getCurrentChapter();
     if (currentChapter === 1) {
@@ -141,7 +240,8 @@ goToVideo(index) {
     localStorage.setItem('currentVideoIndex2', index);  
 
     this.updateVideo();  
-    this.updateInterface();  
+    this.updateInterface();
+	this.updateMusic(); 	
 }  
 
 goToNext() {  

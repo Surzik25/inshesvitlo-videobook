@@ -1206,6 +1206,27 @@ buttons2.forEach(({ button, tooltip }) => {
             </div>
         </div>
     </div>
+	<div class="bottom-panel">
+  <button class="sound-btn" id="musicBtn"></button>
+  <button class="sound-btn" id="soundBtn"></button>
+  </div>
+  <script>
+  window.addEventListener('scroll', () => {
+  const panel = document.querySelector('.bottom-panel');
+  
+  // Рахуємо поточну позицію скролу + висоту екрану
+  const scrollPosition = window.innerHeight + window.scrollY;
+  // Отримуємо повну висоту всього документа
+  const scrollHeight = document.documentElement.scrollHeight;
+
+  // Якщо відстань до кінця сторінки менша або дорівнює 5 пікселям
+  if (scrollHeight - scrollPosition <= 5) {
+    panel.classList.add('bottom-panel--hidden');
+  } else {
+    panel.classList.remove('bottom-panel--hidden');
+  }
+});
+</script>
 	<!-- FOOTER -->
   <footer class="footer line4" id="footerLine4">
     <!-- Animated particles -->
@@ -1284,6 +1305,13 @@ if (!localStorage.getItem('perpereVisiteddd')) {
   const welcome = document.getElementById('welcome');
   welcome.style.display = 'block';
   darkOverlay.style.display = 'block';
+  
+  setTimeout(() => {
+    const welcomeSound = new Audio('../../sound/read/newbies2.mp3');
+	// 🔇 Спільний перемикач звуку (sound-mute-state.js)
+    if (window.SoundPrefs && window.SoundPrefs.isMuted()) return null;
+    welcomeSound.play().catch(err => console.warn('Не вдалося відтворити звук:', err));
+  }, 300);
 }
 
 function closeWelcome() {
@@ -1312,11 +1340,14 @@ function returnToMain() {
   }
 }
   </script>
+  <script src="../sound-mute-state.js"></script>
   <script src="video-controls (1).js"></script>
   <script src="map.js"></script>
+  <script src="sound-effects-reader.js"></script>
   <script src="nav_tree_animator_3trees.js"></script>
   <script src="video_navigator_fix.js"></script>
   <script src="secret-box-new.js"></script>
   <script src="footer-line4.js"></script>
+  
 </body>
 </html>
