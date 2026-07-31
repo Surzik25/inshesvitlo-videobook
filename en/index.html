@@ -366,7 +366,7 @@ It's like a comic book from the future or a weird visual novel, but not interact
   const scrollHeight = document.documentElement.scrollHeight;
 
   // Якщо відстань до кінця сторінки менша або дорівнює 5 пікселям
-  if (scrollHeight - scrollPosition <= 5) {
+  if (scrollHeight - scrollPosition <= 25) {
     panel.classList.add('bottom-panel--hidden');
   } else {
     panel.classList.remove('bottom-panel--hidden');
@@ -533,21 +533,46 @@ It's like a comic book from the future or a weird visual novel, but not interact
 	</div>
   
   <script>
-  let playground = document.querySelector("body");
+(() => {
+  const mq = matchMedia('(hover: hover) and (pointer: fine)');
+  if (!mq.matches) return;                 // тач/стилус — виходимо повністю
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-let cursorArray = ['url("../images2/cursorSeq/2/cursor0000.png"), auto',
-                   'url("../images2/cursorSeq/2/cursor0001.png"), auto',
-                  'url("../images2/cursorSeq/2/cursor0002.png"), auto',
-                  'url("../images2/cursorSeq/2/cursor0003.png"), auto',
-                  'url("../images2/cursorSeq/2/cursor0004.png"), auto'];
-i = 0;
-(function cursor(){
-  playground.style.cursor  = cursorArray[i];
-  i++;
-  if(i == cursorArray.length){
-    i = 0; 
-  }
-   setTimeout(cursor, 50);
+  const frames = [0, 1, 2, 3, 4].map(
+    (n) => `url("../images2/cursorSeq/2/cursor000${n}.png"), auto`
+  );
+
+  // прогріваємо кеш, інакше перший цикл блимає системним курсором
+  frames.forEach((_, n) => {
+    new Image().src = `../images2/cursorSeq/2/cursor000${n}.png`;
+  });
+
+  const body = document.body;
+  let i = 0, last = 0, raf = 0;
+
+  const tick = (t) => {
+    raf = requestAnimationFrame(tick);
+    if (t - last < 50) return;             // ті самі ~20fps, але в такт з кадрами браузера
+    last = t;
+    body.style.cursor = frames[i];
+    i = (i + 1) % frames.length;
+  };
+
+  const start = () => { if (!raf) { last = 0; raf = requestAnimationFrame(tick); } };
+  const stop  = () => { cancelAnimationFrame(raf); raf = 0; };
+
+  start();
+
+  // вкладка неактивна — не крутимо анімацію даремно
+  document.addEventListener('visibilitychange', () =>
+    document.hidden ? stop() : start()
+  );
+
+  // юзер підключив/відключив мишу або перевернув планшет у режим з трекпадом
+  mq.addEventListener('change', (e) => {
+    if (e.matches) start();
+    else { stop(); body.style.cursor = ''; }
+  });
 })();
 
 // Показати оверлеї через 10 секунд після завантаження і прибрати через 3 секунди
