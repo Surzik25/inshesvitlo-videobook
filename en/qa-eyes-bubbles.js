@@ -40,24 +40,57 @@ document.addEventListener('click', e => {
   }
 });
   
-  // Eye-following cursor effect
-    const eyes = document.querySelectorAll('.eye');
-    const pupils = document.querySelectorAll('.pupil');
+  (() => {
+  const eyes = [...document.querySelectorAll('.eye')];
+  if (!eyes.length) return;
 
-    document.addEventListener('mousemove', (e) => {
-      eyes.forEach((eye) => {
-        const eyeRect = eye.getBoundingClientRect();
-        const eyeCenterX = eyeRect.left + eyeRect.width / 2;
-        const eyeCenterY = eyeRect.top + eyeRect.height / 2;
-        const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
-        const distance = Math.min(eye.offsetWidth / 4, Math.hypot(e.clientX - eyeCenterX, e.clientY - eyeCenterY) / 10);
-        const pupilX = Math.cos(angle) * distance;
-        const pupilY = Math.sin(angle) * distance;
-        
-        const pupil = eye.querySelector('.pupil');
-        pupil.style.transform = `translate(-50%, -50%) translate(${pupilX}px, ${pupilY}px)`;
-      });
+  // кешуємо геометрію: getBoundingClientRect у циклі на кожен рух = layout thrash
+  let geo = [];
+  const measure = () => {
+    geo = eyes.map((eye) => {
+      const r = eye.getBoundingClientRect();
+      return {
+        pupil: eye.querySelector('.pupil'),
+        cx: r.left + r.width / 2,
+        cy: r.top + r.height / 2,
+        max: r.width / 4,
+      };
     });
+  };
+
+  let x = 0, y = 0, ticking = false;
+
+  const render = () => {
+    ticking = false;
+    for (const g of geo) {
+      if (!g.pupil) continue;
+      const dx = x - g.cx, dy = y - g.cy;
+      const dist = Math.min(g.max, Math.hypot(dx, dy) / 10);
+      const angle = Math.atan2(dy, dx);
+      g.pupil.style.transform =
+        `translate(-50%, -50%) translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px)`;
+    }
+  };
+
+  const track = (e) => {
+    x = e.clientX; y = e.clientY;
+    if (!ticking) { ticking = true; requestAnimationFrame(render); }
+  };
+
+  measure();
+
+  // pointermove ловить мишу, палець і стилус одним слухачем
+  document.addEventListener('pointermove', track, { passive: true });
+  // на тач-девайсах палець зникає при відпусканні — залишаємо очі там, де були,
+  // але якщо хочеш повертати в центр, розкоментуй:
+  // document.addEventListener('pointerup', () => { x = innerWidth/2; y = innerHeight/2; render(); }, { passive: true });
+
+  // rect у координатах viewport → перераховуємо при скролі/ресайзі
+  addEventListener('scroll', measure, { passive: true });
+  addEventListener('resize', measure, { passive: true });
+  visualViewport?.addEventListener('resize', measure, { passive: true });
+})();
+
 	//це для ховерів
 	 document.querySelectorAll('.side-button').forEach(button => {
     const idleImg  = button.querySelector('.side-button-idle');
