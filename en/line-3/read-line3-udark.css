@@ -1,5 +1,5 @@
 body.udark {
-	background-image: url(../../images2/fonline3udark.png);
+	background-image: url(../../images2/fonline3udark.webp);
 	background-blend-mode: plus-lighter, hard-light;
 }
 
@@ -19,7 +19,7 @@ body.udark::before {
 .footer.line3.udark {
 		background: linear-gradient(
         transparent 20%,
-        #0d2245 100%), url(../../images2/footerLine3.png);
+        #0d2245 100%), url(../../images2/footerLine3.webp);
 		 mix-blend-mode: difference; 
 		 background-blend-mode: color-burn;
 		 background-repeat: no-repeat;

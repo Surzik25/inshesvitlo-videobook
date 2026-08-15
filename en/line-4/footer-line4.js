@@ -123,7 +123,7 @@ function loadUdarkModeToggle() {
         isUltraDark = true;
 
         if (modeToggle) {
-            modeToggle.src = '../../images2/UDMCircleIdle.gif';
+            modeToggle.src = '../../images2/UDMCircleIdle.webp';
         }
 
         setTimeout(() => { body.style.transition = ''; }, 50);
@@ -145,7 +145,7 @@ function toggleMode() {
 
     if (!isUltraDark) {
         // Темний → Ультратемний
-        modeToggle.src = '../../images2/DMCircleHover.gif';
+        modeToggle.src = '../../images2/DMCircleHover.webp';
 
         setTimeout(() => {
             body.classList.add('udark');
@@ -159,13 +159,13 @@ function toggleMode() {
         }, 300);
 
         setTimeout(() => {
-            modeToggle.src = '../../images2/UDMCircleIdle.gif';
+            modeToggle.src = '../../images2/UDMCircleIdle.webp';
             isAnimating = false;
         }, 900);
 
     } else {
         // Ультратемний → Темний
-        modeToggle.src = '../../images2/UDMCircleHover.gif';
+        modeToggle.src = '../../images2/UDMCircleHover.webp';
 
         setTimeout(() => {
             body.classList.remove('udark');
@@ -179,7 +179,7 @@ function toggleMode() {
         }, 300);
 
         setTimeout(() => {
-            modeToggle.src = '../../images2/DMCircleIdle.gif';
+            modeToggle.src = '../../images2/DMCircleIdle.webp';
             isAnimating = false;
         }, 900);
     }
@@ -228,7 +228,7 @@ function activateUdarkMode() {
     localStorage.setItem('udarkMode', 'true');
 
     if (modeToggle) {
-        modeToggle.src = '../../images2/UDMCircleIdle.gif';
+        modeToggle.src = '../../images2/UDMCircleIdle.webp';
     }
 
     udarkSelectors.forEach(selector => {
@@ -244,7 +244,7 @@ function deactivateUdarkMode() {
     localStorage.setItem('udarkMode', 'false');
 
     if (modeToggle) {
-        modeToggle.src = '../../images2/DMCircleIdle.gif';
+        modeToggle.src = '../../images2/DMCircleIdle.webp';
     }
 
     udarkSelectors.forEach(selector => {

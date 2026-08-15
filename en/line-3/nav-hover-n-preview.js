@@ -61,7 +61,7 @@ buttons.forEach(button => {
         previewBubble.style.top = `${buttonRect.top + buttonRect.height / 2 - previewBubble.offsetHeight / 2}px`;
     }
 
-    previewImage.src = `../../images2/klocha-thumbs/page${pageNumber}.png`;
+    previewImage.src = `../../images2/klocha-thumbs/page${pageNumber}.webp`;
     previewText.textContent = `Page ${pageNumber}`;
 
     // Позиціонуємо одразу (для випадку, коли розміри вже відомі)

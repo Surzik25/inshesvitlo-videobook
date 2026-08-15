@@ -54,7 +54,7 @@ toggleMusic() {
 updateMusicBtnUI() {
     if (!this.musicBtn) return;
     this.musicBtn.style.backgroundImage = this.musicMuted
-        ? `url('${this.imagesDir}no-music-btn.png')`
+        ? `url('${this.imagesDir}no-music-btn.webp')`
         : '';
 }
 

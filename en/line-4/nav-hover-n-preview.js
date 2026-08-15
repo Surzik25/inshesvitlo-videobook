@@ -62,7 +62,7 @@ buttons.forEach(button => {
     }
                 
                 // Оновлюємо контент попереднього перегляду
-                previewImage.src = `../../images2/perpere-thumbs/page${pageNumber}.png`;
+                previewImage.src = `../../images2/perpere-thumbs/page${pageNumber}.webp`;
                 previewText.textContent = `Page ${pageNumber}`;
                 
                     // Позиціонуємо одразу (для випадку, коли розміри вже відомі)

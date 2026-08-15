@@ -220,7 +220,7 @@
             z-index: 1;
             box-shadow: 0 0 5px #3c04b5;
             transition: all 0.5s ease;
-           cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+           cursor: url(../images2/cursorPointer/pointer.webp) 2 2, pointer;
         }
 
         .nav-button:hover {

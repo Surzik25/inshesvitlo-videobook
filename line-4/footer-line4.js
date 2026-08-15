@@ -83,7 +83,7 @@ function loadUdarkModeToggle() {
         
         // Встановлюємо правильну іконку
         if (modeToggle) {
-            modeToggle.src = '../images2/UDMCircleIdle.gif';
+            modeToggle.src = '../images2/UDMCircleIdle.webp';
         }
         
         // Повертаємо transitions через короткий час
@@ -106,7 +106,7 @@ function toggleMode() {
     
     if (!isUltraDark) {
         // Переключення з темного на ультратемний
-        modeToggle.src = '../images2/DMCircleHover.gif';
+        modeToggle.src = '../images2/DMCircleHover.webp';
         
         // Затримка для красивого ефекту
         setTimeout(() => {
@@ -129,13 +129,13 @@ function toggleMode() {
         }, 300);
         
         setTimeout(() => {
-            modeToggle.src = '../images2/UDMCircleIdle.gif';
+            modeToggle.src = '../images2/UDMCircleIdle.webp';
             isAnimating = false;
         }, 900);
         
     } else {
         // Переключення з ультратемного на темний
-        modeToggle.src = '../images2/UDMCircleHover.gif';
+        modeToggle.src = '../images2/UDMCircleHover.webp';
         
         // Затримка для красивого ефекту
         setTimeout(() => {
@@ -158,7 +158,7 @@ function toggleMode() {
         }, 300);
         
         setTimeout(() => {
-            modeToggle.src = '../images2/DMCircleIdle.gif';
+            modeToggle.src = '../images2/DMCircleIdle.webp';
             isAnimating = false;
         }, 900);
     }
@@ -210,7 +210,7 @@ function activateUdarkMode() {
     localStorage.setItem('udarkMode', 'true');
     
     if (modeToggle) {
-        modeToggle.src = '../images2/UDMCircleIdle.gif';
+        modeToggle.src = '../images2/UDMCircleIdle.webp';
     }
     
     // Також активуємо для другої функції
@@ -247,7 +247,7 @@ function deactivateUdarkMode() {
     localStorage.setItem('udarkMode', 'false');
     
     if (modeToggle) {
-        modeToggle.src = '../images2/DMCircleIdle.gif';
+        modeToggle.src = '../images2/DMCircleIdle.webp';
     }
     
     // Також деактивуємо для другої функції

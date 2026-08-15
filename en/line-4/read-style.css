@@ -1,6 +1,6 @@
 body {
 	font-family: 'Expert2new', 'Expeng2n', 'Expengsymbols', 'Comic Sans MS', sans-serif;
-	background-image: url(../../images2/BGline4.png);
+	background-image: url(../../images2/BGline4.webp);
 	background-size: cover;
 	background-repeat: no-repeat;
 	min-height: 120vh;
@@ -28,7 +28,7 @@ height: 200vh;
       position: fixed;
       top: 0; left: 0; right: 0;
       height: 80px;
-     background: url(../../images2/headerPidLine4.png), linear-gradient(90deg, rgba(237, 124, 107,0.3) 0%, rgba(61, 25, 224,0.3) 35%, rgba(2, 227, 212,0.3) 100%);
+     background: url(../../images2/headerPidLine4.webp), linear-gradient(90deg, rgba(237, 124, 107,0.3) 0%, rgba(61, 25, 224,0.3) 35%, rgba(2, 227, 212,0.3) 100%);
 	 background-blend-mode: color-burn, hard-light;
 	 border-bottom-style: double;
 	 border-bottom-width: 5px;
@@ -79,7 +79,7 @@ height: 200vh;
 		top: 5px;
 		width: 100%;
 		filter: drop-shadow(0px 0px 5px #0b120b); 
-		cursor: url(../../images2/cursorPointer/pointer.png) 2 2, pointer;
+		cursor: url(../../images2/cursorPointer/pointer.webp) 2 2, pointer;
 		transition: all 0.3s ease;
 	}
 	
@@ -99,7 +99,7 @@ height: 200vh;
 		right: 20px;
 		width: 55%; height: 140%;
 		transition: filter 0.2s ease;
-		cursor: url(../../images2/cursorPointer/pointer.png) 2 2, pointer;
+		cursor: url(../../images2/cursorPointer/pointer.webp) 2 2, pointer;
 		
 	}
 	
@@ -134,7 +134,7 @@ height: 200vh;
             position: absolute;
             bottom: -210px;
             left: -140px;
-            background: url(../../images2/lockBubbleBgENG.png), #ffffff;
+            background: url(../../images2/lockBubbleBgENG.webp), #ffffff;
 			background-size: cover;
 			background-repeat: no-repeat;
             border: 3px solid #333;
@@ -183,7 +183,7 @@ height: 200vh;
             position: absolute;
             bottom: -110px;
             left: -130px;
-            background: url(../../images2/unlockBubbleBg.png), linear-gradient(90deg, rgba(39, 219, 210, 0.5) 0%, rgba(50, 160, 250, 0.5) 45%, #7f5bf5 80%);
+            background: url(../../images2/unlockBubbleBg.webp), linear-gradient(90deg, rgba(39, 219, 210, 0.5) 0%, rgba(50, 160, 250, 0.5) 45%, #7f5bf5 80%);
 			background-position: left;
 			background-size: 105%;
 			background-repeat: no-repeat;
@@ -467,7 +467,7 @@ height: 200vh;
 
         .book-path {
             height: 30px;
-            background-image: url(../../images2/bookPathLine4.png); background-position: bottom; background-color: #16074f;
+            background-image: url(../../images2/bookPathLine4.webp); background-position: bottom; background-color: #16074f;
             display: flex;
             align-items: center;
             padding: 0 10px;
@@ -479,13 +479,13 @@ height: 200vh;
 
         .breadcrumb-button {
             position: relative;
-            background-image: url(../../images2/book-path-button-line4.png); background-position: center; background-size: cover;
+            background-image: url(../../images2/book-path-button-line4.webp); background-position: center; background-size: cover;
             color: #47ffda;
             border: none;
             padding: 6px 20px 6px 15px;
             margin-right: 10px;
             font-size: 21px;
-           cursor: url(../../images2/cursorPointer/pointer.png) 2 2, pointer;
+           cursor: url(../../images2/cursorPointer/pointer.webp) 2 2, pointer;
             clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 10px 50%);
 			font-family: 'Klochaeng', 'Expengsymbols';
 			mix-blend-mode: hard-light;
@@ -535,7 +535,7 @@ height: 200vh;
 
         .pattern-left {
             width: 62px;
-            background-image: url(../../images2/patternLine4.png);
+            background-image: url(../../images2/patternLine4.webp);
 			background-color: rgba(143, 242, 239, 0.5);
 			background-size: 100%;
             display: flex;
@@ -553,7 +553,7 @@ height: 200vh;
             height: 50px;
             border: none;
             background: none;
-            cursor: url(../../images2/cursorPointer/pointer.png) 2 2, pointer;
+            cursor: url(../../images2/cursorPointer/pointer.webp) 2 2, pointer;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -654,7 +654,7 @@ pattern-button:hover {
     animation: none !important; /* Відключає анімацію bright */
 	filter: grayscale(1);
 	opacity: 0.5;
-	cursor: url(../../images2/cursorNot-allowed/not-allowed.png), not-allowed;
+	cursor: url(../../images2/cursorNot-allowed/not-allowed.webp), not-allowed;
 }
 
 .pattern-button:disabled .pattern-buttons-img,
@@ -864,7 +864,7 @@ pattern-button:hover {
 
         .pattern-right {
             width: 62px;
-            background-image: url(../../images2/patternLine4.png);
+            background-image: url(../../images2/patternLine4.webp);
 			background-color: rgba(143, 242, 239, 0.5);
 			background-size: 100%;
             display: flex;
@@ -882,7 +882,7 @@ pattern-button:hover {
 
         .video-controls {
             flex: 1;
-            background-image: url(../../images2/video-controls-line4.png); background-repeat: no-repeat;
+            background-image: url(../../images2/video-controls-line4.webp); background-repeat: no-repeat;
             display: flex;
             align-items: top;
             z-index: 10;
@@ -931,7 +931,7 @@ pattern-button:hover {
         }
         
         .control-button.inactive {
-            cursor: url(../../images2/cursorPointer/pointer.png) 2 2, pointer;
+            cursor: url(../../images2/cursorPointer/pointer.webp) 2 2, pointer;
             opacity: 1;
         }
         
@@ -966,7 +966,7 @@ pattern-button:hover {
 
         .page-date {
             width: 430px; height: 57px;
-            background-image: url(../../images2/page-date-line4.png); background-position: left; background-repeat: no-repeat;
+            background-image: url(../../images2/page-date-line4.webp); background-position: left; background-repeat: no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1090,7 +1090,7 @@ pattern-button:hover {
             flex: 1;
             position: relative;
             overflow: hidden;
-            cursor: url(../../images2/cursorGrab/grab.png) 20 20, grab;
+            cursor: url(../../images2/cursorGrab/grab.webp) 20 20, grab;
             background: radial-gradient(circle at center, rgba(153, 255, 230, 0.91) 0%, rgba(125, 115, 133, 0.5) 65%, #140e24 100%);
             min-height: 300px;
 			
@@ -1103,7 +1103,7 @@ pattern-button:hover {
 }
 
         .map-content:active {
-            cursor: url(../../images2/cursorGrab/grabbing.png) 15 15, grabbing;
+            cursor: url(../../images2/cursorGrab/grabbing.webp) 15 15, grabbing;
         }
 
         .map-svg-container {
@@ -1127,7 +1127,7 @@ pattern-button:hover {
 
         .map-legend {
             height: 145px;
-            background-image: url(../../images2/map-legend-ENG.png); 
+            background-image: url(../../images2/map-legend-ENG.webp); 
             background-size: 100%; 
             background-position: bottom; 
             background-repeat: no-repeat;
@@ -1141,7 +1141,7 @@ pattern-button:hover {
 
         .map-caption {
             height: 65px;
-            background-image: url(../../images2/map-caption-line4-ENG.png); 
+            background-image: url(../../images2/map-caption-line4-ENG.webp); 
 			background-size: 100%;
 			background-position: top;
 			background-repeat: no-repeat;
@@ -1167,7 +1167,7 @@ pattern-button:hover {
         .map-control-btn {
             width: 30px;
             height: 30px;
-            background: url(../../images2/zoombg.png), linear-gradient(45deg, rgba(30, 210, 230, 0.5) 0%, rgba(25, 3, 105, 0.5) 100%);
+            background: url(../../images2/zoombg.webp), linear-gradient(45deg, rgba(30, 210, 230, 0.5) 0%, rgba(25, 3, 105, 0.5) 100%);
 			background-blend-mode: color-burn, color-burn;
 			background-position: crnter;
             border: 1px solid #fafcb6;
@@ -1175,7 +1175,7 @@ pattern-button:hover {
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: url(../../images2/cursorPointer/pointer.png) 2 2, pointer;
+            cursor: url(../../images2/cursorPointer/pointer.webp) 2 2, pointer;
             font-size: 20px;
             font-weight: bold;
             color: blue;
@@ -1235,7 +1235,7 @@ pattern-button:hover {
 	filter: brightness(150%) hue-rotate(56deg);
 	stroke: #2E7D32;
     stroke-width: 2;
-	cursor: url(../../images2/cursorGrab/info.png) 0 0, pointer;
+	cursor: url(../../images2/cursorGrab/info.webp) 0 0, pointer;
 }
 
 
@@ -1243,7 +1243,7 @@ pattern-button:hover {
 	filter: brightness(150%) hue-rotate(56deg);
 	stroke: #2E7D32;
     stroke-width: 2;
-	cursor: url(../../images2/cursorGrab/info.png) 0 0, pointer;
+	cursor: url(../../images2/cursorGrab/info.webp) 0 0, pointer;
 	
 }
 
@@ -1251,14 +1251,14 @@ pattern-button:hover {
 	filter: brightness(150%) hue-rotate(56deg);
 	stroke: #f5a742;
     stroke-width: 2;
-	cursor: url(../../images2/cursorGrab/info.png) 0 0, pointer;
+	cursor: url(../../images2/cursorGrab/info.webp) 0 0, pointer;
 	
 }
 
 .bottom-panel {
 	  position: fixed;
       bottom: -16px; height: 80px;
-      background-image: url(../../images/sound-tab2.png);
+      background-image: url(../../images/sound-tab2.webp);
 	  left: 13%;
 	  width: 180px;
 	  z-index: 101;
@@ -1282,7 +1282,7 @@ pattern-button:hover {
 	  margin-right: 4px;
 	  background: none;
 	  border: none;
-	  cursor: url(../../images2/cursorPointer/littlePointer.png) 1 1, pointer;
+	  cursor: url(../../images2/cursorPointer/littlePointer.webp) 1 1, pointer;
 	  transition: transform 0.2s ease, filter 0.2s ease;
 	  filter: drop-shadow(0 5px 7px black);
 	}
@@ -1293,12 +1293,12 @@ pattern-button:hover {
 	}
 	
 	#musicBtn {
-		background-image: url(../../images/music-btn.gif);
+		background-image: url(../../images/music-btn.webp);
 		background-repeat: no-repeat;
 	}
 	
 	#soundBtn {
-		background-image: url(../../images/sound-btn.gif);
+		background-image: url(../../images/sound-btn.webp);
 		background-repeat: no-repeat;
 	}
 
@@ -1417,7 +1417,7 @@ pattern-button:hover {
       border: 3px solid #115d4e;
       border-radius: 10px;
       color: white;
-      cursor: url(../../images2/cursorPointer/pointer.png) 2 2, pointer;
+      cursor: url(../../images2/cursorPointer/pointer.webp) 2 2, pointer;
       transition: all 0.3s;
 	  margin: 10px;
 	  z-index: 10;
@@ -1435,7 +1435,7 @@ pattern-button:hover {
       border: 3px solid #115d4e;
       border-radius: 10px;
       color: white;
-      cursor: url(../../images2/cursorPointer/pointer.png) 2 2, pointer;
+      cursor: url(../../images2/cursorPointer/pointer.webp) 2 2, pointer;
       transition: all 0.3s;
 	  margin: 10px;
 	  z-index: 10;
@@ -1503,7 +1503,7 @@ pattern-button:hover {
             .map-legend {
                 width: 215px;
                 height: auto;
-				background-image: url(../../images2/map-legend-vert-ENG.png); background-position: top;
+				background-image: url(../../images2/map-legend-vert-ENG.webp); background-position: top;
             }
 			
 			
