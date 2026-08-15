@@ -194,7 +194,7 @@ setInterval(() => {
 	// Відновлення візуального стану після перезавантаження
     restoreVisualState() {
         if (!this.isLocked) {
-            this.boxImage.src = "../images2/skrunkaIdle.gif";
+            this.boxImage.src = "../images2/skrunkaIdle.webp";
             this.boxImage.alt = "Unlocked Treasure Box";
             this.treasureBox.classList.add('unlocked');
             this.speechBubble.classList.remove('show');
@@ -301,7 +301,7 @@ setInterval(() => {
 
         unlockBox() {
         this.isLocked = false;
-        this.boxImage.src = "../images2/skrunkaIdle.gif";
+        this.boxImage.src = "../images2/skrunkaIdle.webp";
         this.boxImage.alt = "Unlocked Treasure Box";
         this.treasureBox.classList.add('unlocked');
         
@@ -407,19 +407,19 @@ preloadAnimationImages() {
     
     imageNames.forEach(imageName => {
         const img = new Image();
-        img.src = `../images2/${imageName}.gif`;
+        img.src = `../images2/${imageName}.webp`;
         
         // Зберігаємо preloaded зображення
         this.preloadedImages[imageName] = img;
         
         // Опціонально: логування успішного завантаження
         img.onload = () => {
-            console.log(`Preloaded: ${imageName}.gif`);
+            console.log(`Preloaded: ${imageName}.webp`);
         };
         
         // Опціонально: обробка помилок завантаження
         img.onerror = () => {
-            console.warn(`Failed to preload: ${imageName}.gif`);
+            console.warn(`Failed to preload: ${imageName}.webp`);
         };
     });
 }
@@ -473,7 +473,7 @@ setBoxImage(imageName, fallbackText) {
         this.boxImage.src = this.preloadedImages[imageName].src;
     } else {
         // Fallback до прямого шляху якщо preload не спрацював
-        this.boxImage.src = `../images2/${imageName}.gif`;
+        this.boxImage.src = `../images2/${imageName}.webp`;
     }
     this.boxImage.alt = fallbackText;
 }

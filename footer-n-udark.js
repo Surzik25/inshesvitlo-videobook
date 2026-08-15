@@ -70,7 +70,7 @@
       }
       
       .speech-bubble a {
-        cursor: url(images2/cursorPointer/pointer.png) 2 2, pointer; !important;
+        cursor: url(images2/cursorPointer/pointer.webp) 2 2, pointer; !important;
         transition: all 0.3s ease;
         pointer-events: auto !important;
       }

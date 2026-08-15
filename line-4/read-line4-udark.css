@@ -1,5 +1,5 @@
 body.udark {
-	background-image: url(../images2/BGline4udark.png);
+	background-image: url(../images2/BGline4udark.webp);
 	background-blend-mode: plus-lighter, hard-light;
 }
 
@@ -19,7 +19,7 @@ body.udark::before {
 .footer.line4.udark {
 		background: linear-gradient(
         transparent 10%,
-        #07135c 100%), url(../images2/footerLine4.png);
+        #07135c 100%), url(../images2/footerLine4.webp);
 		 mix-blend-mode: difference; 
 		 background-blend-mode: color-dodge;
 		 filter: hue-rotate(65deg);

@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const buttonRect = e.target.getBoundingClientRect();
                 
                 // Оновлюємо контент попереднього перегляду
-                previewImage.src = `../images2/klocha-thumbs/page${pageNumber}.png`;
+                previewImage.src = `../images2/klocha-thumbs/page${pageNumber}.webp`;
                 previewText.textContent = `сторінка ${pageNumber}`;
                 
                 // Позиціонуємо бульбашку справа від кнопки з відступом 30px

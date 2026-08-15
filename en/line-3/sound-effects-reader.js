@@ -31,7 +31,7 @@
   function updateSoundBtnUI() {
     if (!soundBtn) return;
     soundBtn.style.backgroundImage = window.SoundPrefs.isMuted()
-      ? `url('${IMAGES_DIR}no-sound-btn.png')`
+      ? `url('${IMAGES_DIR}no-sound-btn.webp')`
       : ''; // повертаємо дефолтне фонове зображення, задане в CSS
   }
 

@@ -2,50 +2,50 @@
 const buttonConfig = {
     infinite: {
         pair: 'freeze',
-        activeImg: '../images2/infinite.gif',
-        inactiveImg: '../images2/infiniteDeact.png',
+        activeImg: '../images2/infinite.webp',
+        inactiveImg: '../images2/infiniteDeact.webp',
         isActive: true
     },
     freeze: {
         pair: 'infinite',
         activeImg: '../images2/freeze.gif',
-        inactiveImg: '../images2/freezeDeact.png',
+        inactiveImg: '../images2/freezeDeact.webp',
         isActive: false
     },
     fast: {
         pair: 'slow',
-        activeImg: '../images2/fast.gif',
-        inactiveImg: '../images2/fastDeact.png',
+        activeImg: '../images2/fast.webp',
+        inactiveImg: '../images2/fastDeact.webp',
         isActive: true
     },
     slow: {
         pair: 'fast',
-        activeImg: '../images2/slow.gif',
-        inactiveImg: '../images2/slowDeact.png',
+        activeImg: '../images2/slow.webp',
+        inactiveImg: '../images2/slowDeact.webp',
         isActive: false
     },
     dark: {
         pair: 'udark',
-        activeImg: '../images2/dark.gif',
-        inactiveImg: '../images2/darkDeact.png',
+        activeImg: '../images2/dark.webp',
+        inactiveImg: '../images2/darkDeact.webp',
         isActive: true
     },
     udark: {
         pair: 'dark',
         activeImg: '../images2/udark.gif',
-        inactiveImg: '../images2/udarkDeact.png',
+        inactiveImg: '../images2/udarkDeact.webp',
         isActive: false
     },
     window: {
         pair: 'fullscreen',
-        activeImg: '../images2/window.gif',
-        inactiveImg: '../images2/windowDeact.png',
+        activeImg: '../images2/window.webp',
+        inactiveImg: '../images2/windowDeact.webp',
         isActive: true
     },
     fullscreen: {
         pair: 'window',
-        activeImg: '../images2/fullscreen2.gif',
-        inactiveImg: '../images2/fullscrDeact.png',
+        activeImg: '../images2/fullscreen2.webp',
+        inactiveImg: '../images2/fullscrDeact.webp',
         isActive: false
     }
 };

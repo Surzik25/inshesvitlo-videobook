@@ -73,7 +73,7 @@
 #cyber-video-tab {
   position: fixed;
   z-index: 1501;
-  top: 57%;
+  top: 61%;
   left: 50%;
   width: max(360px, min(880px, 92vw, calc((100vh - 190px) * 16 / 9)));
   transform: translate(-50%, -50%) scale(0.9);
@@ -135,7 +135,7 @@
   position: absolute;
   /* негативні відступи = картинка виходить за межі таблички */
   inset: -41% -8% 39% -5%;  
-  background: url(../images/anniversary.png);
+  background: url(../images/anniversary.webp);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 10;
@@ -229,7 +229,7 @@ filter: drop-shadow(0 0 15px #0b0352);
     var(--cvt-cyan) 100%);
   -webkit-clip-path: polygon(26% 0, 100% 0, 100% 74%, 74% 100%, 0 100%, 0 26%);
   clip-path: polygon(26% 0, 100% 0, 100% 74%, 74% 100%, 0 100%, 0 26%);
-  cursor: url(../images2/cursorPointer/littlePointer.png) 1 1, pointer;
+  cursor: url(../images2/cursorPointer/littlePointer.webp) 1 1, pointer;
   filter: drop-shadow(0 0 10px rgba(247, 54, 218, 0.65));
   transition: transform 0.2s ease, filter 0.2s ease;
 }
@@ -328,7 +328,7 @@ filter: drop-shadow(0 0 15px #0b0352);
   background: #05020f;
   overflow: hidden;
   display: block;
-  cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+  cursor: url(../images2/cursorPointer/pointer.webp) 2 2, pointer;
   transition: opacity 0.45s ease, visibility 0.45s;
 }
 
@@ -518,30 +518,53 @@ filter: drop-shadow(0 0 15px #0b0352);
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 20px 9px 16px;
+  padding: 4px 10px 4px 7px;
   border: none;
+  /* НЕ overflow:hidden і НЕ clip-path тут — інакше серце-анімація
+     (особливо кадр likeSet, 150×127) ріжеться по краю кнопки.
+     Форму й фон тепер малює .cvt-like-plate — окремий шар нижче. */
+  background: none;
   font-family: 'Expert2new', 'Expengsymbols', 'Comic Sans MS', sans-serif;
   font-size: 19px;
   letter-spacing: 1.5px;
   color: #d8f7ff;
-  background: linear-gradient(145deg,
+  cursor: url(../images2/cursorPointer/littlePointer.webp) 1 1, pointer;
+  transition: transform 0.2s ease, filter 0.25s ease, color 0.25s ease;
+}
+
+/* ── плата: фон + октагональна форма ─────────────────────────────────
+   Усе, що раніше висіло на .cvt-like (clip-path, градієнт, box-shadow),
+   переїхало сюди. Це САМОСТІЙНИЙ шар під контентом (z-index: 0),
+   а не батько .cvt-like-visual — тому clip-path звідси ані краплі
+   не чіпає серце-анімацію, навіть коли та виходить за межі кнопки. */
+.cvt-like-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url(../images/likeTab.webp), linear-gradient(145deg,
     rgba(139, 77, 255, 0.28) 0%,
     rgba(19, 18, 64, 0.92) 55%,
     rgba(0, 228, 245, 0.22) 100%);
+  background-position: center;
+  background-size: 110%;
   box-shadow:
     inset 0 0 0 1px rgba(0, 228, 245, 0.45),
     0 0 14px rgba(0, 228, 245, 0.25);
   -webkit-clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
   clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
-  cursor: url(../images2/cursorPointer/littlePointer.png) 1 1, pointer;
-  transition: transform 0.2s ease, filter 0.25s ease, color 0.25s ease;
+}
+
+.cvt-like-label,
+.cvt-like-count {
+  position: relative;
+  z-index: 1;
 }
 
 /* Поки не приїхав стан із сервера — кнопка неактивна, щоб не було
    кліку «в порожнечу» й миготіння цифри. */
 .cvt-like[disabled] {
   opacity: 0.55;
-  cursor: url(../images2/cursorPointer/littlePointer.png) 1 1, default;
+  cursor: url(../images2/cursorPointer/littlePointer.webp) 1 1, default;
 }
 
 .cvt-like:not([disabled]):hover {
@@ -559,52 +582,72 @@ filter: drop-shadow(0 0 15px #0b0352);
   outline-offset: 3px;
 }
 
-/* ── серце ───────────────────────────────────────────────────────── */
-.cvt-like-heart {
-  display: block;
-  width: 22px;
-  height: 20px;
+/* ── серце: 3 стани, «set» — ручна посекундна секвенція PNG ──────────
+   Логіка перемикання станів і кадрів — у cvt-likes.js.
+
+     is-state-empty  likeEmpty.png              56×60,  8 fps, 5 кадрів, луп — нема лайка
+     is-state-set    likeSet seq/likeFull0001…10.png  150×127, 10 fps, 10 кадрів, РАЗ —
+                     лайк ставиться. Це НЕ APNG: JS сам вручну проходить
+                     кадри 1→10 через setInterval, тому анімація завжди
+                     показує кожен кадр по порядку і не залежить від
+                     того, як конкретний браузер треактує APNG.
+     is-state-full   likeFull.png                50×41,  6 fps, 3 кадри, луп — лайк стоїть
+
+   .cvt-like-visual — маленький «якір» у потоці (не росте й не стрибає
+   макет кнопки), а саме серце — абсолютне й по центру якоря. Кожен
+   стан має свій піксельний розмір, і оскільки серце НЕ в потоці,
+   перемикання розмірів між станами ніяк не зсуває сусідні LIKE/лічильник.
+   Через те що ні тут, ні вище по батьках нема overflow:hidden або
+   clip-path — картинка вільно виходить за межі самої кнопки. */
+.cvt-like-visual {
+  position: relative;
+  z-index: 1;
+  width: 50px;
+  height: 45px;
   flex-shrink: 0;
+  pointer-events: none;
 }
 
-.cvt-like-heart svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
+.cvt-like-heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
-.cvt-like-heart path {
-  fill: none;
-  stroke: var(--cvt-ice);
-  stroke-width: 2.4;
-  transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
-  filter: drop-shadow(0 0 4px rgba(0, 228, 245, 0.6));
+.cvt-like-heart.is-state-empty {
+  width: 56px;
+  height: 60px;
+  background-image: url(../images/likeEmpty.webp);
 }
 
-.cvt-like.is-liked .cvt-like-heart path {
-  fill: var(--cvt-magenta);
-  stroke: #ffb3f0;
-  filter: drop-shadow(0 0 8px var(--cvt-magenta));
+.cvt-like-heart.is-state-set {
+  width: 130px;
+  height: 107px;
+  /* background-image СЮДИ не пишемо: кадр 1..10 підставляє JS
+     (cvt-likes.js) через style.backgroundImage при кожному тіку. */
+  bottom: 280%;
+  left: 80%;
+  transform: translate(-50%, -66%);
 }
 
-.cvt-like.is-liked {
-  color: #ffe6fb;
+.cvt-like-heart.is-state-full {
+  width: 50px;
+  height: 41px;
+  background-image: url(../images/likeFull.webp);
+}
+
+.cvt-like.is-liked .cvt-like-plate {
   box-shadow:
     inset 0 0 0 1px rgba(247, 54, 218, 0.6),
     0 0 18px rgba(247, 54, 218, 0.4);
 }
 
-/* Стрибок серця в момент лайка. Клас знімає JS на animationend. */
-.cvt-like.is-pop .cvt-like-heart {
-  animation: cvtHeartPop 0.5s cubic-bezier(0.2, 1.6, 0.3, 1);
-}
-
-@keyframes cvtHeartPop {
-  0%   { transform: scale(1); }
-  35%  { transform: scale(1.45); }
-  60%  { transform: scale(0.9); }
-  100% { transform: scale(1); }
+.cvt-like.is-liked {
+  color: #ffe6fb;
 }
 
 /* ── лічильник ───────────────────────────────────────────────────── */
@@ -634,11 +677,14 @@ filter: drop-shadow(0 0 15px #0b0352);
   100% { transform: translateY(0); opacity: 1; }
 }
 
-/* ── спалах-кільце при лайку ─────────────────────────────────────── */
+/* ── спалах-кільце при лайку ─────────────────────────────────────────
+   Тепер усередині .cvt-like-visual — центрується відносно якоря серця,
+   а не всієї кнопки, тож лишається на місці незалежно від того, який
+   зараз кадр (56×60 / 150×127 / 50×41). */
 .cvt-like-burst {
   position: absolute;
   top: 50%;
-  left: 26px;
+  left: 50%;
   width: 22px;
   height: 22px;
   margin: -11px 0 0 -11px;
@@ -696,7 +742,10 @@ body.udark #cyber-video-tab .cvt-frame {
   .cvt-foot  { font-size: 16px; }
   .cvt-play  { width: 74px; height: 74px; }
   .cvt-like  { font-size: 16px; padding: 7px 16px 7px 13px; gap: 8px; }
-  .cvt-like-heart { width: 19px; height: 17px; }
+  /* Той самий якір, просто трохи менший — самі кадри (is-state-*)
+     мають фіксовані пікселі й на вузьких екранах не міняються:
+     це маленька декоративна іконка, дрібніти їй ні до чого. */
+  .cvt-like-visual { width: 38px; height: 34px; }
   .cvt-likes { margin-top: 9px; }
   .cvt-tri   { margin-left: 7px; border-left-width: 23px; border-top-width: 14px; border-bottom-width: 14px; }
   .cvt-facade::before,
@@ -729,7 +778,6 @@ body.udark #cyber-video-tab .cvt-frame {
   .cvt-led,
   .cvt-blink,
   .cvt-iframe,
-  .cvt-like.is-pop .cvt-like-heart,
   .cvt-like.is-pop .cvt-like-burst,
   .cvt-like-count.is-bump,
   .cvt-like.is-error {

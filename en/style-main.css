@@ -1,6 +1,6 @@
 /* Базовий ресет */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Expert2new', 'Expengsymbols', 'Expeng2n', 'Comic Sans MS', sans-serif; background-image: url(../images/BGdark.png); background-size: cover;
+    body { font-family: 'Expert2new', 'Expengsymbols', 'Expeng2n', 'Comic Sans MS', sans-serif; background-image: url(../images/BGdark.webp); background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-width: 600px; min-height: 120vh; max-width: 95%;}
@@ -54,7 +54,7 @@ body::before {
 }
 
 #preloader {
-  cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+  cursor: url(../images2/cursorPointer/pointer.webp) 2 2, pointer;
 }
 
 #progress-fill {
@@ -77,7 +77,7 @@ body::before {
       top: 0; left: 0; right: 0;
       height: 80px;
       background: rgba(2,0,36,0.1);
-     background: url(../images/headerPid.png), linear-gradient(90deg, rgba(239, 245, 83,0.5) 0%, rgba(136, 10, 247,0.5) 35%, rgba(10, 239, 247,0.5) 100%) ;
+     background: url(../images/headerPid.webp), linear-gradient(90deg, rgba(239, 245, 83,0.5) 0%, rgba(136, 10, 247,0.5) 35%, rgba(10, 239, 247,0.5) 100%) ;
 	 background-blend-mode: color-burn, hard-light;
 	 border-bottom-style: double;
 	 border-bottom-width: 5px;
@@ -161,7 +161,7 @@ body::before {
 .eye {
     width: 35px;
     height: 34px;
-    background-image: url(../images/hudozEye.png);
+    background-image: url(../images/hudozEye.webp);
 	background-size: cover;
     border-radius: 40%;
     position: relative;
@@ -173,7 +173,7 @@ body::before {
   .pupil {
     width: 6px;
     height: 15px;
-    background-image: url(../images/qaBg2.png);
+    background-image: url(../images/qaBg2.webp);
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -235,7 +235,7 @@ body::before {
 .bottom-panel {
 	  position: fixed;
       bottom: -16px; height: 80px;
-      background-image: url(../images/sound-tab.png);
+      background-image: url(../images/sound-tab.webp);
 	  left: 13%;
 	  width: 310px;
 	  z-index: 101;
@@ -259,7 +259,7 @@ body::before {
 	  margin-right: 7px;
 	  background: none;
 	  border: none;
-	  cursor: url(../images2/cursorPointer/littlePointer.png) 1 1, pointer;
+	  cursor: url(../images2/cursorPointer/littlePointer.webp) 1 1, pointer;
 	  transition: transform 0.2s ease, filter 0.2s ease;
 	  filter: drop-shadow(0 5px 7px black);
 	}
@@ -270,17 +270,17 @@ body::before {
 	}
 	
 	#musicBtn {
-		background-image: url(../images/music-btn.gif);
+		background-image: url(../images/music-btn.webp);
 		background-repeat: no-repeat;
 	}
 	
 	#soundBtn {
-		background-image: url(../images/sound-btn.gif);
+		background-image: url(../images/sound-btn.webp);
 		background-repeat: no-repeat;
 	}
 	
 	#adaptBtn {
-		background-image: url(../images/ua-btn.gif);
+		background-image: url(../images/ua-btn.webp);
 		background-repeat: no-repeat;
 	}
 
@@ -307,7 +307,7 @@ body::before {
       background: none; border: none;
       font-family: 'Expert2new', 'Expengsymbols';
 	  position: relative;
-	  cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+	  cursor: url(../images2/cursorPointer/pointer.webp) 2 2, pointer;
 	  
     }
     .side-panel.left .side-button:nth-of-type(6),
@@ -455,7 +455,7 @@ body::before {
 		-webkit-text-stroke: 0.3px rgba(7, 0, 79, 0.5);
 		font-weight: bold;
 		font-size: 28px;
-		cursor: url(../images2/cursorWiki.png) 2 2, pointer;
+		cursor: url(../images2/cursorWiki.webp) 2 2, pointer;
 	}
 	
 	.grad-links2 {
@@ -468,13 +468,13 @@ body::before {
 		z-index: 100;
 		text-shadow: none;
 		font-weight: bold;
-		cursor: url(../images2/cursorWiki.png) 2 2, pointer;
+		cursor: url(../images2/cursorWiki.webp) 2 2, pointer;
 	}
 	
 	
 	.qa-item2 {
 		pointer-events: auto;
-      background-image: url(../images/qaBg.png); margin-bottom: 10px; margin-left: 10px;
+      background-image: url(../images/qaBg.webp); margin-bottom: 10px; margin-left: 10px;
       padding: 8px; 
 	  padding-left: 20px;
       clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%);
@@ -491,7 +491,7 @@ body::before {
 	
     .qa-item {
 		pointer-events: auto;
-      background-image: url(../images/Qbg.png); background-size: cover; margin-bottom: 10px; margin-left: 10px;
+      background-image: url(../images/Qbg.webp); background-size: cover; margin-bottom: 10px; margin-left: 10px;
       padding: 8px; 
 	  padding-left: 20px;
       clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%);
@@ -505,7 +505,7 @@ body::before {
       position: relative;      /* щоб лейбл був вище відповіді */
       z-index: 2; font-family: 'Expeng2n', 'Expengsymbols', 'Expert2new';
 	  /* Додаємо border через box-shadow */
-	  cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+	  cursor: url(../images2/cursorPointer/pointer.webp) 2 2, pointer;
   
 	
     }
@@ -646,7 +646,7 @@ body::before {
     0 0 20px #ff2200,
     0 0 40px #ff1100,
     0 0 60px #ff0000;
-	background-image: url('../images/captionBGLine3.png');
+	background-image: url('../images/captionBGLine3.webp');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat; 
@@ -704,7 +704,7 @@ body::before {
     0 0 20px #0ff,
     0 0 40px #0ff,
     0 0 80px #0ff; 
-	background-image: url('../images/captionBGLine4.png');
+	background-image: url('../images/captionBGLine4.webp');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -729,7 +729,7 @@ body::before {
     }
 	
 	.video-button-space img {
-		cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+		cursor: url(../images2/cursorPointer/pointer.webp) 2 2, pointer;
 	}
 	
 	
@@ -926,7 +926,7 @@ body::before {
 	position: relative;
 	left: 30px;
 	top: 620px;
-	background: url(../images/newBookmarks.png);
+	background: url(../images/newBookmarks.webp);
 	z-index: 1002;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -1068,7 +1068,7 @@ body::before {
       border: 3px solid #cf8a00;
       border-radius: 10px;
       color: #cf8a00;
-      cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+      cursor: url(../images2/cursorPointer/pointer.webp) 2 2, pointer;
       transition: all 0.3s;
 	  margin: 10px;
 	  z-index: 10;
@@ -1087,7 +1087,7 @@ body::before {
       border: 3px solid #49e5eb;
       border-radius: 10px;
       color: #49e5eb;
-      cursor: url(../images2/cursorPointer/pointer.png) 2 2, pointer;
+      cursor: url(../images2/cursorPointer/pointer.webp) 2 2, pointer;
       transition: all 0.3s;
 	  margin: 10px;
 	  z-index: 10;

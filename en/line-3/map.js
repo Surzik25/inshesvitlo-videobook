@@ -483,7 +483,7 @@ getPinchDistance(touches) {
         this.isDragging = true;
         this.lastMouseX = e.clientX;
         this.lastMouseY = e.clientY;
-        this.container.style.cursor = 'url(../../images2/cursorGrab/grabbing.png) 15 15, none';
+        this.container.style.cursor = 'url(../../images2/cursorGrab/grabbing.webp) 15 15, none';
     }
     
     onMouseMove(e) {
@@ -503,7 +503,7 @@ getPinchDistance(touches) {
     
     onMouseUp() {
         this.isDragging = false;
-        this.container.style.cursor = 'url(../../images2/cursorGrab/grab.png) 20 20, grab';
+        this.container.style.cursor = 'url(../../images2/cursorGrab/grab.webp) 20 20, grab';
     }
     
     onWheel(e) {

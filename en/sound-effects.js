@@ -72,7 +72,7 @@
   function updateSoundBtnUI() {
     if (!soundBtn) return;
     soundBtn.style.backgroundImage = soundMuted
-      ? `url('${IMAGES_DIR}no-sound-btn.png')`
+      ? `url('${IMAGES_DIR}no-sound-btn.webp')`
       : ''; // повертаємо дефолтне фонове зображення, задане в CSS
   }
 
@@ -139,7 +139,7 @@
   function updateMusicBtnUI() {
     if (!musicBtn) return;
     musicBtn.style.backgroundImage = musicMuted
-      ? `url('${IMAGES_DIR}no-music-btn.png')`
+      ? `url('${IMAGES_DIR}no-music-btn.webp')`
       : ''; // повертаємо дефолтне фонове зображення, задане в CSS
   }
 
