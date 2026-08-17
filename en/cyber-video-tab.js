@@ -3,8 +3,8 @@
  * Стилі: cyber-video-tab.css
  *
  * ЩО РОБИТЬ:
- *  1. Автоматичний показ ВИМКНЕНО.
- *     Табличка відкривається тільки вручну через консоль.
+ *  1. З'являється через 6 секунд після того, як зник прелоадер
+ *     (слухає подію 'preloader:hidden', яку кидає preloader.js).
  *  2. iframe вантажиться ЛИШЕ після кліку по PLAY - до того
  *     в бік YouTube не йде ані байта.
  *  3. Коли користувач запускає відео:
@@ -25,8 +25,8 @@
 (function () {
   'use strict';
 
-  var VIDEO_ID   = 'qRQbisLviwA';
-  var SHOW_DELAY = 6000;
+  var VIDEO_ID   = '1L3E42L47QE';
+  var SHOW_DELAY = 6000;        // 6 секунд після зникнення прелоадера
   var IFRAME_ID  = 'cvt-iframe';
   var SOUND_DIR  = '../sound/';
 
@@ -63,9 +63,10 @@
     }
 
     var opened = false;
+    var scheduled = false;
     var lastFocus = null;
-    var player = null;
-    var previewState = [];
+    var player = null;        // YT.Player, якщо API підвантажиться
+    var previewState = [];    // хто з line3/line4 грав до запуску YouTube
 
     // ===================================================================
     // МУЗИКА: перемикаємо саму кнопку #musicBtn, а не її внутрішній стан
@@ -80,20 +81,16 @@
         log('музика вже вимкнена - не перемикаю:', reason);
         return;
       }
-
       var btn = document.getElementById('musicBtn');
-
       if (btn) {
-        btn.click();
+        btn.click();   // рідний toggleMusic(): пауза + іконка + localStorage
         log('musicBtn перемкнено -', reason);
         return;
       }
-
       // Фолбек, якщо кнопки раптом немає на сторінці
       if (window.__music && window.__music.el) {
         try { window.__music.el.pause(); } catch (e) {}
       }
-
       localStorage.setItem('musicMuted', '1');
       log('кнопки немає - заглушив музику напряму:', reason);
     }
@@ -101,6 +98,10 @@
     // ===================================================================
     // ПРЕВ'Ю-БЛОКИ line3 / line4 - пауза на час перегляду YouTube
     // ===================================================================
+    //
+    // Запам'ятовуємо, хто саме грав, і відновлюємо ТІЛЬКИ їх. Інакше можна
+    // випадково увімкнути блок, який стояв на паузі ще до нашої таблички
+    // (користувач сам зупинив, браузер не дав автоплей тощо).
 
     function getPreviewVideos() {
       return [
@@ -110,7 +111,8 @@
     }
 
     function pausePreviewVideos() {
-      // Якщо стан уже знято - не перезаписуємо його
+      // Якщо стан уже знято (напр. повторний PLAY) - не перезаписуємо його
+      // зліпком, де все вже на паузі, бо тоді відновлювати буде нічого.
       if (previewState.length) return;
 
       previewState = getPreviewVideos().map(function (video) {
@@ -124,90 +126,56 @@
         try { item.el.pause(); } catch (e) {}
       });
 
-      if (previewState.length) {
-        log('прев-ю line3/line4 на паузі');
-      }
+      if (previewState.length) log('прев-ю line3/line4 на паузі');
     }
 
     function resumePreviewVideos() {
       previewState.forEach(function (item) {
         if (!item.wasPlaying) return;
-
         try {
           var p = item.el.play();
-
           if (p && typeof p.catch === 'function') {
-            p.catch(function () {
-              /* автоплей міг зникнути - не критично */
-            });
+            p.catch(function () { /* автоплей міг зникнути - не критично */ });
           }
         } catch (e) {}
       });
 
-      if (previewState.length) {
-        log('прев-ю line3/line4 відновлено');
-      }
-
+      if (previewState.length) log('прев-ю line3/line4 відновлено');
       previewState = [];
     }
 
     // ===================================================================
-    // Дрібні звуки інтерфейсу
+    // Дрібні звуки інтерфейсу (у стилі решти сайту, з повагою до SoundPrefs)
     // ===================================================================
 
     var sfxCache = {};
 
     function sfx(file) {
       if (window.SoundPrefs && window.SoundPrefs.isMuted()) return;
-
-      var base = sfxCache[file] ||
-        (sfxCache[file] = new Audio(SOUND_DIR + file));
-
+      var base = sfxCache[file] || (sfxCache[file] = new Audio(SOUND_DIR + file));
       var inst = base.cloneNode();
-
-      inst.play().catch(function () {
-        /* автоплей до першого жесту */
-      });
+      inst.play().catch(function () { /* автоплей до першого жесту */ });
     }
 
-    facade.addEventListener('mouseenter', function () {
-      sfx('blockHover.mp3');
-    });
-
-    closeBtn.addEventListener('mouseenter', function () {
-      sfx('QAHover.mp3');
-    });
-
-    closeBtn.addEventListener('mousedown', function () {
-      sfx('QAClick.mp3');
-    });
+    facade.addEventListener('mouseenter', function () { sfx('blockHover.mp3'); });
+    closeBtn.addEventListener('mouseenter', function () { sfx('QAHover.mp3'); });
+    closeBtn.addEventListener('mousedown',  function () { sfx('QAClick.mp3'); });
 
     // ===================================================================
-    // Постер
+    // Постер: тягнемо заздалегідь, щоб табличка відкрилась із картинкою
     // ===================================================================
 
     var posterStarted = false;
-
     function loadPoster() {
       if (posterStarted || !poster) return;
-
       posterStarted = true;
-
       poster.addEventListener('error', function onErr() {
         // maxres є не в кожного відео - тихо падаємо на hqdefault
         poster.removeEventListener('error', onErr);
-
-        poster.src =
-          'https://i.ytimg.com/vi/' +
-          VIDEO_ID +
-          '/hqdefault.jpg';
+        poster.src = 'https://cdn.inshesvitlo.com.ua/vidO201.png';
       });
-
-      poster.src =
-        poster.getAttribute('data-src') ||
-        ('https://i.ytimg.com/vi/' +
-         VIDEO_ID +
-         '/maxresdefault.jpg');
+      poster.src = poster.getAttribute('data-src') ||
+        ('https://cdn.inshesvitlo.com.ua/vidO201.png');
     }
 
     // ===================================================================
@@ -215,140 +183,92 @@
     // ===================================================================
 
     function buildEmbedSrc() {
-      var src =
-        'https://www.youtube.com/embed/' +
-        VIDEO_ID +
-        '?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1';
-
-      // origin потрібен для JS API, але лише на http(s)
-      if (
-        location.protocol === 'http:' ||
-        location.protocol === 'https:'
-      ) {
+      var src = 'https://www.youtube.com/embed/' + VIDEO_ID +
+        '?vq=hd1080&autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1';
+      // origin потрібен для JS API, але лише на http(s) - на file:// він ламає
+      if (location.protocol === 'http:' || location.protocol === 'https:') {
         src += '&origin=' + encodeURIComponent(location.origin);
       }
-
       return src;
     }
 
     function play() {
-      if (document.getElementById(IFRAME_ID)) return;
+      if (document.getElementById(IFRAME_ID)) return; // вже грає
 
-      // Користувач сам запустив відео
+      // Головне: користувач сам запустив відео -
+      // прибираємо музику й глушимо прев'ю line3 / line4
       hushMusic('користувач натиснув PLAY');
       pausePreviewVideos();
 
       var iframe = document.createElement('iframe');
-
       iframe.id = IFRAME_ID;
       iframe.className = 'cvt-iframe';
       iframe.title = 'Different Light - video';
       iframe.src = buildEmbedSrc();
-
-      iframe.allow =
-        'accelerometer; autoplay; clipboard-write; encrypted-media; ' +
-        'gyroscope; picture-in-picture; web-share';
-
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.setAttribute('allowfullscreen', '');
-
       slot.appendChild(iframe);
 
       facade.classList.add('is-gone');
 
-      // YouTube API
+      // Далі - необов'язкове: JS API дає змогу дізнатись про старт у плеєрі,
+      // а на кінці відео - самим закритися.
       ensureYouTubeApi(function () {
         try {
           player = new YT.Player(IFRAME_ID, {
             events: {
               onStateChange: function (e) {
-
                 if (e.data === YT.PlayerState.PLAYING) {
                   hushMusic('YouTube: PLAYING');
                   pausePreviewVideos();
                 }
-
                 if (e.data === YT.PlayerState.ENDED) {
+                  // close() сам прибере iframe і відновить прев'ю-блоки
                   close();
                 }
               }
             }
           });
         } catch (err) {
-          log(
-            'не вдалось прицепити YT.Player (не критично)',
-            err
-          );
+          log('не вдалось прицепити YT.Player (не критично)', err);
         }
       });
     }
 
     function killPlayer() {
-      if (
-        player &&
-        typeof player.destroy === 'function'
-      ) {
-        try {
-          player.destroy();
-        } catch (e) {}
+      if (player && typeof player.destroy === 'function') {
+        try { player.destroy(); } catch (e) {}
       }
-
       player = null;
-
       var frame = document.getElementById(IFRAME_ID);
-
-      if (frame && frame.parentNode) {
-        frame.parentNode.removeChild(frame);
-      }
-
+      if (frame && frame.parentNode) frame.parentNode.removeChild(frame);
       facade.classList.remove('is-gone');
-
-      resumePreviewVideos();
+      resumePreviewVideos();   // line3 / line4 повертаються до життя
     }
 
-    // ===================================================================
-    // YouTube IFrame API
-    // ===================================================================
-
+    // YouTube IFrame API - вантажимо ЛИШЕ після кліку по PLAY
     var apiRequested = false;
     var apiWaiting = [];
-
     function ensureYouTubeApi(cb) {
-      if (window.YT && window.YT.Player) {
-        cb();
-        return;
-      }
-
+      if (window.YT && window.YT.Player) { cb(); return; }
       apiWaiting.push(cb);
-
       if (apiRequested) return;
-
       apiRequested = true;
-
       var prev = window.onYouTubeIframeAPIReady;
-
       window.onYouTubeIframeAPIReady = function () {
-
         if (typeof prev === 'function') {
-          try {
-            prev();
-          } catch (e) {}
+          try { prev(); } catch (e) {}
         }
-
         var queue = apiWaiting.splice(0);
-
         for (var i = 0; i < queue.length; i++) {
-          try {
-            queue[i]();
-          } catch (e) {}
+          try { queue[i](); } catch (e) {}
         }
       };
 
       var s = document.createElement('script');
-
       s.src = 'https://www.youtube.com/iframe_api';
       s.async = true;
-
       document.head.appendChild(s);
     }
 
@@ -358,132 +278,96 @@
 
     function open() {
       if (opened) return;
-
       opened = true;
-
       loadPoster();
-
       backdrop.classList.add('is-open');
       tab.classList.add('is-open');
-
       tab.setAttribute('aria-hidden', 'false');
-
       lastFocus = document.activeElement;
-
-      try {
-        facade.focus({ preventScroll: true });
-      } catch (e) {}
-
-      document.addEventListener(
-        'keydown',
-        onKeyDown,
-        true
-      );
-
+      try { facade.focus({ preventScroll: true }); } catch (e) {}
+      document.addEventListener('keydown', onKeyDown, true);
       log('табличка відкрита');
     }
 
     function close() {
       if (!opened) return;
-
       opened = false;
-
       tab.classList.remove('is-open');
       backdrop.classList.remove('is-open');
-
       tab.setAttribute('aria-hidden', 'true');
-
-      document.removeEventListener(
-        'keydown',
-        onKeyDown,
-        true
-      );
-
-      killPlayer();
-
-      if (
-        lastFocus &&
-        typeof lastFocus.focus === 'function'
-      ) {
-        try {
-          lastFocus.focus({
-            preventScroll: true
-          });
-        } catch (e) {}
+      document.removeEventListener('keydown', onKeyDown, true);
+      killPlayer();            // знімає iframe + відновлює прев'ю
+      if (lastFocus && typeof lastFocus.focus === 'function') {
+        try { lastFocus.focus({ preventScroll: true }); } catch (e) {}
       }
-
       lastFocus = null;
-
       log('табличка закрита');
     }
 
     function onKeyDown(e) {
-      if (
-        e.key === 'Escape' ||
-        e.key === 'Esc'
-      ) {
+      if (e.key === 'Escape' || e.key === 'Esc') {
         e.stopPropagation();
         close();
       }
     }
 
     facade.addEventListener('click', play);
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);   // клік поза табличкою
+    tab.addEventListener('click', function (e) { e.stopPropagation(); });
 
-    closeBtn.addEventListener(
-      'click',
-      close
-    );
+    // Щоб не громадились дві таблички: коли відкривають перемикач мови -
+    // наша йде з екрану (і забирає з собою звук відео).
+    var adaptBtn = document.getElementById('adaptBtn');
+    if (adaptBtn) adaptBtn.addEventListener('click', close);
 
-    backdrop.addEventListener(
-      'click',
-      close
-    );
+    // ===================================================================
+    // КОЛИ ПОКАЗУВАТИ: +6 с після зникнення прелоадера
+    // ===================================================================
 
-    tab.addEventListener(
-      'click',
-      function (e) {
-        e.stopPropagation();
-      }
-    );
-
-    // Перемикач мови закриває табличку
-    var adaptBtn =
-      document.getElementById('adaptBtn');
-
-    if (adaptBtn) {
-      adaptBtn.addEventListener(
-        'click',
-        close
-      );
+    function schedule(reason) {
+      if (scheduled) return;
+      scheduled = true;
+      loadPoster();            // 6 секунд - вдосталь, щоб постер приїхав
+      log('показ через', SHOW_DELAY, 'мс -', reason);
+      setTimeout(open, SHOW_DELAY);
     }
 
-    // ===================================================================
-    // АВТОМАТИЧНИЙ ПОКАЗ ВИМКНЕНО
-    //
-    // Табличка більше НЕ відкривається:
-    // - через 6 секунд;
-    // - після preloader:hidden;
-    // - після window load;
-    // - через MutationObserver.
-    //
-    // Вона відкривається тільки вручну:
-    //
-    //   CyberVideoTab.open()
-    //   CyberVideoTab.play()
-    //   CyberVideoTab.close()
-    // ===================================================================
+    // Прелоадера на сторінці немає - значить, він уже зник
+    var preloaderEl = document.getElementById('preloader');
+    if (!preloaderEl) {
+      if (document.readyState === 'complete') {
+        schedule('прелоадера немає, readyState=complete');
+      } else {
+        window.addEventListener('load', function () {
+          schedule('прелоадера немає, window load');
+        }, { once: true });
+      }
+    } else {
+      document.addEventListener('preloader:hidden', function () {
+        schedule('preloader:hidden');
+      }, { once: true });
 
-    // ===================================================================
-    // ПУБЛІЧНІ РУЧКИ
-    // ===================================================================
+      // Страховка (як у sound-effects.js): ловимо саме зникнення #preloader.
+      // Спостерігаємо лише прямих дітей body - це майже безкоштовно.
+      if (document.body) {
+        var mo = new MutationObserver(function () {
+          var el = document.getElementById('preloader');
+          if (!el || !el.isConnected) {
+            mo.disconnect();
+            schedule('preloader зник із DOM (страховка)');
+          }
+        });
+        mo.observe(document.body, { childList: true });
+      }
+    }
 
+    // Публічні ручки
     window.CyberVideoTab = {
       open: open,
       close: close,
       play: play,
-      isOpen: function () {
-        return opened;
-      }
+      isOpen: function () { return opened; }
     };
   });
 })();
