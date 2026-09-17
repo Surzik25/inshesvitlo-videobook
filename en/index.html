@@ -22,7 +22,6 @@
   <link rel="stylesheet" href="main-dark.css">
   <link rel="stylesheet" href="comic-bubbles.css">
   <link rel="stylesheet" href="footer.css">
-  <link rel="stylesheet" href="cyber-video-tab.css">
 
   <!-- Open Graph -->
   <meta property="og:title" content="⋆.ೃ࿔*Different Light: Ultimate Diodes and Their Life Cycle ⋆˚｡⋆" />
@@ -529,62 +528,6 @@ It's like a comic book from the future or a weird visual novel, but not interact
 	</div>
 	</div>
 
-  <!-- ⚡ Кіберпанк-табличка з YouTube-відео (з'являється через 6 с після прелоадера) -->
-  <div id="cyber-video-backdrop"></div>
-  <div id="cyber-video-tab" role="dialog" aria-modal="true" aria-labelledby="cvt-title" aria-hidden="true">
-  <div class="cvt-image"></div>
-	<div class="cvt-frame">
-      <div class="cvt-inner">
-        <button id="cvt-close" class="cvt-close" type="button" aria-label="Close this tab" title="Close">
-          <span class="cvt-close-x" aria-hidden="true">✕</span>
-        </button>
-
-        <div class="cvt-head">
-          <span class="cvt-led" aria-hidden="true"></span>
-          <h2 id="cvt-title" class="cvt-title">DIFFERENT LIGHT:</h2>
-          <span class="cvt-tag">Nearly seven years in development.</span>
-        </div>
-
-        <div class="cvt-screen">
-          <div class="cvt-slot" id="cvt-slot">
-            <!-- Фасад: справжній iframe народжується лише після кліку по PLAY -->
-            <button id="cvt-facade" class="cvt-facade" type="button" aria-label="Play the video">
-              <img id="cvt-poster" class="cvt-poster" alt=""
-                   data-src="https://cdn.inshesvitlo.com.ua/vidO201.png"
-                   draggable="false" ondragstart="return false;" oncontextmenu="return false;">
-              <span class="cvt-veil" aria-hidden="true"></span>
-              <span class="cvt-beam" aria-hidden="true"></span>
-              <span class="cvt-play" aria-hidden="true"><span class="cvt-tri"></span></span>
-            </button>
-			</div>
-          </div>
-        
-
-        <!-- ♥ Лайк + лічильник. Логіка: cvt-likes.js -->
-        <div class="cvt-likes" id="cvt-likes" data-slug="different-light-video">
-          <button id="cvt-like-btn" class="cvt-like" type="button"
-                  aria-pressed="false" disabled
-                  aria-label="Like this video">
-            <!-- Плата: фон + октагональна форма. Саме тут clip-path,
-                 тому арт нижче (у .cvt-like-visual) до нього не прив'язаний
-                 і може виходити за межі кнопки. -->
-            <span class="cvt-like-plate" aria-hidden="true"></span>
-            <!-- Слот-якір для серця: сам маленький і в потоці, а серце
-                 всередині — абсолютне й може бути більшим за нього. -->
-            <span class="cvt-like-visual" aria-hidden="true">
-              <span id="cvt-like-heart" class="cvt-like-heart is-state-empty"></span>
-            </span>
-            <span class="cvt-like-label">LIKE this! :D</span>
-            <span class="cvt-like-count" id="cvt-like-count" aria-hidden="true">—</span>
-          </button>
-          <!-- Живий текст для скрінрідерів: цифра всередині кнопки для них скрита -->
-          <span class="cvt-like-live" id="cvt-like-live" role="status" aria-live="polite"></span>
-        </div>
-
-        <p class="cvt-foot">What has changed in this short and at the same time long time? <span class="cvt-blink">▮</span></p>
-      </div>
-    </div>
-  </div>
   
   <script>
 (() => {
@@ -712,7 +655,5 @@ function switchToUkr() {
   <script src="preloader.js"></script>	  
 <script src="sound-effects.js"></script>
 <script src="footer-n-udark.js"></script>
-<script src="cyber-video-tab.js"></script>
-<script src="cvt-likes.js"></script>
 </body>
 </html>
