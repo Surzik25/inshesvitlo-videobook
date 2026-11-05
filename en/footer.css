@@ -15,6 +15,7 @@
 	   mask-image: linear-gradient(90deg, transparent -10%, black 4%, black 80%, rgba(0, 0, 0, 0.5) 96%, transparent 100%);
 	   min-height: 140px; min-width: 1000px;
       z-index: 100;
+      overflow: hidden; /* частинки вилітають за край і розширюють сторінку; маска вище все одно ховає все поза футером */
 	  box-sizing: border-box;
 	
 	 

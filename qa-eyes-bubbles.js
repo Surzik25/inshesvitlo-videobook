@@ -1,7 +1,8 @@
 const items = document.querySelectorAll('.qa');
 let hideTimer;
 
-items.forEach(item => {
+items.forEach((item, i) => {
+  item.style.setProperty('--i', i); // порядковий номер для каскадної появи в мобільному Q&A
   const button = item.querySelector('.qa-item');
   const answer = item.querySelector('.answer'); // відповіді
 
@@ -38,6 +39,66 @@ document.addEventListener('click', e => {
     items.forEach(item => item.classList.remove('active'));
     clearTimeout(hideTimer);
   }
+});
+
+// Телефони: кнопка "Q&A" вгорі показує/ховає список (стилі .qa-open — у style-main.css)
+const qaPanel = document.querySelector('.side-panel.right');
+qaPanel.querySelector('.qa-item2').addEventListener('click', () => {
+  qaPanel.classList.toggle('qa-open');
+});
+
+// Safari не прокручує панель з pointer-events: none, навіть коли курсор чи палець на пункті
+// з pointer-events: auto — замість неї їде сторінка. Тому прокрутку над пунктами Q&A
+// передаємо панелі вручну: колесо/тачпад і перетягування пальцем з інерцією.
+// Відкритий мобільний список (.qa-open) має pointer-events: auto і скролиться сам.
+let qaCarry = 0, qaLastY = null, qaLastT = 0, qaSpeed = 0, qaGlide = 0;
+const qaAtEdge = dy => dy < 0
+  ? qaPanel.scrollTop <= 0
+  : qaPanel.scrollTop + qaPanel.clientHeight >= qaPanel.scrollHeight - 1;
+const qaScroll = dy => { // Safari округлює scrollTop, тож дрібні зсуви тачпада накопичуємо
+  qaCarry += dy;
+  const step = Math.round(qaCarry);
+  qaCarry -= step;
+  qaPanel.scrollTop += step;
+};
+
+qaPanel.addEventListener('wheel', e => {
+  if (qaPanel.classList.contains('qa-open')) return;
+  const dy = e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? qaPanel.clientHeight : 1);
+  if (qaAtEdge(dy)) return; // на краю списку віддаємо прокрутку сторінці
+  e.preventDefault();
+  qaScroll(dy);
+}, { passive: false });
+
+qaPanel.addEventListener('touchstart', e => {
+  cancelAnimationFrame(qaGlide);
+  qaLastY = e.touches[0].clientY;
+  qaLastT = e.timeStamp;
+  qaSpeed = 0;
+}, { passive: true });
+
+qaPanel.addEventListener('touchmove', e => {
+  if (qaPanel.classList.contains('qa-open') || qaLastY === null) return;
+  const y = e.touches[0].clientY, dy = qaLastY - y;
+  if (qaAtEdge(dy)) return;
+  e.preventDefault();
+  qaScroll(dy);
+  qaSpeed = dy / Math.max(e.timeStamp - qaLastT, 1); // px/мс — для інерції
+  qaLastY = y;
+  qaLastT = e.timeStamp;
+}, { passive: false });
+
+qaPanel.addEventListener('touchend', e => {
+  if (qaLastY === null) return;
+  qaLastY = null;
+  if (e.timeStamp - qaLastT > 100) return; // палець зупинився перед тим, як відпустити
+  const glide = () => {
+    if (Math.abs(qaSpeed) < 0.05 || qaAtEdge(qaSpeed)) return;
+    qaScroll(qaSpeed * 16);
+    qaSpeed *= 0.95;
+    qaGlide = requestAnimationFrame(glide);
+  };
+  qaGlide = requestAnimationFrame(glide);
 });
   
   // Eye-following cursor effect
@@ -90,19 +151,11 @@ document.addEventListener('click', e => {
   });
   
   //це ций мудрагель закодив
-  const bubbleMessages = {
-			0: '🎞️📔 Відеокнижка - це вид медіа, який поєднує в собі текст та анімаційні стрічки, повторювані або зациклені у вічному потоці. Розраховано на комбіноване сприйняття інформації та розвиток читацької уяви ◡̈🌟',
-            1: '💙💛 Колись ця книжка мала тільки українську версію (оригінал). Але тепер вона доступна ще й по-англійськи! Більше того: англійська версія сайту оновлюється набагато жвавіше, ніж ця. Май це на увазі ;)',
-            2: '❗Для читачів від 13 років до ∞ ;) Книжка має дещо уривчастий характер, і часто побудована на метафорах; можуть зачіпатися глибокі/неоднозначні теми, зокрема питання Долі та життя після смерті; присутня посилена деталізація, дрібний текст та велика кількість оффтопів (перескакування з теми на тему). Для молодшої аудиторії контент може бути складним для сприйняття або не зовсім relatable (знайомим за життєвим досвідом)❗',
-            3: '🔦 Це просто перемикач на темну/ультратемну тему сайту. На СВІТЛІЙ темі не було б видно сяйва діодів, а з цим ми миритися точно не збираємось :p',
-            4: '✂ Тут вже дещо є. <br><br><a href="https://www.youtube.com/@inshesvitlo" target="_blank" style="color: #470616; text-decoration: underline;">🎥 Можете глянути ;3 →</a>',
-            6: 'Діскорд-сервер (кумедне та затишне місце, куди вам неодмінно треба потрапити). Там ми будуємо теорії, постимо фанарти і просто балакаємо від душі! <br><br><a href="https://discord.gg/xMSHbqytTK" target="_blank" style="color: #2efff8; text-decoration: underline;">👾 ПРИЄДНУЙСЯ ДО ВЕСЕЛОЩІВ →</a>',
-			7: '🖥️ Найкраще виглядає на великих моніторах (HD 1080px, 16:9). Базово адаптовано до мобільних пристроїв, але може мати там відчутні затримки. Негайно чимчикуй до ПК, грр! 📺',
-			8: 'Просто ще одна запасна соцмережа (можна написати туди, якщо не дуже кортить тинятися каналами чи підозрілими серверами) :] <br><br><a href="https://bsky.app/profile/surzik25.bsky.social" target="_blank" style="color: #210f96; text-decoration: underline;">˚🦋༘ Чкурнути за метеликом →</a>',
-			9: 'Наш офіційний міжнародний вікі-проєкт (вся інформація, написана адміном, підтверджена).<br> Хочете дізнатися про <b>Інше світло</b> більше? <br><br><a href="https://different-light.fandom.com/wiki/Different_Light:_Ultimate_Diodes_and_Their_Life_Cycle" target="_blank" style="color: #0b2e01; text-decoration: underline;">📚 ШНУРКУЙТЕ ДО ЕНЦИКЛОПЕДІЇ! →</a>',
-			10: 'ХТО ХОЧЕ ГАРНЕНЬКО І ДІЯЛЬНО ПІДТРИМАТИ ПРОЄКТ?<br> Ще й отримати тонну ексклюзивного контенту натомість 😋<br><br><a href="https://www.patreon.com/Surzik25" target="_blank" style="color: #0b2e01; font-weight: bold; text-decoration: underline;"> Мені це справді допоможе 🥹 →</a>',
-			11: 'ЩЕ БІЛЬШ простий спосіб підтримки (скористайся ним, поки не пізно!)<br><br><a href="https://ko-fi.com/surzik25" target="_blank" style="color: #024500; font-weight: bold; text-decoration: underline;">🥐 НАГОДУВАТИ ГОЛОДНОГО КАЗА →</a>'	
-        };
+  // Тексти бульбашок лежать у HTML (#bubble-messages), щоб їх бачив і індексував Google
+  const bubbleMessages = {};
+  document.querySelectorAll('#bubble-messages [data-bubble]').forEach(el => {
+    bubbleMessages[el.dataset.bubble] = el.innerHTML.trim();
+  });
 
         const buttons = document.querySelectorAll('.side-button');
         const speechBubble = document.getElementById('speech-bubble');

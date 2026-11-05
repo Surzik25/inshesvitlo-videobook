@@ -1468,3 +1468,10 @@ pattern-button:hover {
                 flex-direction: column;
             }
 }
+
+/* Телефони й планшети: горизонтальне переповнення обрізаємо на html. На body мобільні браузери
+   його ігнорують і розтягують сторінку вшир — тоді закріплені панелі їздять. ПК це не зачіпає. */
+@media (pointer: coarse) {
+	html { overflow-x: hidden; }
+	body { overflow-x: visible; }
+}

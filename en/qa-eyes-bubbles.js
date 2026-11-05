@@ -1,7 +1,8 @@
 const items = document.querySelectorAll('.qa');
 let hideTimer;
 
-items.forEach(item => {
+items.forEach((item, i) => {
+  item.style.setProperty('--i', i); // порядковий номер для каскадної появи в мобільному Q&A
   const button = item.querySelector('.qa-item');
   const answer = item.querySelector('.answer'); // відповіді
 
@@ -38,6 +39,66 @@ document.addEventListener('click', e => {
     items.forEach(item => item.classList.remove('active'));
     clearTimeout(hideTimer);
   }
+});
+
+// Телефони: кнопка "Q&A" вгорі показує/ховає список (стилі .qa-open — у style-main.css)
+const qaPanel = document.querySelector('.side-panel.right');
+qaPanel.querySelector('.qa-item2').addEventListener('click', () => {
+  qaPanel.classList.toggle('qa-open');
+});
+
+// Safari не прокручує панель з pointer-events: none, навіть коли курсор чи палець на пункті
+// з pointer-events: auto — замість неї їде сторінка. Тому прокрутку над пунктами Q&A
+// передаємо панелі вручну: колесо/тачпад і перетягування пальцем з інерцією.
+// Відкритий мобільний список (.qa-open) має pointer-events: auto і скролиться сам.
+let qaCarry = 0, qaLastY = null, qaLastT = 0, qaSpeed = 0, qaGlide = 0;
+const qaAtEdge = dy => dy < 0
+  ? qaPanel.scrollTop <= 0
+  : qaPanel.scrollTop + qaPanel.clientHeight >= qaPanel.scrollHeight - 1;
+const qaScroll = dy => { // Safari округлює scrollTop, тож дрібні зсуви тачпада накопичуємо
+  qaCarry += dy;
+  const step = Math.round(qaCarry);
+  qaCarry -= step;
+  qaPanel.scrollTop += step;
+};
+
+qaPanel.addEventListener('wheel', e => {
+  if (qaPanel.classList.contains('qa-open')) return;
+  const dy = e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? qaPanel.clientHeight : 1);
+  if (qaAtEdge(dy)) return; // на краю списку віддаємо прокрутку сторінці
+  e.preventDefault();
+  qaScroll(dy);
+}, { passive: false });
+
+qaPanel.addEventListener('touchstart', e => {
+  cancelAnimationFrame(qaGlide);
+  qaLastY = e.touches[0].clientY;
+  qaLastT = e.timeStamp;
+  qaSpeed = 0;
+}, { passive: true });
+
+qaPanel.addEventListener('touchmove', e => {
+  if (qaPanel.classList.contains('qa-open') || qaLastY === null) return;
+  const y = e.touches[0].clientY, dy = qaLastY - y;
+  if (qaAtEdge(dy)) return;
+  e.preventDefault();
+  qaScroll(dy);
+  qaSpeed = dy / Math.max(e.timeStamp - qaLastT, 1); // px/мс — для інерції
+  qaLastY = y;
+  qaLastT = e.timeStamp;
+}, { passive: false });
+
+qaPanel.addEventListener('touchend', e => {
+  if (qaLastY === null) return;
+  qaLastY = null;
+  if (e.timeStamp - qaLastT > 100) return; // палець зупинився перед тим, як відпустити
+  const glide = () => {
+    if (Math.abs(qaSpeed) < 0.05 || qaAtEdge(qaSpeed)) return;
+    qaScroll(qaSpeed * 16);
+    qaSpeed *= 0.95;
+    qaGlide = requestAnimationFrame(glide);
+  };
+  qaGlide = requestAnimationFrame(glide);
 });
   
   (() => {
@@ -123,19 +184,11 @@ document.addEventListener('click', e => {
   });
   
   //це ций мудрагель закодив
-  const bubbleMessages = {
-			0: '🎞️📔 A videobook is a type of media that combines text and animated strips, repeated or looped in an eternal flow. Designed for the combined perception of info and the freedom of the reader\'s imagination. ◡̈🌟',
-            1: '💙💛 The real origin of this book is Ukraine :D But the site is now officially English adapted!',
-            2: '❗For readers from 13 to ∞ ;) The book is sometimes uneven, and often built on metaphors; may touch on deep/ambiguous topics, including issues of Fate and life after death; there is increased detail, small text, and a large number of offtopics (jumping from topic to topic). For a younger audience, the content may be difficult to perceive or not entirely relatable❗',
-            3: '🔦 This is just a switch to the dark/ultra-dark theme of the site. On a LIGHT theme, the glow of the diodes would not be visible, and we are definitely not going to put up with that :p',
-            4: '✂ We are not YouTubers, but..:) <br><br><a href="https://www.youtube.com/@inshesvitlo" target="_blank" style="color: #470616; text-decoration: underline;">🎥 C\'mon, take a peek :D →</a>',
-            6: 'OUR DISCORD SERVER (a fun and cozy place you should definitely visit). It\'s where we build theories, post fanart, and just chat to our heart\'s content! <br><br><a href="https://discord.gg/xMSHbqytTK" target="_blank" style="color: #2efff8; text-decoration: underline;">👾 COME COME COME →</a>',
-			7: '🖥️ Looks best on large monitors (HD 1080px, 16:9). Basically adapted to mobile devices, but may have noticeable delays there. Immediately pinch to your PC, grr! 📺',
-			8: 'Just another backup social network (you can message there if you don\'t really feel like wandering through channels or suspicious servers) :] <br><br><a href="https://bsky.app/profile/surzik25.bsky.social" target="_blank" style="color: #210f96; text-decoration: underline;">˚🦋༘ Chase the butterfly →</a>',
-			9: 'Our official international wiki project (all information written by the admin is verified!).<br> Wanna learn more about <b>Different Light</b>? <br><br><a href="https://different-light.fandom.com/wiki/Different_Light:_Ultimate_Diodes_and_Their_Life_Cycle" target="_blank" style="color: #0b2e01; text-decoration: underline;">📚 DIVE INTO THE ENCYCLOPEDIA! →</a>',
-			10: 'WHO WANTS TO SUPPORT THE PROJECT IN A COOL AND PROFITABLE WAY?<br> And get a ton of exclusive content in return 😋<br><br><a href="https://www.patreon.com/Surzik25" target="_blank" style="color: #0b2e01; font-weight: bold; text-decoration: underline;"> This will help me more than you think 🥹 →</a>',
-			11: 'AN EVEN MORE simple way to support (use it before it\'s too late!)<br><br><a href="https://ko-fi.com/surzik25" target="_blank" style="color: #024500; font-weight: bold; text-decoration: underline;">🥐 FEED HUNGRY KAZ →</a>'	
-        };
+  // Тексти бульбашок лежать у HTML (#bubble-messages), щоб їх бачив і індексував Google
+  const bubbleMessages = {};
+  document.querySelectorAll('#bubble-messages [data-bubble]').forEach(el => {
+    bubbleMessages[el.dataset.bubble] = el.innerHTML.trim();
+  });
 
         const buttons = document.querySelectorAll('.side-button');
         const speechBubble = document.getElementById('speech-bubble');
