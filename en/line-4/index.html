@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      // Сторінка не влазить у вузький екран: мінімальна ширина верстки (портрет, ландшафт) — внизу.
+      // На вужчих телефонах/планшетах просимо браузер верстати рівно на цю ширину і вмістити її в екран:
+      // без горизонтального переповнення закріплені панелі більше не їздять. ПК цей тег ігнорує.
+      (function (minPortrait, minLandscape) {
+        var meta = document.querySelector('meta[name="viewport"]');
+        var landscape = matchMedia('(orientation: landscape)');
+        function fit() {
+          var min = landscape.matches ? minLandscape : minPortrait;
+          var screenWidth = (landscape.matches ? Math.max : Math.min)(screen.width, screen.height);
+          meta.content = screenWidth < min ? 'width=' + min : 'width=device-width, initial-scale=1.0';
+        }
+        fit();
+        landscape.addEventListener('change', fit);
+      })(1030, 1490);
+    </script>
     <title>•ᴗ• Per-pere's Diary ~ 🔎🫖</title>
 
     <!-- SEO & Мовні зв'язки для Лінії 4 -->

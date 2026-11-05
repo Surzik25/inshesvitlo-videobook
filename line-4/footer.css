@@ -14,6 +14,7 @@
 	  
       min-height: 140px; min-width: 1450px;
       z-index: 100;
+      overflow: hidden; /* частинки вилітають за край і розширюють сторінку; маска вище все одно ховає все поза футером */
 	  box-sizing: border-box;
 	
 	 
