@@ -149,7 +149,7 @@ getCurrentChapter() {
 }  
 
 getVideoPath() {  
-    const overwriteVideos = [8, 9, 10, 40];
+    const overwriteVideos = [1, 5, 7, 8, 9, 10, 25, 27, 36, 40];
     
     if (overwriteVideos.includes(this.currentVideo)) {
         return 'https://cdn.jsdelivr.net/npm/@surzik25/line3-eng-overwrite@latest/overwrite/';
