@@ -19,7 +19,9 @@ this.initElements();
     this.bindEvents();  
    this.bindMusicButton();
    this.updateMusicBtnUI();
-   const savedIndex = parseInt(localStorage.getItem('currentVideoIndex'));  
+   // 🔗 Посилання ?page=N відкриває конкретну сторінку (має пріоритет над збереженою)
+   const urlPage = new URLSearchParams(location.search).get('page');
+   const savedIndex = parseInt(urlPage ?? localStorage.getItem('currentVideoIndex'));  
     if (!isNaN(savedIndex) && savedIndex >= 0 && savedIndex < this.totalVideos) {  
         this.goToVideo(savedIndex);  
     } else {  
@@ -232,7 +234,11 @@ goToVideo(index) {
 
     this.currentVideo = index;  
     // 💾 Зберігаємо в localStorage  
-    localStorage.setItem('currentVideoIndex', index);  
+    localStorage.setItem('currentVideoIndex', index);
+    // 🔗 Адреса завжди показує поточну сторінку, тож її можна скопіювати й поділитися
+    const url = new URL(location.href);
+    url.searchParams.set('page', index);
+    history.replaceState(null, '', url);  
 
     this.updateVideo();  
     this.updateInterface();  

@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const inst = lottie.dotLottie;
     if (inst && typeof inst.play === "function") inst.play();
     else lottie.setAttribute("autoplay", "");
-    preloaderText.textContent = "Loading: 0%";
+    preloaderText.textContent = "Завантаження: 0%";
     startLoading();
   }, { once: true });
 

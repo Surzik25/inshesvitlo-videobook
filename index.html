@@ -169,7 +169,7 @@
        oncontextmenu="return false;"
 	src="images/DMHover.webp" style="opacity: 0;">
 	</button>
-	<button class="side-button " data-bubble="9">
+	<button class="side-button bkm" data-bubble="9">
 	<img class="side-button-sm" 
 	draggable="false" 
        ondragstart="return false;" 
@@ -181,7 +181,7 @@
        oncontextmenu="return false;"
 	src="images/WKHover.webp">
 	</button>
-	<button class="side-button " data-bubble="10">
+	<button class="side-button bkm" data-bubble="10">
 	<img class="side-button-sm" 
 	draggable="false" 
        ondragstart="return false;" 
@@ -193,7 +193,7 @@
        oncontextmenu="return false;"
 	src="images/PTHover.webp">
 	</button>
-	<button class="side-button " data-bubble="11">
+	<button class="side-button bkm" data-bubble="11">
 	<img class="side-button-sm" 
 	draggable="false" 
        ondragstart="return false;" 
@@ -205,7 +205,7 @@
        oncontextmenu="return false;"
 	src="images/KFHover.webp">
 	</button>
-    <button class="side-button " data-bubble="4">
+    <button class="side-button bkm" data-bubble="4">
 	<img class="side-button-sm" 
 	draggable="false" 
        ondragstart="return false;" 
@@ -217,7 +217,7 @@
        oncontextmenu="return false;"
 	src="images/YTHover.webp">
 	</button>
-	<button class="side-button " data-bubble="6">
+	<button class="side-button bkm" data-bubble="6">
 	<img class="side-button-sm" 
 	draggable="false" 
        ondragstart="return false;" 
@@ -229,7 +229,7 @@
        oncontextmenu="return false;"
 	src="images/DCHover.webp">
 	</button>
-	<button class="side-button " data-bubble="8">
+	<button class="side-button bkm" data-bubble="8">
 	<img class="side-button-sm" 
 	draggable="false" 
        ondragstart="return false;" 
@@ -326,6 +326,28 @@
 	<div class="answer">Імовірно ;) бо ввесь цей час а балакала не з кимось, а сама з собою. Заглядайте до нас у Discord, там розберемося.</div>
 	</div>
   </div>
+  <div class="bottom-panel">
+  <button class="sound-btn" id="musicBtn"></button>
+  <button class="sound-btn" id="soundBtn"></button>
+  <button class="sound-btn" id="adaptBtn"></button>
+  </div>
+  <script>
+  window.addEventListener('scroll', () => {
+  const panel = document.querySelector('.bottom-panel');
+  
+  // Рахуємо поточну позицію скролу + висоту екрану
+  const scrollPosition = window.innerHeight + window.scrollY;
+  // Отримуємо повну висоту всього документа
+  const scrollHeight = document.documentElement.scrollHeight;
+
+  // Якщо відстань до кінця сторінки менша або дорівнює 5 пікселям
+  if (scrollHeight - scrollPosition <= 25) {
+    panel.classList.add('bottom-panel--hidden');
+  } else {
+    panel.classList.remove('bottom-panel--hidden');
+  }
+});
+</script>
 <!-- Ось тут заклинання -->
   <script src="qa-eyes-bubbles.js"></script>
 
@@ -464,67 +486,139 @@
   </footer>
   
   <div class="newbuttons-ol">
- </div>
+  <div class="new-bookmarks-arrow">
+  </div>
+  </div>
   <div class="newbuttons-ol2">
+  </div>
+  
+  <div class="board-pid">
+ </div>
+  <div class="board-pid2">
    
   <div id="welcome">
   <div class="welcome-in">
-    <p>In addition to all the updates you've seen before, the English version is now FULLY SOUNDED! If you don't want to miss anything new, check it out and don't hesitate :D</p>
+    <p>«Інше світло» тепер має повну англійську адаптацію! Хочеш почитати англійською чи показати книжку друзям з-за кордону — сміливо перемикайся :D</p>
 	
 	<div class="welcome-buttons">
-    <button class="welcome-btn1" onclick="closeWelcome()">Stay here :)</button>
-	<button class="welcome-btn2" onclick="switchToEnglish()">✨SWITCH⋆.</button>
+    <button class="welcome-btn1" onclick="closeWelcome()">Лишуся :)</button>
+	<button class="welcome-btn2" onclick="switchToEnglish()">✨ПЕРЕЙТИ⋆.</button>
 	</div>
 	</div>
 	<img class="welcome-img" src="images/adaptation.webp">
 	</div>
 	</div>
+
   
   <script>
-  let playground = document.querySelector("body");
+(() => {
+  const mq = matchMedia('(hover: hover) and (pointer: fine)');
+  if (!mq.matches) return;                 // тач/стилус — виходимо повністю
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-let cursorArray = ['url("images2/cursorSeq/2/cursor0000.webp"), auto',
-                   'url("images2/cursorSeq/2/cursor0001.webp"), auto',
-                  'url("images2/cursorSeq/2/cursor0002.webp"), auto',
-                  'url("images2/cursorSeq/2/cursor0003.webp"), auto',
-                  'url("images2/cursorSeq/2/cursor0004.webp"), auto'];
-i = 0;
-(function cursor(){
-  playground.style.cursor  = cursorArray[i];
-  i++;
-  if(i == cursorArray.length){
-    i = 0; 
-  }
-   setTimeout(cursor, 50);
+  const frames = [0, 1, 2, 3, 4].map(
+    (n) => `url("images2/cursorSeq/2/cursor000${n}.webp"), auto`
+  );
+
+  // прогріваємо кеш, інакше перший цикл блимає системним курсором
+  frames.forEach((_, n) => {
+    new Image().src = `images2/cursorSeq/2/cursor000${n}.webp`;
+  });
+
+  const body = document.body;
+  let i = 0, last = 0, raf = 0;
+
+  const tick = (t) => {
+    raf = requestAnimationFrame(tick);
+    if (t - last < 50) return;             // ті самі ~20fps, але в такт з кадрами браузера
+    last = t;
+    body.style.cursor = frames[i];
+    i = (i + 1) % frames.length;
+  };
+
+  const start = () => { if (!raf) { last = 0; raf = requestAnimationFrame(tick); } };
+  const stop  = () => { cancelAnimationFrame(raf); raf = 0; };
+
+  start();
+
+  // вкладка неактивна — не крутимо анімацію даремно
+  document.addEventListener('visibilitychange', () =>
+    document.hidden ? stop() : start()
+  );
+
+  // юзер підключив/відключив мишу або перевернув планшет у режим з трекпадом
+  mq.addEventListener('change', (e) => {
+    if (e.matches) start();
+    else { stop(); body.style.cursor = ''; }
+  });
 })();
 
-// Поява оверлеїв та таблички через 3 секунди після завантаження
+// Показати підказку про закладки через 20 секунд після завантаження і прибрати через 3 секунди (якщо є images/newBookmarksUA.webp)
 window.addEventListener('load', function () {
-  setTimeout(function () {
-    const ol2 = document.querySelector('.newbuttons-ol2');
-    const ol = document.querySelector('.newbuttons-ol');
-    const welcome = document.getElementById('welcome');
-
-    // Спочатку newbuttons-ol
-    ol.classList.add('visible');
-
-    // Потім newbuttons-ol2
+  const arrowImg = new Image();
+  arrowImg.onload = function () {
     setTimeout(function () {
-      ol2.classList.add('visible');
+        const overlay1 = document.querySelector('.newbuttons-ol');
+        const overlay2 = document.querySelector('.newbuttons-ol2');
 
-      // Потім табличка — вона вже анімується через CSS fadeIn
-      setTimeout(function () {
-        welcome.style.display = 'block';
-		welcome.style.animation = 'fadeIn 0.4s ease forwards';
-      }, 400);
-    }, 500);
-  }, 15000);
+        // Показуємо оверлеї
+        if (overlay1) overlay1.classList.add('visible');
+        if (overlay2) overlay2.classList.add('visible');
+
+        // Автоматично забираємо оверлеї через 3 секунди (3000 мілісекунд)
+        setTimeout(function () {
+            if (overlay1) overlay1.classList.remove('visible');
+            if (overlay2) overlay2.classList.remove('visible');
+        }, 3000);
+
+    }, 20000);
+  };
+  arrowImg.src = 'images/newBookmarksUA.webp';
+});
+
+// Закрити оверлеї при натисканні на кнопки з data-bubble="10" або "11"
+document.querySelectorAll('.side-button[data-bubble="10"], .side-button[data-bubble="11"]')
+    .forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const overlay1 = document.querySelector('.newbuttons-ol');
+            const overlay2 = document.querySelector('.newbuttons-ol2');
+            
+            if (overlay1) overlay1.classList.remove('visible');
+            if (overlay2) overlay2.classList.remove('visible');
+        });
+    });
+	
+// Показ оверлеїв та таблички після кліку на кнопку adaptBtn
+document.getElementById('adaptBtn').addEventListener('click', function () {
+  const ol2 = document.querySelector('.board-pid2');
+  const ol = document.querySelector('.board-pid');
+  const welcome = document.getElementById('welcome');
+
+  // Спочатку newbuttons-ol
+  ol.classList.add('visible');
+
+  // Потім newbuttons-ol2
+  setTimeout(function () {
+    ol2.classList.add('visible');
+
+    // Потім табличка — вона вже анімується через CSS fadeIn
+    setTimeout(function () {
+      welcome.style.display = 'block';
+      welcome.style.animation = 'fadeIn 0.4s ease forwards';
+    }, 200);
+  }, 200);
+setTimeout(() => {
+    const welcomeSound = new Audio('sound/uaAdaptTab.mp3');
+	 // 🔇 Спільний перемикач звуку (sound-mute-state.js)
+    if (window.SoundPrefs && window.SoundPrefs.isMuted()) return null;
+    welcomeSound.play().catch(err => console.warn('Не вдалося відтворити звук:', err));
+  }, 300);
 });
 
 // Закриває табличку та обидва оверлеї
 function closeWelcome() {
-  const ol2 = document.querySelector('.newbuttons-ol2');
-  const ol = document.querySelector('.newbuttons-ol');
+  const ol2 = document.querySelector('.board-pid2');
+  const ol = document.querySelector('.board-pid');
   const welcome = document.getElementById('welcome');
 
   welcome.style.animation = 'fadeOut 0.4s ease forwards';
@@ -542,7 +636,9 @@ function switchToEnglish() {
   window.location.href = 'en';
 }
   </script>
-  <script src="footer-n-udark.js"></script>
-  <script src="preloader.js"></script>
+  <script src="sound-mute-state.js"></script>
+  <script src="preloader.js"></script>	  
+<script src="sound-effects.js"></script>
+<script src="footer-n-udark.js"></script>
 </body>
 </html>

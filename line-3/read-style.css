@@ -136,9 +136,9 @@ body::before {
 	 /* Коміксова бульбашка */
         .speech-bubble {
             position: absolute;
-            bottom: -110px;
-            left: -130px;
-            background: url(../images2/lockBubbleBg.webp), #ffffff;
+            bottom: -210px;
+            left: -140px;
+            background: url(../images2/lockBubbleBgENG.webp), #ffffff;
 			background-size: cover;
 			background-repeat: no-repeat;
             border: 3px solid #333;
@@ -153,7 +153,9 @@ body::before {
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             pointer-events: none;
             z-index: 1001;
-            line-height: 1.4;
+            line-height: 1;
+			width: 310px;
+			text-wrap: wrap;
         }
 
         .speech-bubble::after {
@@ -237,8 +239,8 @@ body::before {
         /* Бульбашка з фактами */
         .fact-bubble {
             position: absolute;
-            bottom: -320px;
-            left: -90px;
+            bottom: -420px;
+            left: -170px;
             background: linear-gradient(360deg, rgba(20, 38, 64,0.5) 0%, #a8968f 70%);
             border: 3px dashed #fff6b3;
             border-radius: 20px;
@@ -251,7 +253,7 @@ body::before {
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             pointer-events: none;
             z-index: 1002;
-            max-width: 270px;
+            max-width: 370px;
 			text-wrap: wrap;
         }
 
@@ -294,8 +296,8 @@ body::before {
         }
 
         .fact-image {
-            width: 250px;
-            height: 213px;
+            width: 350px;
+            height: auto;
             border-radius: 10px;
             border: none;
             display: block;
@@ -345,8 +347,8 @@ body::before {
 
         .magnified-image {
             position: absolute;
-            width: 340px;
-            height: 290px;
+            width: 450px;
+            height: auto;
             object-fit: cover;
             border-radius: 20px;
             transform-origin: center;
@@ -786,24 +788,19 @@ pattern-button:hover {
             border-left: 10px solid #443652;
         }
 
-        .button-container:hover .tooltip-bubble-right {
-            opacity: 1;
+
+        .tooltip-bubble-right.show {
+            animation: bounceRight 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+			opacity: 1;
             visibility: visible;
             transform: translateY(-50%) translateX(100%) scale(1);
         }
 		
-		.button-container:hover .tooltip-bubble-left {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(-50%) translateX(-100%) scale(1);
-        }
-
-        .tooltip-bubble-right.show {
-            animation: bounceRight 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-		
 		.tooltip-bubble-left.show {
             animation: bounceLeft 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+			opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(-100%) scale(1);
         }
 
         @keyframes bounceRight {
@@ -1041,14 +1038,11 @@ pattern-button:hover {
             border-bottom: 10px solid #443652;
         }
 
-        .container:hover .tooltip-bubble {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(0, 0) scale(1);
-        }
-
         .tooltip-bubble.show {
             animation: bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+			opacity: 1;
+            visibility: visible;
+            transform: translate(0, 0) scale(1);
         }
 
         @keyframes bounce {
@@ -1098,6 +1092,12 @@ pattern-button:hover {
             min-height: 300px;
 			
         }
+
+		#mapContent,
+#mapContent * {
+    user-select: none;
+    -webkit-user-select: none;
+}
 
         .map-content:active {
             cursor: url(../images2/cursorGrab/grabbing.webp) 15 15, grabbing;
@@ -1475,3 +1475,50 @@ pattern-button:hover {
 	html { overflow-x: hidden; }
 	body { overflow-x: visible; }
 }
+
+.bottom-panel {
+	  position: fixed;
+      bottom: -16px; height: 80px;
+      background-image: url(../images/sound-tab2.webp);
+	  left: 13%;
+	  width: 180px;
+	  z-index: 101;
+	  background-repeat: no-repeat;
+	  padding-top: 19px;
+	  padding-left: 19px;
+	  filter: drop-shadow(0 -4px 13px blue);
+	  transition: bottom 0.3s ease-in-out; 
+    }
+	
+	.bottom-panel--hidden {
+  bottom: -90px; 
+}
+	
+	.sound-btn {
+		display: inline-block;
+	  width: 64px;
+	  height: 41px;
+	  align-items: center;
+      justify-content: center;
+	  margin-right: 4px;
+	  background: none;
+	  border: none;
+	  cursor: url(../images2/cursorPointer/littlePointer.webp) 1 1, pointer;
+	  transition: transform 0.2s ease, filter 0.2s ease;
+	  filter: drop-shadow(0 5px 7px black);
+	}
+	
+	.sound-btn:hover {
+		transform: translateY(-2px);
+		filter: brightness(140%);
+	}
+	
+	#musicBtn {
+		background-image: url(../images/music-btn.webp);
+		background-repeat: no-repeat;
+	}
+	
+	#soundBtn {
+		background-image: url(../images/sound-btn.webp);
+		background-repeat: no-repeat;
+	}
