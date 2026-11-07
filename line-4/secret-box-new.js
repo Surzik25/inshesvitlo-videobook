@@ -14,6 +14,8 @@ class TreasureBoxTimer {
         this.magnifiedImage = document.getElementById('magnifiedImage');
         this.factGroupNumber = document.getElementById('factGroupNumber');
         this.unlockMessage = document.getElementById('unlockMessage');
+		this.soundCache = new Map();
+		this.SOUND_DIR = '../sound/read/';
         
         // Змінні для анімацій розблокованої скриньки
         this.hoverTimeout = null;
@@ -48,7 +50,12 @@ class TreasureBoxTimer {
 					{ image: 'fact44.PNG', text: 'Пер-пере святкує свій день народження тринадцятого грудня 138 року постери (п.е.). Може, через ЦЕ він такий одержимий числом *13*?' },
 					{ image: 'fact47.PNG', text: 'Пер-пере НАДЗВИЧАЙНО боїться голосних та деренчливих звуків. Особливо - звірячої бензопили Дворовика-боровика. Кожного року 19 липня той привозить на подвір*я вантажівку колод і вмикає її на повну потужність. Нелегко вухам :d' },
 					{ image: 'fact48.PNG', text: 'Колись Окі зробив для Пер-пере тіньову лампу, яка сканує його силовий перстень і тільки після цього розблоковується' },
-					{ image: 'fact52.PNG', text: 'Найпоширеніші та найпопулярніші роботи в кімнаті Пер-пере та Окі - роботи-шпигуни. Інша їхня назва - *циліндричні жуки-кажанчики, які лякають всіх навколо*. Як не дивно, вони насправді ні лякають, ні шпигують. Зате виконують купу інших корисних функцій :D' }
+					{ image: 'fact52.PNG', text: 'Найпоширеніші та найпопулярніші роботи в кімнаті Пер-пере та Окі - роботи-шпигуни. Інша їхня назва - *циліндричні жуки-кажанчики, які лякають всіх навколо*. Як не дивно, вони насправді ні лякають, ні шпигують. Зате виконують купу інших корисних функцій :D' },
+					{ image: 'fact56.PNG', text: 'У Пер-пере в коморі капітана Во - справді гігантська колекція чаю! Тут тобі і трав\'яні, і фруктово-ягідні, і квіткові, і ферментовані чаї.' },
+					{ image: 'fact61.PNG', text: 'У Пер-пере є спеціальна літальна машина у формі тарілки, яку зробили із запасних крилець шпигунських роботів.' },
+					{ image: 'fact62.PNG', text: 'Нещодавно Пер-пере намалював на одній із котячих полиць спеціальний червоний прямокутник, щоб завжди класти туди свій мобільний пристрій і не губити його. Займати це місце він категорично забороняє!' },
+					{ image: 'fact65.PNG', text: 'Щоліта Окі з Пер-пере облаштовують Царську терасу на розпеченому металевому даху свого горища. Там можна підзарядити батарейки, полежати в гамаку і навіть посмажити горішки!' },
+					{ image: 'fact67.PNG', text: 'Репетитор Пер-пере - чорний кіт Аристократ - має звичку з\'являтися в Казовому гнізді нізвідки. Усьому виною його особисті *чорні двері* - дірка під підлогою, крізь яку він прослизає, навіть коли всі входи й виходи заблоковано.' }
             ],
             // Група 2 
             [
@@ -69,6 +76,11 @@ class TreasureBoxTimer {
 					{ image: 'fact46.PNG', text: 'Каз на дотик точнісінько такий, як надута булька пиріжкового тіста, присипана тонким шаром борошна' },
 					{ image: 'fact50.PNG', text: 'Тітка Веда у своєму домі не має з ким поговорити, крім Пер-пере. Тому, що ніхто з мешканців Казового гнізда, крім Пер-пере, не вміє спілкуватися звичайними словами' },
 					{ image: 'fact51.PNG', text: 'Тітка Веда - теплова діодка (ТД) коренистої статури та господарчої вдачі. Ататомічна природа ТД подарувала її тілу спеціальну серцеву шухлядку, де вона може зберігати найсокровенніші для себе речі (зокрема спадок від своїх бабусь і прабабусь)' },
+					{ image: 'fact54.PNG', text: 'Циліндричний Роботокіт поводиться точнісінько як кіт, бо в його спину впаяна база даних - книжка про котів.' },
+					{ image: 'fact57.PNG', text: 'У діодів також є своя валюта.' },
+					{ image: 'fact58.PNG', text: 'Щовечора, коли від Межі тягне протягами, селяни запинають вікна важкими шторами й цілу ніч не виглядають надвір, бо це вважається захистом від нечистої сили. Саме такими вечорами Окі з Пер-пере дозволено виходити на вулицю.' },
+					{ image: 'fact64.PNG', text: 'Тітка Веда завжди дуже гостинна до Дворовика-боровика. Коли він приїздить, конвеєр грушевих рогаликів на кухні не зупиняється.' }
+					
             ],
             // Група 3 
             [
@@ -89,6 +101,12 @@ class TreasureBoxTimer {
 					{ image: 'fact42.PNG', text: 'Зазвичай до Окі підключений спеціальний механізм, який робить його очиці менш чутливими до зовнішніх подразників і захищає їх. Без цієї штуки навколишнє середовище стає для Окі дуже вразливим :(' },
 					{ image: 'fact45.PNG', text: 'У Пер-пере з Окі є навіть постійні клієнти! Одна з них - крута руденька жіночка із вибуховою зачіскою. Їй постійно треба ремонтувати іригатор!' },
 					{ image: 'fact49.PNG', text: 'Окі володіє неймовірною гнучкістю! Йому зручно перебувати годинами в таких закручених положеннях, від думки про які звичайні світлові діоди ВЖЕ переломали б собі всі мікросхемки (в уяві).' },
+					{ image: 'fact53.PNG', text: 'В Окі є дві стрічечки - кінці його бежевої шлейки! Вони завжди майорять, як котячі хвости чи прапорці на верхівці вежі, тому Пер-пере називає їх шляхетними.' },
+					{ image: 'fact55.PNG', text: 'Якось тітка Веда захотіла відчистити Окі від усіх його неонових плям. У результаті всі потомилися, а плями розрослися ще більше, ніж були.' },
+					{ image: 'fact59.PNG', text: 'Ноги й руки в Окі можуть згинатися будь-де! І підлаштовуватися під будь-яке положення :)' },
+					{ image: 'fact60.PNG', text: 'Антена-вилка Окі постійно під напругою. Не смій її торкатися!' },
+					{ image: 'fact63.PNG', text: 'Як Окі вдається ходити, не роздушивши жодного механічного бірюзового котика, не більшого за блоху? Усе завдяки армії спеціальних, дуже міцних механічних павуків, які підтримують його ступні, щоб ті не торкалися землі.' },
+					{ image: 'fact66.PNG', text: 'Насправді Казове гніздо почав будувати не хто інший, як Дворовик-боровик.' }
 					
             ]
         ];
@@ -189,6 +207,17 @@ window.addEventListener('beforeunload', () => {
 setInterval(() => {
     this.saveState();
 }, 1000);
+this.bubbleObserver = new MutationObserver((mutations) => {
+    mutations.forEach((m) => {
+        if (m.attributeName === 'class') {
+            const classes = this.factBubble.classList;
+            if (classes.contains('show') || classes.contains('suck-in')) {
+                this.muteChestSound();
+            }
+        }
+    });
+});
+this.bubbleObserver.observe(this.factBubble, { attributes: true });
     }
 	
 	// Відновлення візуального стану після перезавантаження
@@ -424,9 +453,40 @@ preloadAnimationImages() {
     });
 }
 
+playSound(fileName, trackAsChestSound = false) {
+	// 🔇 Спільний перемикач звуку (sound-mute-state.js)
+    if (window.SoundPrefs && window.SoundPrefs.isMuted()) return null;
+	
+    if (!this.soundCache.has(fileName)) {
+        const audio = new Audio(this.SOUND_DIR + fileName);
+        audio.preload = 'auto';
+        this.soundCache.set(fileName, audio);
+    }
+    const instance = this.soundCache.get(fileName).cloneNode();
+
+    if (trackAsChestSound) {
+        this.activeChestAudio = instance;
+    }
+
+    instance.play().catch(() => {});
+    return instance;
+}
+
+muteChestSound() {
+    if (this.activeChestAudio) {
+        this.activeChestAudio.pause();
+        this.activeChestAudio.currentTime = 0;
+        this.activeChestAudio = null;
+    }
+}
+
 handleUnlockedHover() {
     this.isHovering = true;
-    
+    // Не програвати звук, якщо ми зараз в процесі перемикання факту —
+    // browser може викликати цей hover штучно (hit-testing після зміни DOM)
+    if (!this.suppressChestSound) {
+        this.playSound('teapotOpening.mp3', true); // true — трекаємо як chest sound
+    }
     // Очистити попередній таймер якщо він існує
     if (this.hoverTimeout) {
         clearTimeout(this.hoverTimeout);
@@ -447,7 +507,11 @@ handleUnlockedHover() {
 
 handleUnlockedLeave() {
     this.isHovering = false;
-    
+    // Те саме — не програвати звук закривання, якщо це "фантомний" leave
+    // під час перемикання факту
+    if (!this.suppressChestSound) {
+        this.playSound('teapotClosing.mp3', true); // true — трекаємо як chest sound
+    }
     // Очистити таймер
     if (this.hoverTimeout) {
         clearTimeout(this.hoverTimeout);
@@ -481,7 +545,7 @@ setBoxImage(imageName, fallbackText) {
     showUnlockBubble() {
         // Оновити повідомлення залежно від кількості розблокувань
         this.unlockCount++;
-        
+        this.playSound('boxUnlocked2.mp3');
         if (this.unlockCount === 1) {
             this.unlockMessage.textContent = 'Чайник розблоковано!';
         } else if (this.unlockCount === 2) {
@@ -499,19 +563,34 @@ setBoxImage(imageName, fallbackText) {
     }
 
     showFactBubbleWithAnimation() {
-        if (this.isFactBubbleVisible) {
-            // Якщо бульбашка вже видима, спочатку втягуємо її
-            this.suckInBubble().then(() => {
-                this.showNewFact();
-            });
-        } else {
-            // Якщо бульбашка не видима, просто показуємо новий факт
+    // Блокуємо звуки ChestOpening/ChestClosing на весь час анімації переключення факту.
+    // Це важливіше за muteChestSound(), бо той глушить лише те, що ВЖЕ грає —
+    // а тут ми запобігаємо запуску звуку, який ще навіть не почав відтворюватись
+    // (browser може викликати mouseleave/mouseenter вже ПІСЛЯ зміни DOM,
+    // коли muteChestSound() вже відпрацював).
+    this.suppressChestSound = true;
+    clearTimeout(this.suppressChestSoundTimeout);
+
+    this.muteChestSound(); // заглушити ChestOpening/ChestClosing, якщо вже грає
+
+    if (this.isFactBubbleVisible) {
+        this.suckInBubble().then(() => {
             this.showNewFact();
-        }
+        });
+    } else {
+        this.showNewFact();
     }
+
+    // Зняти блокування вже після завершення suck-in (400ms) + показу нового факту (100ms)
+    // + невеликий запас на те, щоб браузер встиг перерахувати hover-стан
+    this.suppressChestSoundTimeout = setTimeout(() => {
+        this.suppressChestSound = false;
+    }, 800);
+}
 
     suckInBubble() {
         return new Promise((resolve) => {
+			this.muteChestSound(); // глушимо перед suck-in
             this.factBubble.classList.add('suck-in');
             
             setTimeout(() => {
@@ -524,17 +603,20 @@ setBoxImage(imageName, fallbackText) {
     }
 
     showNewFact() {
+		this.muteChestSound(); // глушимо перед show
+		this.playSound('factPull.mp3');
         // Випадковий вибір факту з доступних фактів
         const randomIndex = Math.floor(Math.random() * this.availableFacts.length);
         const selectedFact = this.availableFacts[randomIndex];
         
         // Встановити зображення та текст
-        this.factImage.src = `https://cdn.jsdelivr.net/npm/@surzik25/perpere-teapot-facts@1.0.0/facts/${selectedFact.image}`;
+        this.factImage.src = this.factImageUrl(selectedFact.image);
         this.factImage.alt = `Fact ${randomIndex + 1}`;
         this.factText.textContent = selectedFact.text;
+		this.adjustBubblePosition();
         
         // Встановити збільшене зображення (використовуємо те саме зображення)
-        this.magnifiedImage.src = `https://cdn.jsdelivr.net/npm/@surzik25/perpere-teapot-facts@1.0.0/facts/${selectedFact.image}`;
+        this.magnifiedImage.src = this.factImageUrl(selectedFact.image);
         this.magnifiedImage.alt = `Magnified Fact ${randomIndex + 1}`;
         
         // Невелика затримка перед показом нового факту
@@ -543,6 +625,34 @@ setBoxImage(imageName, fallbackText) {
             this.isFactBubbleVisible = true;
         }, 100);
     }
+	
+    // Факти 1–52 — з українського пакета, нові (53+) — з англійського
+    factImageUrl(image) {
+        const pkg = parseInt(image.replace(/\D/g, '')) <= 52 ? 'perpere-teapot-facts@1.0.0' : 'perpere-teapot-facts-eng@1.0.0';
+        return `https://cdn.jsdelivr.net/npm/@surzik25/${pkg}/facts/${image}`;
+    }
+
+	adjustBubblePosition() {
+    const text = this.factText.textContent || '';
+    const charCount = text.length;
+    
+    // Базова позиція і зміщення залежно від кількості символів
+    let bottomValue;
+    
+    if (charCount <= 80) {
+        bottomValue = -390;   // короткий текст — бульбашка вища
+    } else if (charCount <= 150) {
+        bottomValue = -420;
+    } else if (charCount <= 250) {
+        bottomValue = -470;   // середній (базовий)
+    } else if (charCount <= 350) {
+        bottomValue = -500;
+    } else {
+        bottomValue = -540;   // довгий текст — бульбашка нижче
+    }
+    
+    this.factBubble.style.bottom = `${bottomValue}px`;
+}
 
     updateMagnifyingGlass(e) {
     if (!this.magnifyingGlass.classList.contains('active')) return;
@@ -579,8 +689,8 @@ setBoxImage(imageName, fallbackText) {
     const scaleX = x / this.factImage.offsetWidth;
     const scaleY = y / this.factImage.offsetHeight;
 
-    const offsetX = scaleX * 300;
-    const offsetY = scaleY * 250;
+    const offsetX = scaleX * 450;
+    const offsetY = scaleY * 350;
 
     this.magnifiedImage.style.left = `-${offsetX - 50}px`;
     this.magnifiedImage.style.top = `-${offsetY - 50 - fingerOffsetY}px`;
@@ -603,7 +713,7 @@ setBoxImage(imageName, fallbackText) {
         
         group.forEach((fact, index) => {
             const img = new Image();
-            const imageUrl = `https://cdn.jsdelivr.net/npm/@surzik25/perpere-teapot-facts@1.0.0/facts/${fact.image}`;
+            const imageUrl = this.factImageUrl(fact.image);
             
             const loadPromise = new Promise((resolve, reject) => {
                 img.onload = () => {

@@ -105,10 +105,9 @@ function toggleMode() {
     }, 10);
     
     if (!isUltraDark) {
-        // Переключення з темного на ультратемний
+        // Темний → Ультратемний
         modeToggle.src = '../images2/DMCircleHover.webp';
-        
-        // Затримка для красивого ефекту
+
         setTimeout(() => {
             // Додаємо клас udark до всіх елементів
             body.classList.add('udark');
@@ -134,10 +133,9 @@ function toggleMode() {
         }, 900);
         
     } else {
-        // Переключення з ультратемного на темний
+        // Ультратемний → Темний
         modeToggle.src = '../images2/UDMCircleHover.webp';
-        
-        // Затримка для красивого ефекту
+
         setTimeout(() => {
             // Забираємо клас udark з всіх елементів
             body.classList.remove('udark');

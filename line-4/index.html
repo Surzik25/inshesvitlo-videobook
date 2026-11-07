@@ -72,10 +72,11 @@
             <img class="skrunka-img" id="boxImage" src="../images2/teapotBlocked.webp" alt="Treasure Box">
            
             <div class="speech-bubble" id="speechBubble">
-                Чайник заблокований.<br>Наберись терпіння, не все одразу ;)
+                Чайник заблокований.<br>Наберись терпіння, не все одразу ;) <br><br>
+				<span style="font-size:13px; color: #780129;">Важливо: після основного розблокування цей таймер лише двічі запам'ятовує час, на якому ти зупинився(лась). Якщо оновиш сторінку втретє, не дочекавшись повного розблокування, доведеться щоразу чекати заново. Не допусти цього!</span>
             </div>
             <div class="unlock-bubble" id="unlockBubble">
-               <span id="unlockMessage">Чайник розблоковано!</span><br>Доступні набори рандому: <span id="factGroupNumber">1</span>/3.<br>Всього карточок: 52
+               <span id="unlockMessage">Чайник розблоковано!</span><br>Доступні набори рандому: <span id="factGroupNumber">1</span>/3.<br>Всього карточок: 67
             </div>
             <div class="fact-bubble" id="factBubble">
                 <button class="fact-close" id="factClose" style="display: none">×</button>
@@ -350,44 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 					
 	<script src="nav-panel_scrolling.js"></script>
-	<script>
-        const pageDate = document.getElementById('pageDate');
-        const tooltipBubble = document.getElementById('tooltipBubble');
-
-        pageDate.addEventListener('mouseenter', () => {
-            tooltipBubble.classList.add('show');
-        });
-
-        pageDate.addEventListener('mouseleave', () => {
-            tooltipBubble.classList.remove('show');
-        });
-
-        // Навігаційні кнопки
-        const buttons = [
-            { button: 'prevBtn', tooltip: 'tooltipPrev' },
-            { button: 'firstBtn', tooltip: 'tooltipFirst' },
-            { button: 'nextBtn', tooltip: 'tooltipNext' },
-            { button: 'lastBtn', tooltip: 'tooltipLast' }
-        ];
-
-        buttons.forEach(({ button, tooltip }) => {
-            const buttonElement = document.getElementById(button);
-            const tooltipElement = document.getElementById(tooltip);
-
-            buttonElement.addEventListener('mouseenter', () => {
-                tooltipElement.classList.add('show');
-            });
-
-            buttonElement.addEventListener('mouseleave', () => {
-                tooltipElement.classList.remove('show');
-            });
-        });
-		
-		function reloadPage() {
-    // Перезавантажує сторінку з кешем
-    location.reload();
-  }
-    </script>
+	
 
                     <div class="video-bottom">
                         <div class="video-controls">
@@ -452,16 +416,59 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 			 <script>
         const pageDate = document.getElementById('pageDate');
-        const tooltipBubble = document.getElementById('tooltipBubble');
+const tooltipBubble = document.getElementById('tooltipBubble');
 
-        pageDate.addEventListener('mouseenter', () => {
-            tooltipBubble.classList.add('show');
-        });
+let showTimer;
+let hideTimer;
 
-        pageDate.addEventListener('mouseleave', () => {
+pageDate.addEventListener('mouseenter', () => {
+    showTimer = setTimeout(() => {
+        tooltipBubble.classList.add('show');
+
+        hideTimer = setTimeout(() => {
             tooltipBubble.classList.remove('show');
-        });
-		
+        }, 3500);
+    }, 500);
+});
+
+pageDate.addEventListener('mouseleave', () => {
+    clearTimeout(showTimer);
+    clearTimeout(hideTimer);
+    tooltipBubble.classList.remove('show');
+});
+
+// Навігаційні кнопки
+const buttons2 = [
+    { button: 'prevBtn', tooltip: 'tooltipPrev' },
+    { button: 'firstBtn', tooltip: 'tooltipFirst' },
+    { button: 'nextBtn', tooltip: 'tooltipNext' },
+    { button: 'lastBtn', tooltip: 'tooltipLast' }
+];
+
+buttons2.forEach(({ button, tooltip }) => {
+    const buttonElement = document.getElementById(button);
+    const tooltipElement = document.getElementById(tooltip);
+
+    let showTimer;
+    let hideTimer;
+
+    buttonElement.addEventListener('mouseenter', () => {
+        showTimer = setTimeout(() => {
+            tooltipElement.classList.add('show');
+
+            hideTimer = setTimeout(() => {
+                tooltipElement.classList.remove('show');
+            }, 2000);
+        }, 500);
+    });
+
+    buttonElement.addEventListener('mouseleave', () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+        tooltipElement.classList.remove('show');
+    });
+});
+
     </script>	
 				
 
@@ -472,8 +479,25 @@ document.addEventListener("DOMContentLoaded", () => {
                   
                     <img class="svg-img" id="svgImg" src="../images2/kartaPrirva.webp" style="pointer-events: none; width: 180%; height: 118%; position: absolute; top: -11%; left: -40%;">
                     <!-- тут карта -->
-                    <svg class="map-svg" id="mapSvg" viewBox="0 0 1318 1133" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g class="planet">
+                    <svg class="map-svg" id="mapSvg" viewBox="0 0 1520 1133" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g class="paa">	
+<path d="M737 446.757C705.5 509.257 576.374 733.023 544.499 754.757L194.5 1121.26C245.731 1194.58 440.312 1328.61 526.5 1359.76C712.198 1426.87 856.435 1415.01 979.5 1389.26C1088.86 1366.37 1286.73 1268.06 1392 1121.26C1486.87 988.958 1524.83 668.291 1500 565.758C1472.88 453.757 1318.5 202.758 1227 188.257C1172.28 179.586 1063.84 150.877 1025 167.757C986.156 184.637 913.999 213.757 880.5 246.757C864.792 262.231 830.626 316.158 812.499 347.757C775.499 412.257 749.722 421.515 737 446.757Z" fill="url(#paint0_linear_2006_320)"/>
+<defs>
+<linearGradient id="paint0_linear_2006_320" x1="1216" y1="1286.26" x2="737" y2="668.258" gradientUnits="userSpaceOnUse">
+<stop stop-color="#070c30" stop-opacity="0.06"/>
+<stop offset="0.671154" stop-color="#65e0c8" stop-opacity="0.2"/>
+<stop offset="1" stop-color="#0B218B" stop-opacity="0.09"/>
+<animateTransform
+    attributeName="gradientTransform"
+    type="translate"
+    values="-1600 -1600; 1600 1600; -1600 -1600"
+	keyTimes="0; 0.6; 1"
+    dur="20s"
+    repeatCount="indefinite"/>
+</linearGradient>
+</defs>
+</g>
+  <g class="planet">	
 <path d="M853.61 362.373C831.21 365.573 780.277 425.04 757.61 454.373L201.611 1126.37C129.61 1076.37 78.3865 986.06 49.6104 904.373C-12.3896 728.373 -5.64902 499.159 23.6103 384.373C49.6104 282.373 171.61 149.271 321.61 54.3732C456.791 -31.1493 751.61 8.37314 853.61 34.3731C955.61 60.3731 1315.61 200.373 1315.61 252.373C1315.61 304.373 1285.61 398.373 1267.61 434.373C1249.61 470.373 1173.61 614.373 1155.61 602.373C1137.61 590.373 1067.61 512.373 1041.61 488.373C1015.61 464.373 881.61 358.373 853.61 362.373Z" fill="#B8AB98" stroke="#615555" stroke-width="4"/>
 <path d="M213 157C194 139 250 107 292 76C327 45 429.444 14.0912 503 6.00001C603 -4.99999 839 26 824 31C809 36 796 45 782 61C768 77 733 92 708 105C683 118 655 78 630 85C605 92 594 126 545 144C496 162 504 135 475 144C446 153 417 196 372 191C327 186 333 176 301 173C269 170 246.63 188.86 213 157Z" fill="#BA9997"/>
 <path d="M102 503C19 532 27 693 15 752C19 809.6 63.3333 932 85 986C94 980 128.6 958 195 918C278 868 342 700 369 597C396 494 653 368 707 340C761 312 1278 396 1293 358C1308 320 1316 257 1312 244C1308 231 1286 221 1260 203C1234 185 961 68 933 60C905 52 871 57 807 68C743 79 753 97 684 146C615 195 606 178 510 187C414 196 417 240 364 271C311 302 338 404 301 453C264 502 185 474 102 503Z" fill="#9E9C92"/>
@@ -861,6 +885,14 @@ document.addEventListener("DOMContentLoaded", () => {
 <path d="M1234.5 459L1226 444C1228.57 447.481 1233.65 454.453 1235.16 456.903L1234.5 459Z" fill="#6E6E6E"/>
 <path d="M1216 461.5C1218.17 464.167 1222.6 469.7 1223 470.5L1222 472L1216 461.5Z" fill="#6E6E6E"/>
 <path d="M1223 465.5L1217.5 454.5L1223.5 462.5L1222 456.903L1226 461.5L1223.5 462.5L1223 465.5Z" fill="#6E6E6E"/>
+<path d="M1232.29 462.715C1231.46 461.774 1225.59 454.23 1222.76 450.575L1226.91 459.673L1232.29 462.715Z" fill="#6E6E6E"/>
+<path d="M1214.93 462.938L1211 455.178L1212.24 459.221L1214.93 462.938Z" fill="#6E6E6E"/>
+<path d="M1195.51 459.711L1197.57 458.769L1195.75 454.781L1194.43 455.178L1195.51 459.711Z" fill="#6E6E6E"/>
+<path d="M1205.86 469.278L1209.37 469.324C1209.16 468.873 1207.65 465.931 1205.66 462.091L1203.38 462.662L1205.86 469.278Z" fill="#6E6E6E"/>
+<path d="M1229.42 472.818L1232.3 471.5C1231.82 471.168 1229.46 468.689 1226.46 465.455L1224.89 466.674L1229.42 472.818Z" fill="#6E6E6E"/>
+<path d="M1248.54 434.941L1246.54 436.087L1247.52 439.276L1248.99 451.245L1255.8 446.49C1255.22 445.222 1254.67 439.41 1254.29 434.186L1253.5 434.383L1253.1 440.576L1251.14 436.278L1250.02 436.955L1250.62 439.51L1248.54 434.941Z" fill="#6E6E6E"/>
+<path d="M1240.72 446.226L1241.35 450.885C1241.06 450.242 1239.08 447.359 1236.99 443.77L1238.09 442.664L1240.72 446.226Z" fill="#6E6E6E"/>
+<path d="M1229.22 442.59L1227.83 443.4C1228.89 445.939 1229.44 448.071 1230.81 450.746L1236.81 452.957C1234.31 449.091 1231.52 445.417 1229.22 442.59Z" fill="#6E6E6E"/>
   </g>
   <g class="radioactive">
 <path d="M534.981 33.5503C537.296 34.4539 538.44 37.0633 537.537 39.3784C536.633 41.6936 534.024 42.8379 531.709 41.9343C529.393 41.0306 528.249 38.4213 529.153 36.1061C530.056 33.7909 532.666 32.6466 534.981 33.5503Z" fill="#B28888"/>
@@ -1112,6 +1144,39 @@ document.addEventListener("DOMContentLoaded", () => {
   <g class="timetrain-mark">
 <path d="M1120.61 179.276C1122.24 174.621 1118.57 171 1113.46 171C1108.97 171 1105.3 174.966 1106.11 179.276C1106.77 182.724 1111.56 188.529 1113.46 191C1115.3 188.644 1119.3 183 1120.61 179.276Z" fill="#B3A8E3"/>
   </g>
+  <g class="klocha-market-mark">
+<path d="M599.608 624.033C601.241 619.378 597.566 615.758 592.463 615.758C587.972 615.758 584.298 619.723 585.114 624.033C585.767 627.482 590.558 633.286 592.463 635.758C594.3 633.401 598.301 627.758 599.608 624.033Z" fill="#AE8170"/>
+      </g>
+    <g class="lizards-mark">
+<path d="M473.608 505.033C475.241 500.378 471.566 496.758 466.463 496.758C461.972 496.758 458.298 500.723 459.114 505.033C459.767 508.482 464.558 514.286 466.463 516.758C468.3 514.401 472.301 508.758 473.608 505.033Z" fill="#AE8170"/>
+      </g>
+    <g class="pink-diodette-mark">
+<path d="M895.608 522.033C897.241 517.378 893.566 513.758 888.463 513.758C883.972 513.758 880.298 517.723 881.114 522.033C881.767 525.482 886.558 531.286 888.463 533.758C890.3 531.401 894.301 525.758 895.608 522.033Z" fill="#68BFBB"/>
+      </g>
+    <g class="waterfall-mark">
+<path d="M888.608 853.033C890.241 848.378 886.566 844.758 881.463 844.758C876.972 844.758 873.298 848.723 874.114 853.033C874.767 856.482 879.558 862.286 881.463 864.758C883.3 862.401 887.301 856.758 888.608 853.033Z" fill="#68BFBB"/>
+      </g>
+    <g class="tombstone-forbidden-mark">
+<path d="M992.608 657.033C994.241 652.378 990.566 648.758 985.463 648.758C980.972 648.758 977.298 652.723 978.114 657.033C978.767 660.482 983.558 666.286 985.463 668.758C987.3 666.401 991.301 660.758 992.608 657.033Z" fill="#68BFBB"/>
+      </g>
+    <g class="yardman-mark">
+<path d="M816.608 502.033C818.241 497.378 814.566 493.758 809.463 493.758C804.972 493.758 801.298 497.723 802.114 502.033C802.767 505.482 807.558 511.286 809.463 513.758C811.3 511.401 815.301 505.758 816.608 502.033Z" fill="#68BFBB"/>
+      </g>
+    <g class="exoskeletons-mark">
+<path d="M323.608 836.033C325.241 831.378 321.566 827.758 316.463 827.758C311.972 827.758 308.298 831.723 309.114 836.033C309.767 839.482 314.558 845.286 316.463 847.758C318.3 845.401 322.301 839.758 323.608 836.033Z" fill="#AE8170"/>
+      </g>
+    <g class="end-circle-mark">
+<path d="M184.608 980.033C186.241 975.378 182.566 971.758 177.463 971.758C172.972 971.758 169.298 975.723 170.114 980.033C170.767 983.482 175.558 989.286 177.463 991.758C179.3 989.401 183.301 983.758 184.608 980.033Z" fill="#AE8170"/>
+      </g>
+    <g class="planetarium-mark">
+<path d="M479.608 726.033C481.241 721.378 477.566 717.758 472.463 717.758C467.972 717.758 464.298 721.723 465.114 726.033C465.767 729.482 470.558 735.286 472.463 737.758C474.3 735.401 478.301 729.758 479.608 726.033Z" fill="#AE8170"/>
+      </g>
+    <g class="willow-tali-mark">
+<path d="M1260.61 241.033C1262.24 236.378 1258.57 232.758 1253.46 232.758C1248.97 232.758 1245.3 236.723 1246.11 241.033C1246.77 244.482 1251.56 250.286 1253.46 252.758C1255.3 250.401 1259.3 244.758 1260.61 241.033Z" fill="#B3A8E3"/>
+  </g>
+  <g class="golku-broken-mark">	
+<path d="M1246.61 435.033C1248.24 430.378 1244.57 426.758 1239.46 426.758C1234.97 426.758 1231.3 430.723 1232.11 435.033C1232.77 438.482 1237.56 444.286 1239.46 446.758C1241.3 444.401 1245.3 438.758 1246.61 435.033Z" fill="#B3A8E3"/>
+    </g>
   </g>
 <defs>
 <linearGradient id="paint0_linear_31_60" x1="399" y1="248" x2="357" y2="456" gradientUnits="userSpaceOnUse">
@@ -1146,6 +1211,27 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         </div>
     </div>
+	<div class="bottom-panel">
+  <button class="sound-btn" id="musicBtn"></button>
+  <button class="sound-btn" id="soundBtn"></button>
+  </div>
+  <script>
+  window.addEventListener('scroll', () => {
+  const panel = document.querySelector('.bottom-panel');
+  
+  // Рахуємо поточну позицію скролу + висоту екрану
+  const scrollPosition = window.innerHeight + window.scrollY;
+  // Отримуємо повну висоту всього документа
+  const scrollHeight = document.documentElement.scrollHeight;
+
+  // Якщо відстань до кінця сторінки менша або дорівнює 5 пікселям
+  if (scrollHeight - scrollPosition <= 5) {
+    panel.classList.add('bottom-panel--hidden');
+  } else {
+    panel.classList.remove('bottom-panel--hidden');
+  }
+});
+</script>
 	<!-- FOOTER -->
   <footer class="footer line4" id="footerLine4">
     <!-- Animated particles -->
@@ -1201,29 +1287,61 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
   </div>
   <script>
-  let playground = document.querySelector("body");
+  (() => {
+  const mq = matchMedia('(hover: hover) and (pointer: fine)');
+  if (!mq.matches) return;                 // тач/стилус — виходимо повністю
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-let cursorArray = ['url("../images2/cursorSeq/2/cursor0000.webp"), auto',
-                   'url("../images2/cursorSeq/2/cursor0001.webp"), auto',
-                  'url("../images2/cursorSeq/2/cursor0002.webp"), auto',
-                  'url("../images2/cursorSeq/2/cursor0003.webp"), auto',
-                  'url("../images2/cursorSeq/2/cursor0004.webp"), auto'];
-i = 0;
-(function cursor(){
-  playground.style.cursor  = cursorArray[i];
-  i++;
-  if(i == cursorArray.length){
-    i = 0; 
-  }
-   setTimeout(cursor, 50);
+  const frames = [0, 1, 2, 3, 4].map(
+    (n) => `url("../images2/cursorSeq/2/cursor000${n}.png"), auto`
+  );
+
+  // прогріваємо кеш, інакше перший цикл блимає системним курсором
+  frames.forEach((_, n) => {
+    new Image().src = `../images2/cursorSeq/2/cursor000${n}.png`;
+  });
+
+  const body = document.body;
+  let i = 0, last = 0, raf = 0;
+
+  const tick = (t) => {
+    raf = requestAnimationFrame(tick);
+    if (t - last < 50) return;             // ті самі ~20fps, але в такт з кадрами браузера
+    last = t;
+    body.style.cursor = frames[i];
+    i = (i + 1) % frames.length;
+  };
+
+  const start = () => { if (!raf) { last = 0; raf = requestAnimationFrame(tick); } };
+  const stop  = () => { cancelAnimationFrame(raf); raf = 0; };
+
+  start();
+
+  // вкладка неактивна — не крутимо анімацію даремно
+  document.addEventListener('visibilitychange', () =>
+    document.hidden ? stop() : start()
+  );
+
+  // юзер підключив/відключив мишу або перевернув планшет у режим з трекпадом
+  mq.addEventListener('change', (e) => {
+    if (e.matches) start();
+    else { stop(); body.style.cursor = ''; }
+  });
 })();
 
     // перевіряємо чи був візит, але не записуємо одразу
-if (!localStorage.getItem('perpereVisitedd')) {
+if (!localStorage.getItem('perpereVisiteddd')) {
   const darkOverlay = document.getElementById('darkOverlay');
   const welcome = document.getElementById('welcome');
   welcome.style.display = 'block';
   darkOverlay.style.display = 'block';
+  
+  setTimeout(() => {
+    const welcomeSound = new Audio('../sound/read/newbies2.mp3');
+	// 🔇 Спільний перемикач звуку (sound-mute-state.js)
+    if (window.SoundPrefs && window.SoundPrefs.isMuted()) return null;
+    welcomeSound.play().catch(err => console.warn('Не вдалося відтворити звук:', err));
+  }, 300);
 }
 
 function closeWelcome() {
@@ -1236,7 +1354,7 @@ function closeWelcome() {
     welcome.style.display = 'none';
     darkOverlay.style.display = 'none';
     // записуємо в localStorage тільки після закриття вікна
-    localStorage.setItem('perpereVisitedd', 'true');
+    localStorage.setItem('perpereVisiteddd', 'true');
   }, 1000);
 }
 
@@ -1252,11 +1370,14 @@ function returnToMain() {
   }
 }
   </script>
+  <script src="../sound-mute-state.js"></script>
   <script src="video-controls (1).js"></script>
   <script src="map.js"></script>
+  <script src="sound-effects-reader.js"></script>
   <script src="nav_tree_animator_3trees.js"></script>
   <script src="video_navigator_fix.js"></script>
   <script src="secret-box-new.js"></script>
   <script src="footer-line4.js"></script>
+  
 </body>
 </html>

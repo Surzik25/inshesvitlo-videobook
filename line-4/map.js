@@ -85,7 +85,17 @@ class InteractiveMap {
 			'mesnuk-mark',
 			'river-mark',
 			'timetrain-mark',
-            'marker-klocha',
+			'klocha-market-mark',
+			'lizards-mark',
+			'pink-diodette-mark',
+			'waterfall-mark',
+			'tombstone-forbidden-mark',
+			'yardman-mark',
+			'exoskeletons-mark',
+			'end-circle-mark',
+			'planetarium-mark',
+			'willow-tali-mark',
+			'golku-broken-mark',            'marker-klocha',
             'marker-perpere'
         ];
         
@@ -113,6 +123,17 @@ class InteractiveMap {
 			'mesnuk-mark': 'Підземелля Месника. З пір настання постери ніхто про нього жодного разу не згадував. І не міг би згадати, навіть, якби хотів  💥',
 			'river-mark': 'Води річки не роблять цю пустелю менш пустельною ☢️',
 			'timetrain-mark': 'Тут не їздить ніхто, окрім Часопотяга. Здається, що його рейки пронизують всю планету діодів наскрізь 𖣘',
+			'klocha-market-mark': 'Продуктовий ринок. У містечку їх хоч греблю гати 🛒',
+			'lizards-mark': 'Ящірчине королівство. Їх там цілі орди, але жодної ти не впіймаєш! 🦎',
+			'pink-diodette-mark': 'Хатинка Рожевої Діодки 🌸 Така маленька й така рожева, що вона запросто могла б жити серед механізмів Окі',
+			'waterfall-mark': 'Водоспад, що спадає з самого висячого острівця! Навпроти нього завжди гуляють Окі з Пер-пере 🏞️',
+			'tombstone-forbidden-mark': 'Заборонене тіткою Ведою місце для прогулянок. Не лише через колючий дріт під високою напругою, а й через надгробок, у якого, можливо, є приховані очі 𓉸',
+			'yardman-mark': 'Щороку 19 липня до цієї клуні приїздить Дворовик-боровик. Заготівля дров - це вам не жарти 🪵🪓',
+			'exoskeletons-mark': 'Центр екзоскелетів. Тут діоди перебудовують себе, щоб отримати нові функції для своїх тіл 🛠️',
+			'end-circle-mark': 'Кільцева дорога. Доволі дивно, бо здавалося, що після кінцевої зупинки доріг точно вже немає',
+			'planetarium-mark': 'Бродячі планетарії мадам Оллє. Часом їх можна сплутати з Лігвом Картонного Чарівника 🎩🔮',
+			'willow-tali-mark': 'Гілки Всохлої Верби. Якщо чуєш, як вони рипають, - це точно Талісманка, молодша сестра Кардиналі, наминає на них сині хот-доги 🌭',
+			'golku-broken-mark': 'Якби хтось із діодів таке побачив, то здригнувся б: часом біля цих голок блукає згорблена постать у мішковині. Невже це правда?',
             'marker-klocha': '🏢Будинок 35 (квартири №№215-219). Тут мешкають Клоча та його тітка Їші 🪲☯',
             'marker-perpere': '🏡Хата, капітаном якої є тітка Веда. Казове гніздо. Місце, де притаковилися Пер-пере та Окі 🔎⚙️⁂'
         };
@@ -369,16 +390,37 @@ onTouchStart(e) {
         // Початок pinch-to-zoom
         this.isDragging = false;
         this.lastPinchDistance = this.getPinchDistance(e.touches);
+        
+        // Отримуємо межі контейнера, щоб рахувати координати відносно нього
+        const rect = this.container.getBoundingClientRect();
+        
+        // Знаходимо центр між двома пальцями ВІДНОСНО КОНТЕНТУ КАРТИ
+        const touchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const touchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        
+        // Центруємо координату відносно центру контейнера (аналогічно до логіки onWheel)
+        this.pinchCenterX = touchCenterX - (rect.left + rect.width / 2);
+        this.pinchCenterY = touchCenterY - (rect.top + rect.height / 2);
+
+        // ХОВАЄМО ТАБЛИЧКУ: Користувач почав зумити двома пальцями
+        this.hideMarkerInfo();
     }
 }
 
 onTouchMove(e) {
-    e.preventDefault(); // Щоб сторінка не скролилась при жестах
+    if (e.cancelable) e.preventDefault(); 
 
     if (e.touches.length === 1 && this.isDragging) {
         // Переміщення
         const deltaX = e.touches[0].clientX - this.lastTouchX;
         const deltaY = e.touches[0].clientY - this.lastTouchY;
+        
+        // Перевіряємо, чи це реальний зсув, а не випадковий мікро-тиць
+        if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
+            // ХОВАЄМО ТАБЛИЧКУ: Карта почала рухатися від пальця
+            this.hideMarkerInfo();
+        }
+
         this.translateX += deltaX;
         this.translateY += deltaY;
         this.lastTouchX = e.touches[0].clientX;
@@ -388,19 +430,46 @@ onTouchMove(e) {
     else if (e.touches.length === 2) {
         // Масштабування pinch-to-zoom
         const newDistance = this.getPinchDistance(e.touches);
-        if (this.lastPinchDistance) {
+
+        if (this.lastPinchDistance && this.lastPinchDistance > 0) {
             const zoomFactor = newDistance / this.lastPinchDistance;
-            const newScale = Math.max(this.minScale, Math.min(this.maxScale, this.scale * zoomFactor));
-            this.scale = newScale;
-            this.updateTransform();
+            const oldScale = this.scale;
+            const newScale = Math.max(this.minScale, Math.min(this.maxScale, oldScale * zoomFactor));
+
+            if (newScale !== oldScale) {
+                const scaleDiff = newScale / oldScale;
+                
+                // Формула точного зсуву відносно точки між пальцями
+                this.translateX = this.translateX * scaleDiff - this.pinchCenterX * (scaleDiff - 1);
+                this.translateY = this.translateY * scaleDiff - this.pinchCenterY * (scaleDiff - 1);
+                
+                this.scale = newScale;
+                this.updateTransform();
+            }
         }
         this.lastPinchDistance = newDistance;
+        
+        // Динамічно оновлюємо центр між пальцями під час руху, 
+        // щоб зум плавно слідував за руками
+        const rect = this.container.getBoundingClientRect();
+        const touchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const touchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        this.pinchCenterX = touchCenterX - (rect.left + rect.width / 2);
+        this.pinchCenterY = touchCenterY - (rect.top + rect.height / 2);
     }
 }
 
 onTouchEnd(e) {
     if (e.touches.length === 0) {
         this.isDragging = false;
+        this.lastPinchDistance = null;
+        this.pinchCenterX = null;
+        this.pinchCenterY = null;
+    } else if (e.touches.length === 1) {
+        // Якщо один палець прибрали, а другий залишився — перемикаємося назад на drag
+        this.isDragging = true;
+        this.lastTouchX = e.touches[0].clientX;
+        this.lastTouchY = e.touches[0].clientY;
         this.lastPinchDistance = null;
     }
 }
